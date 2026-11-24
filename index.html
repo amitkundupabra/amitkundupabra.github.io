@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dr Amit Kumar</title>
+<meta name="description" content="Dr Amit Kumar: Spaceflight Imager Engineer at the Centre for Electronic Imaging, The Open University. CCD/CMOS detector characterisation for JANUS/JUICE, I-MIM and EnVision; time-domain astrophysics of gamma-ray bursts and supernovae.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Layout idea: a lab-notebook page. Mono "readout" labels in a narrow left rail, content in a reading column; one plotted light curve as the hero figure. */
+  --bg: #f3f4f7;
+  --surface: #ffffff;
+  --ink: #141a2a;
+  --muted: #5a6276;
+  --line: #dcdfe7;
+  --accent: #b1203a;      /* H-alpha red, 656.3 nm */
+  --accent-soft: #b1203a14;
+  --font-display: "Spectral", "Iowan Old Style", Georgia, serif;
+  --font-body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --step--1: 0.84rem;
+  --step-0: 1rem;
+  --step-1: 1.2rem;
+  --step-2: 1.6rem;
+  --step-3: 2.2rem;
+  --step-4: clamp(2.8rem, 6.4vw, 4.6rem);
+  --rail: 9.5rem;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e121c;
+    --surface: #151b28;
+    --ink: #e6e9f0;
+    --muted: #9aa2b4;
+    --line: #262d3d;
+    --accent: #ff7088;
+    --accent-soft: #ff708818;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e121c;
+  --surface: #151b28;
+  --ink: #e6e9f0;
+  --muted: #9aa2b4;
+  --line: #262d3d;
+  --accent: #ff7088;
+  --accent-soft: #ff708818;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 500; text-wrap: balance; margin: 0; line-height: 1.15; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; }
+.mono { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.01em; font-variant-numeric: tabular-nums; }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 max(20px, 4vw); }
+
+/* ---------- top bar ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.6rem; }
+.brand { font-family: var(--font-display); font-size: var(--step-1); color: var(--ink); text-decoration: none; white-space: nowrap; }
+.brand span { color: var(--accent); }
+.nav { display: flex; gap: 1.25rem; overflow-x: auto; scrollbar-width: none; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); text-decoration: none; white-space: nowrap; padding: 0.25rem 0; }
+.nav a:hover { color: var(--ink); }
+
+/* ---------- hero ---------- */
+.hero { padding: clamp(2.5rem, 6vw, 4.5rem) 0 2.5rem; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+.eyebrow { color: var(--accent); margin-bottom: 1rem; display: block; }
+.id-row { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 1.4rem; }
+.id-row .eyebrow { margin: 0; line-height: 1.5; }
+.portrait {
+  width: clamp(88px, 11vw, 116px); height: auto; aspect-ratio: 1; object-fit: cover; flex: none;
+  border-radius: 50%; border: 3px solid var(--surface);
+  box-shadow: 0 0 0 1px var(--accent), 0 6px 18px -8px color-mix(in srgb, var(--ink) 45%, transparent);
+}
+.hero h1 { font-size: var(--step-4); font-weight: 400; letter-spacing: -0.02em; }
+.hero h1 em { font-style: italic; color: var(--muted); font-weight: 400; }
+.lede { margin-top: 1.25rem; font-size: var(--step-1); line-height: 1.55; max-width: 34em; color: var(--ink); }
+.lede + .lede { font-size: var(--step-0); color: var(--muted); margin-top: 0.9rem; }
+.links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-family: var(--font-mono); font-size: 0.82rem;
+  padding: 0.55rem 0.9rem; border-radius: 4px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); text-decoration: none;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.btn.primary:hover { filter: brightness(1.08); color: var(--surface); }
+
+.figure { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1rem 1rem 0.85rem; }
+.figure-head { display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); margin-bottom: 0.4rem; }
+.figure canvas { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; }
+.figure figcaption { color: var(--muted); font-size: var(--step--1); line-height: 1.45; margin-top: 0.5rem; border-top: 1px solid var(--line); padding-top: 0.6rem; }
+.figure figcaption b { color: var(--ink); font-weight: 500; }
+
+/* ---------- readout strip ---------- */
+.readout { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
+.readout ul { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.readout li { padding: 1.2rem 1rem 1.1rem; border-left: 1px solid var(--line); }
+.readout li:first-child { border-left: 0; padding-left: 0; }
+.readout .num { font-family: var(--font-display); font-size: var(--step-3); line-height: 1; font-variant-numeric: tabular-nums lining-nums; }
+.readout .num small { font-size: 0.5em; color: var(--muted); margin-left: 0.15em; }
+.readout .lbl { display: block; color: var(--muted); margin-top: 0.45rem; font-size: 0.78rem; line-height: 1.35; }
+
+/* ---------- sections ---------- */
+section.block { padding: clamp(3rem, 7vw, 5rem) 0 0; }
+.block-grid { display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); gap: 2rem; }
+.rail { color: var(--muted); padding-top: 0.55rem; }
+.rail .idx { color: var(--accent); display: block; }
+.block h2 { font-size: var(--step-3); font-weight: 400; margin-bottom: 1.4rem; }
+.prose p { max-width: 65ch; }
+.prose p + p { margin-top: 1rem; }
+
+.two-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1.4rem 1.4rem 1.3rem; display: flex; flex-direction: column; gap: 0.8rem; }
+.card h3 { font-size: var(--step-2); }
+.card p { color: var(--muted); }
+.card ul { list-style: none; display: grid; gap: 0.45rem; }
+.card li { padding-left: 1.1rem; position: relative; }
+.card li::before { content: ""; position: absolute; left: 0; top: 0.68em; width: 0.45rem; height: 1px; background: var(--accent); }
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tag { font-family: var(--font-mono); font-size: 0.74rem; padding: 0.18rem 0.5rem; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); background: var(--bg); white-space: nowrap; }
+.tag.hot { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); background: var(--accent-soft); }
+
+/* timeline */
+.timeline { list-style: none; display: grid; }
+.timeline li { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 1.25rem; padding: 1.2rem 0; border-top: 1px solid var(--line); }
+.timeline li:last-child { border-bottom: 1px solid var(--line); }
+.timeline .when { color: var(--muted); padding-top: 0.2rem; }
+.timeline h3 { font-size: var(--step-1); font-family: var(--font-body); font-weight: 600; }
+.timeline .where { color: var(--muted); margin-top: 0.15rem; }
+.timeline p.what { margin-top: 0.55rem; max-width: 65ch; }
+.timeline .now { color: var(--accent); }
+
+/* publications */
+.pub-tools { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.chip {
+  font-family: var(--font-mono); font-size: 0.78rem; cursor: pointer;
+  padding: 0.38rem 0.7rem; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--muted);
+}
+.chip:hover { color: var(--ink); border-color: var(--muted); }
+.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.chip .ct { opacity: 0.7; margin-left: 0.3rem; }
+.search { position: relative; flex: 0 1 17rem; min-width: 12rem; }
+.search input {
+  width: 100%; font: inherit; font-size: 0.9rem; color: var(--ink);
+  padding: 0.45rem 0.75rem; border-radius: 4px; border: 1px solid var(--line); background: var(--surface);
+}
+.search input::placeholder { color: var(--muted); }
+.pub-count { color: var(--muted); margin-bottom: 0.5rem; display: block; }
+.pubs { list-style: none; counter-reset: pub; }
+.pubs li { display: grid; grid-template-columns: 3.2rem minmax(0, 1fr); gap: 0.5rem; padding: 0.95rem 0; border-top: 1px solid var(--line); }
+.pubs li[hidden] { display: none; }
+.pubs .yr { color: var(--muted); padding-top: 0.15rem; }
+.pubs .t { font-family: var(--font-display); font-size: 1.12rem; line-height: 1.35; color: var(--ink); text-decoration: none; }
+.pubs a.t:hover { color: var(--accent); }
+.pubs .au { color: var(--muted); font-size: 0.92rem; margin-top: 0.2rem; }
+.pubs .au b { color: var(--ink); font-weight: 600; }
+.pubs .ven { margin-top: 0.3rem; display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; color: var(--muted); }
+.empty { color: var(--muted); padding: 1rem 0; border-top: 1px solid var(--line); }
+.note { color: var(--muted); font-size: 0.92rem; max-width: 65ch; margin-bottom: 1.25rem; }
+
+/* observing */
+.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.94rem; }
+th, td { text-align: left; padding: 0.75rem 1rem; border-top: 1px solid var(--line); vertical-align: top; }
+thead th { border-top: 0; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; color: var(--muted); background: var(--bg); }
+td.n { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+th.n { text-align: right; }
+tfoot td { font-weight: 600; }
+.sub-h { font-family: var(--font-body); font-size: var(--step-1); font-weight: 600; margin: 2rem 0 0.9rem; }
+.scopes { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0; border-top: 1px solid var(--line); }
+.scopes li { display: grid; grid-template-columns: 4.2rem minmax(0, 1fr); gap: 0.6rem; padding: 0.6rem 0; border-bottom: 1px solid var(--line); font-size: 0.93rem; }
+.scopes .ap { color: var(--accent); }
+.nights { list-style: none; display: grid; gap: 0.6rem; margin-top: 0.25rem; }
+.bar-row { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) 3.5rem; gap: 0.9rem; align-items: center; font-size: 0.93rem; }
+.bar { height: 0.55rem; background: var(--bg); border: 1px solid var(--line); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+
+/* talks */
+.talks { list-style: none; }
+.talks li { display: grid; grid-template-columns: 6.2rem minmax(0, 1fr); gap: 1rem; padding: 0.85rem 0; border-top: 1px solid var(--line); }
+.talks .d { color: var(--muted); padding-top: 0.15rem; }
+.talks .tt { font-family: var(--font-display); font-size: 1.08rem; line-height: 1.35; }
+.talks .ev { color: var(--muted); font-size: 0.92rem; margin-top: 0.15rem; }
+details.more { margin-top: 0.5rem; }
+details.more > summary {
+  cursor: pointer; list-style: none; font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent);
+  padding: 0.8rem 0; border-top: 1px solid var(--line);
+}
+details.more > summary::-webkit-details-marker { display: none; }
+details.more > summary::before { content: "+ "; }
+details.more[open] > summary::before { content: "− "; }
+
+/* skills */
+.skills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+.skills h3 { font-family: var(--font-body); font-size: 0.95rem; font-weight: 600; margin-bottom: 0.6rem; }
+.skills .card { gap: 0; }
+.skills .card + .card { margin: 0; }
+.skills p { font-size: 0.93rem; }
+
+/* contact */
+.contact { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 1.25rem; }
+.contact dl { margin: 0; display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 0.75rem 1rem; }
+.contact dt { color: var(--muted); font-family: var(--font-mono); font-size: 0.8rem; padding-top: 0.15rem; }
+.contact dd { margin: 0; }
+
+footer { margin-top: clamp(3.5rem, 8vw, 6rem); border-top: 1px solid var(--line); padding: 1.5rem 0 2.5rem; color: var(--muted); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 920px) {
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); }
+  .readout ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .readout li:nth-child(4) { border-left: 0; padding-left: 0; }
+  .readout li:nth-child(n+4) { border-top: 1px solid var(--line); }
+  .block-grid { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
+  .rail { display: flex; gap: 0.75rem; padding-top: 0; }
+  .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .two-col, .skills, .contact { grid-template-columns: minmax(0, 1fr); }
+  .readout ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .readout li { border-left: 0 !important; padding-left: 0 !important; border-top: 1px solid var(--line); }
+  .readout li:nth-child(-n+2) { border-top: 0; }
+  .readout li:nth-child(even) { padding-left: 1rem !important; border-left: 1px solid var(--line) !important; }
+  .timeline li { grid-template-columns: minmax(0, 1fr); gap: 0.3rem; }
+  .talks li { grid-template-columns: minmax(0, 1fr); gap: 0.2rem; }
+  .pubs li { grid-template-columns: minmax(0, 1fr); gap: 0.1rem; }
+  .bar-row { grid-template-columns: minmax(0, 1fr) 3rem; }
+  .bar-row .bar { grid-column: 1 / -1; grid-row: 2; }
+  .contact dl { grid-template-columns: minmax(0, 1fr); gap: 0.15rem; }
+  .contact dd { margin-bottom: 0.7rem; }
+  .nav { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top">Amit Kumar<span>.</span></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#experience">Experience</a>
+      <a href="#publications">Publications</a>
+      <a href="#observing">Observing</a>
+      <a href="#talks">Talks</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="id-row">
+        <img class="portrait" src="assets/amit-kumar.jpg" width="360" height="360" alt="Amit Kumar smiling outdoors, wearing a helmet and harness">
+        <span class="eyebrow mono">Spaceflight Imager Engineer<br>The Open University</span>
+      </div>
+      <h1>Dr Amit Kumar</h1>
+      <p class="lede">I characterise the CCD and CMOS detectors that will image Jupiter's icy moons and the surface of Venus, at the Centre for Electronic Imaging.</p>
+      <p class="lede">Before that I spent a decade studying the Universe's most energetic explosions: gamma-ray bursts, superluminous supernovae and the links between them, from discovery with GOTO to modelling what powers them.</p>
+      <div class="links">
+        <a class="btn primary" href="mailto:amit.kumar2@open.ac.uk">amit.kumar2@open.ac.uk</a>
+        <a class="btn" href="https://scholar.google.com/citations?hl=en&amp;user=ojOoBBUAAAAJ">Google Scholar ↗</a>
+        <a class="btn" href="https://orcid.org/0000-0002-4870-9436">ORCID ↗</a>
+        <a class="btn" href="https://www.researchgate.net/profile/Amit-Kumar-361">ResearchGate ↗</a>
+      </div>
+    </div>
+
+    <figure class="figure" aria-labelledby="fig-cap">
+      <div class="figure-head mono"><span>Fig. 1</span><span>GRB + SN light curve</span></div>
+      <canvas id="lc" width="640" height="480" role="img" aria-label="Schematic light curve: a gamma-ray burst afterglow fades as a power law, then a supernova bump rises to a peak about two weeks after the burst."></canvas>
+      <figcaption id="fig-cap"><b>Schematic.</b> A long-GRB afterglow fades as a power law in time; around two weeks later the light of the accompanying supernova emerges as a bump. Separating the two is the core of my thesis work on GRB–SN connections.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= READOUT ================= -->
+<div class="readout">
+  <div class="wrap">
+    <ul>
+      <li><span class="num">60</span><span class="lbl mono">refereed papers, 10 as lead or corresponding author</span></li>
+      <li><span class="num">~1900</span><span class="lbl mono">TNS transient reports, ~430 as first author</span></li>
+      <li><span class="num">~180</span><span class="lbl mono">GCN circulars, ~60 as first author</span></li>
+      <li><span class="num">~200</span><span class="lbl mono">observing nights on 1–3.6 m telescopes</span></li>
+      <li><span class="num">365<small>h</small></span><span class="lbl mono">telescope time won as lead proposer</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<section class="block" id="about">
+  <div class="wrap block-grid">
+    <div class="rail mono"><span class="idx">01</span>About</div>
+    <div class="prose">
+      <h2>From transient skies to flight detectors</h2>
+      <p>I am a Spaceflight Imager Engineer at the Centre for Electronic Imaging (CEI), School of Physical Sciences, The Open University. I test and calibrate imaging sensors for ESA and NASA planetary missions, including the CIS115 CMOS sensor of the JANUS camera on JUICE, as well as I-MIM and EnVision. The work runs from optical and vacuum test setups in an ISO Class 5 cleanroom to photon-transfer analysis, noise and dark-current measurements, and Python pipelines that turn test data into detector performance.</p>
+      <p>My background is observational astrophysics. I did my PhD at the Aryabhatta Research Institute of Observational Sciences (ARIES) in Nainital, India, on the connection between gamma-ray bursts and supernovae, then held postdoctoral positions at the University of Warwick with the Gravitational-wave Optical Transient Observer (GOTO) and at Royal Holloway, University of London. Instrumentation has been part of my work throughout: my first-author papers include the photometric calibration of the 4K×4K CCD Imager on India's 3.6 m Devasthal Optical Telescope.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESEARCH ================= -->
+<section class="block" id="research">
+  <div class="wrap block-grid">
+    <div class="rail mono"><span class="idx">02</span>Research</div>
+    <div>
+      <h2>Two threads, one instrument chain</h2>
+      <div class="two-col">
+        <article class="card">
+          <div class="tags"><span class="tag hot">JANUS / JUICE</span><span class="tag hot">I-MIM</span><span class="tag hot">EnVision</span></div>
+          <h3>Imaging detectors for planetary missions</h3>
+          <p>Characterising CCD and CMOS sensors so that flight cameras return calibrated, trustworthy images.</p>
+          <ul>
+            <li>Photon-transfer curves, conversion gain, read noise, linearity and full-well capacity</li>
+            <li>Dark current and noise measurements in vacuum test setups</li>
+            <li>Signal-dependent effects in the CIS115 sensor for JANUS: baseline shift and negative trailing (two SPIE papers in preparation)</li>
+            <li>Cleanroom handling and contamination control for sensitive detectors</li>
+          </ul>
+        </article>
+        <article class="card">
+          <div class="tags"><span class="tag">GRBs</span><span class="tag">Supernovae</span><span class="tag">GW counterparts</span><span class="tag">GOTO</span></div>
+          <h3>Time-domain astrophysics</h3>
+          <p>Finding fast-evolving transients early, following them up, and working out what powers them.</p>
+          <ul>
+            <li>GRB–supernova connections and magnetar-powered explosions</li>
+            <li>Superluminous and stripped-envelope supernovae; late-time shock interaction</li>
+            <li>Afterglow discovery for poorly localised GRBs with GOTO's wide-field survey</li>
+            <li>Light-curve and spectral modelling (MOSFiT, TARDIS, SYN++) and machine-learning classification</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section class="block" id="experience">
+  <div class="wrap block-grid">
+    <div class="rail mono"><span class="idx">03</span>Experience</div>
+    <div>
+      <h2>Positions and education</h2>
+      <ol class="timeline">
+        <li>
+          <span class="when mono">Dec 2025 – <span class="now">present</span></span>
+          <div>
+            <h3>Spaceflight Imager Engineer</h3>
+            <p class="where">Centre for Electronic Imaging, The Open University, UK</p>
+            <p class="what">Characterisation and testing of CCD/CMOS imaging detectors for JANUS/JUICE, I-MIM and EnVision: optical and vacuum test setups, photon-transfer analysis, calibration, noise and dark-current measurements, and Python-based performance evaluation.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when mono">Oct 2024 – Oct 2025</span>
+          <div>
+            <h3>Research Associate</h3>
+            <p class="where">Department of Physics, Royal Holloway, University of London</p>
+            <p class="what">Optical imaging and spectroscopy of supernovae, including fibre-fed WEAVE integral-field spectroscopy.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when mono">Sep 2022 – Sep 2024</span>
+          <div>
+            <h3>Research Associate, GOTO</h3>
+            <p class="where">Department of Physics, University of Warwick</p>
+            <p class="what">Instrumentation, performance monitoring and science exploitation of GOTO's multi-camera wide-field telescope system: image analysis, transient-discovery pipelines and follow-up.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when mono">Jun – Aug 2022</span>
+          <div>
+            <h3>Post-thesis-submission Fellow</h3>
+            <p class="where">Aryabhatta Research Institute of Observational Sciences (ARIES), India</p>
+          </div>
+        </li>
+        <li>
+          <span class="when mono">2018 – 2022</span>
+          <div>
+            <h3>PhD, Astronomy &amp; Astrophysics</h3>
+            <p class="where">Pt. Ravishankar Shukla University, Raipur; research carried out at ARIES, Nainital</p>
+            <p class="what">Thesis: <em>Energetic Cosmic Transients in the Context of Gamma Ray Bursts–Supernovae Connections</em>. Advisor Dr S. B. Pandey; co-advisor Prof. Nameeta Brahme. Defended January 2023. Senior and Junior Research Fellowships, 2017–2022.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when mono">2015 – 2017</span>
+          <div>
+            <h3>MSc, Physics and Astrophysics</h3>
+            <p class="where">University of Delhi</p>
+            <p class="what">Qualified the National Eligibility Test twice, with All-India ranks 61 (2016) and 81 (2017).</p>
+          </div>
+        </li>
+        <li>
+          <span class="when mono">2012 – 2015</span>
+          <div>
+            <h3>BSc (Hons) Physics</h3>
+            <p class="where">Atma Ram Sanatan Dharma College, University of Delhi</p>
+            <p class="what">First rank in college.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PUBLICATIONS ================= -->
+<section class="block" id="publications">
+  <div class="wrap block-grid">
+    <div class="rail mono"><span class="idx">04</span>Publications</div>
+    <div>
+      <h2>Publications</h2>
+      <p class="note">I referee for MNRAS, The Astrophysical Journal and Astronomy and Computing. Full and up-to-date list on <a href="https://scholar.google.com/citations?hl=en&amp;user=ojOoBBUAAAAJ">Google Scholar</a>.</p>
+
+      <div class="pub-tools">
+        <div class="chips" role="group" aria-label="Filter publications">
+          <button class="chip" type="button" data-filter="lead" aria-pressed="true">Lead author<span class="ct"></span></button>
+          <button class="chip" type="button" data-filter="prep" aria-pressed="false">In preparation<span class="ct"></span></button>
+          <button class="chip" type="button" data-filter="co" aria-pressed="false">Co-author<span class="ct"></span></button>
+          <button class="chip" type="button" data-filter="proc" aria-pressed="false">Proceedings<span class="ct"></span></button>
+          <button class="chip" type="button" data-filter="all" aria-pressed="false">All<span class="ct"></span></button>
+        </div>
+        <label class="search" for="pub-search">
+          <input id="pub-search" type="search" placeholder="Search titles, authors, objects" autocomplete="off">
+        </label>
+      </div>
+      <span class="pub-count mono" id="pub-count" aria-live="polite"></span>
+
+      <ol class="pubs" id="pubs">
+        <!-- In preparation -->
+        <li data-cat="prep"><span class="yr mono">—</span><div><span class="t">Signal-Dependent Baseline Shift (SDBS) in CMOS Image Sensors: Characterisation and Correction for the CIS115 Detector for JANUS</span><p class="au"><b>Kumar, A.</b>, et al.</p><p class="ven mono">SPIE · circulated to co-authors</p></div></li>
+        <li data-cat="prep"><span class="yr mono">—</span><div><span class="t">Characterisation of Signal-Dependent Negative Trailing in the CIS115 CMOS Image Sensor Onboard JANUS</span><p class="au"><b>Kumar, A.</b>, et al.</p><p class="ven mono">SPIE · circulated to co-authors</p></div></li>
+
+        <!-- Lead / corresponding -->
+        <li data-cat="lead"><span class="yr mono">2025</span><div><a class="t" href="https://doi.org/10.1093/mnras/staf1689">Discovery and Analysis of Afterglows from Poorly Localised GRBs with the Gravitational-wave Optical Transient Observer (GOTO) All-sky Survey</a><p class="au"><b>Kumar, A.</b>, Gompertz, B. P., Schneider, B., Belkin, S., et al.</p><p class="ven mono">MNRAS 544, 1541</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2025</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2024arXiv241203509K/abstract">Signatures of the Shock Interaction as an Additional Power Source in the Nebular Spectra of SN 2023ixf</a><p class="au"><b>Kumar, A.</b>, Dastidar, R., Maund, J. R., Singleton, A. J., Sun, N.-C.</p><p class="ven mono">MNRAS 538, 659</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2025</span><div><a class="t" href="https://doi.org/10.1016/j.newast.2024.102346">Insights from Modeling Magnetar-driven Light Curves of Stripped-envelope Supernovae</a><p class="au"><b>Kumar, A.</b></p><p class="ven mono">New Astronomy 116, 102346</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2024</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2024MNRAS.531.3297K/abstract">Magnetars as Powering Sources of Gamma-Ray Burst Associated Supernovae and Unsupervised Clustering of Cosmic Explosions</a><p class="au"><b>Kumar, A.</b>, Sharma, K., Vinko, J., Steeghs, D., Gompertz, B., et al.</p><p class="ven mono">MNRAS 531, 3297</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2023</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2023JAI....1240009P/abstract">4K×4K CCD Imager for the 3.6m DOT: Recent Up-gradations and Results</a><p class="au">Pandey, S. B., <b>Kumar, A.</b>, Reddy, B. K., Yadav, S., Nanjappa, N., et al.</p><p class="ven mono">Journal of Astronomical Instrumentation</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2022</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2022NewA...9701889K/abstract">Tale of GRB 171010A/SN 2017htp and GRB 171205A/SN 2017iuk: Magnetar Origin?</a><p class="au"><b>Kumar, A.</b>, Pandey, S. B., Gupta, R., Aryan, A., et al.</p><p class="ven mono">New Astronomy 97, 101889</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2022</span><div><a class="t" href="https://link.springer.com/article/10.1007/s12036-022-09798-8">Photometric Calibration and Characterization of the 4K×4K CCD Imager, the First-light Axial Port Instrument for the 3.6m DOT</a><p class="au"><b>Kumar, A.</b>, Pandey, S. B., Singh, A., Yadav, R. K. S., et al.</p><p class="ven mono">J. Astrophys. Astron. 43, 27</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2021</span><div><a class="t" href="https://academic.oup.com/mnras/article-abstract/502/2/1678/6103929">SN 2020ank: A Bright and Fast-evolving H-deficient Superluminous Supernova</a><p class="au"><b>Kumar, A.</b>, Kumar, B., Pandey, S. B., Sahu, D. K., et al.</p><p class="ven mono">MNRAS 502, 1678</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2021</span><div><a class="t" href="https://academic.oup.com/mnras/article-abstract/507/1/1229/6358325">Photometric, Polarimetric, and Spectroscopic Studies of the Luminous, Slow-decaying Type Ib SN 2012au</a><p class="au">Pandey, S. B., <b>Kumar, A.</b>, Kumar, B., Anupama, G. C., et al.</p><p class="ven mono">MNRAS 507, 1229</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2020</span><div><a class="t" href="https://iopscience.iop.org/article/10.3847/1538-4357/ab737b/meta">SN 2010kd: Photometric and Spectroscopic Analysis of a Slow-decaying Superluminous Supernova</a><p class="au"><b>Kumar, A.</b>, Pandey, S. B., Konyves-Toth, R., Staten, R., Vinko, J., Wheeler, J. C., et al.</p><p class="ven mono">ApJ 892, 28</p></div></li>
+
+        <!-- Co-author: 2nd / 3rd and others -->
+        <li data-cat="co"><span class="yr mono">2026</span><div><a class="t" href="https://doi.org/10.1093/rasti/rzag042">The Gravitational-wave Optical Transient Observer (GOTO) Data Pipeline and Workflow for Transient Discovery</a><p class="au">Lyman, J. D., O'Neill, D., Killestein, T., Jarvis, D., <b>Kumar, A.</b>, et al.</p><p class="ven mono">RAS Techniques and Instruments 5, 1</p></div></li>
+        <li data-cat="co"><span class="yr mono">2026</span><div><a class="t" href="https://academic.oup.com/mnras/article/552/3/stag1848/8836714">The GOTO Fast Analysis and Spectroscopy of Transients (FAST) Surveys</a><p class="au">Godson, B., Lyman, J., Pursiainen, M., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 552</p></div></li>
+        <li data-cat="co"><span class="yr mono">2026</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2026A%26A...708A..60R/abstract">GRB 180728A and SN 2018fip: the Nearest High-energy Cosmological Gamma-ray Burst with an Associated Supernova</a><p class="au">Rossi, A., Izzo, L., Maeda, K., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">A&amp;A 708, A60</p></div></li>
+        <li data-cat="co"><span class="yr mono">2026</span><div><a class="t" href="https://iopscience.iop.org/article/10.1088/1674-4527/ae9ca0">Early Near-Infrared Excess and Rapid Disk-Corona Evolution in the Tidal Disruption Event 2024aepd</a><p class="au">Wu, Y., Wang, Y., Reynolds, T. M., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">Res. Astron. Astrophys.</p></div></li>
+        <li data-cat="co"><span class="yr mono">2026</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2026ApJ...997...72C/abstract">SN 2025coe: A Multiple-Peaked Calcium-Strong Transient from a White-Dwarf Progenitor</a><p class="au">Chen, C., Sun, N.-C., Xi, Q., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">ApJ 997, 72</p></div></li>
+        <li data-cat="co"><span class="yr mono">2026</span><div><a class="t" href="https://www.arxiv.org/abs/2509.12343">SN 2024aecx: Double-Peaked Light Curves and Rapid Evolution in a Nearby Type IIb Supernova</a><p class="au">Xi, Q., Sun, N.-C., Aguado, D., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">ApJ 997, 77</p></div></li>
+        <li data-cat="co"><span class="yr mono">2026</span><div><a class="t" href="https://arxiv.org/abs/2510.27631">SN 2024cld: Unveiling the Complex Mass-loss Histories of Evolved Supergiant Progenitors to Core-collapse Supernovae</a><p class="au">Killestein, T. L., Pursiainen, M., Kotak, R., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 548, 2261</p></div></li>
+        <li data-cat="co"><span class="yr mono">2026</span><div><a class="t" href="https://arxiv.org/abs/2602.16559">GOTO Identification and Broadband Modelling of the Counterpart to the SVOM GRB 250818B</a><p class="au">Belkin, S., Lamb, G. P., Ackley, K., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS, in press</p></div></li>
+        <li data-cat="co"><span class="yr mono">2026</span><div><a class="t" href="https://arxiv.org/abs/2603.06344">Searching for Outbursts from Symbiotic Binaries in GOTO and ATLAS Data</a><p class="au">Ramsay, G., Ackley, K., Belkin, S., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">A&amp;A, accepted</p></div></li>
+        <li data-cat="co"><span class="yr mono">2026</span><div><a class="t" href="https://arxiv.org/abs/2606.10002">Failed Jet Breakout in the Metal-poor Broad-lined Type Ic Supernova 2026gzf</a><p class="au">Martin-Carrillo, A., Thöne, C. C., Leung, J. K., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">Submitted to Nature Astronomy</p></div></li>
+        <li data-cat="co"><span class="yr mono">2026</span><div><a class="t" href="https://arxiv.org/abs/2606.05146">Early Multiwavelength Observations of AT 2026fgk: The Luminous Afterglow to Sub-luminous GRB 260310A, Identified Independently of a Gamma-ray Trigger</a><p class="au">Hinds, K.-R., Ho, A. Y. Q., Wagh, Y., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">Submitted to ApJ</p></div></li>
+        <li data-cat="co"><span class="yr mono">2026</span><div><a class="t" href="https://arxiv.org/abs/2608.09704">Exploring the Multi-wavelength Properties of the High Energetic Event ZTF20abbiixp/GRB 200524A: from Prompt Emission to Afterglow</a><p class="au">Ghosh, A., Dimple, Misra, K., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">Submitted to MNRAS</p></div></li>
+        <li data-cat="co"><span class="yr mono">2026</span><div><a class="t" href="https://arxiv.org/abs/2603.01383">Time-Domain Photometry and Activity Evolution of Interstellar Comet 3I/ATLAS with BHTOM</a><p class="au">Fraser Gillan, A., Wyrzykowski, Ł., Mikołajczyk, P. J., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">Submitted to A&amp;A</p></div></li>
+        <li data-cat="co"><span class="yr mono">2025</span><div><a class="t" href="https://iopscience.iop.org/article/10.3847/2041-8213/adf8e1">The Day-long, Repeating GRB 250702B: A Unique Extragalactic Transient</a><p class="au">Levan, A. J., Martin-Carrillo, A., Laskar, T., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">ApJL 990, L28</p></div></li>
+        <li data-cat="co"><span class="yr mono">2025</span><div><a class="t" href="https://doi.org/10.48550/arXiv.2505.07665">EP241021a: A Months-duration X-ray Transient with Luminous Optical and Radio Emission</a><p class="au">Shu, X., Yang, L., Yang, H., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">ApJL 990, L29</p></div></li>
+        <li data-cat="co"><span class="yr mono">2025</span><div><a class="t" href="https://academic.oup.com/mnras/advance-article/doi/10.1093/mnras/staf1574/8256866">GRB 241105A: A Test Case for GRB Classification and Rapid r-process Nucleosynthesis Channels</a><p class="au">Dimple, Gompertz, B. P., Levan, A. J., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 544, 548</p></div></li>
+        <li data-cat="co"><span class="yr mono">2025</span><div><a class="t" href="https://doi.org/10.1093/mnras/staf1675">SN 2024bfu, SN 2025qe, and the Early Light Curves of Type Iax Supernovae</a><p class="au">Magee, M. R., Killestein, T. L., Pursiainen, M., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 543, 3731</p></div></li>
+        <li data-cat="co"><span class="yr mono">2025</span><div><a class="t" href="https://arxiv.org/abs/2510.05426">SN 2021tsz: A Luminous, Short Photospheric Phase Type II Supernova in a Low-metallicity Host</a><p class="au">Dastidar, R., Pignata, G., Dukiya, N., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">A&amp;A 703, A224</p></div></li>
+        <li data-cat="co"><span class="yr mono">2025</span><div><a class="t" href="https://arxiv.org/abs/2504.17034">An Extremely Soft and Weak Fast X-ray Transient Associated with a Luminous Supernova</a><p class="au">Li, W.-X., Zhu, Z.-P., Zou, X.-Z., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">Submitted to Nature Astronomy</p></div></li>
+        <li data-cat="co"><span class="yr mono">2025</span><div><a class="t" href="https://arxiv.org/abs/2503.21874">The Type I Superluminous Supernova Catalogue II: Spectroscopic Evolution in the Photospheric Phase, Velocity Measurements, and Constraints on Diversity</a><p class="au">Aamer, A., Nicholl, M., Gomez, S., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 541, 2674</p></div></li>
+        <li data-cat="co"><span class="yr mono">2025</span><div><a class="t" href="https://arxiv.org/abs/2504.21686">The Case of AT2022wtn: a Tidal Disruption Event in an Interacting Galaxy</a><p class="au">Onori, F., Nicholl, M., Ramsden, P., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 540, 498</p></div></li>
+        <li data-cat="co"><span class="yr mono">2025</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2025MNRAS.537.3298P/abstract">Optical Evolution of AT 2024wpp: The High-velocity Outflows in Cow-like Transients are Consistent with High Spherical Symmetry</a><p class="au">Pursiainen, M., Killestein, T. L., Kuncarayakti, H., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 537, 3298</p></div></li>
+        <li data-cat="co"><span class="yr mono">2025</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2025MNRAS.537.1015T/abstract">SN 2023xwi: Forbidden Line Emission in the Peak Spectrum of a Ca-strong Transient</a><p class="au">Touchard-Paxton, C.-G., Frohmaier, C., Pursiainen, M., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 537, 1015</p></div></li>
+        <li data-cat="co"><span class="yr mono">2025</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2025MNRAS.537.3078A/abstract">Follow-up on Three Poorly Studied AM CVn Stars</a><p class="au">Aungwerojwit, A., Gänsicke, B. T., Breedt, E., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 537, 3078</p></div></li>
+        <li data-cat="co"><span class="yr mono">2025</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2025MNRAS.536.3588W/abstract">SN 2023tsz: A Helium-interaction Driven Supernova in a Very Low-mass Galaxy</a><p class="au">Warwick, B., Lyman, J., Pursiainen, M., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 536, 3588</p></div></li>
+        <li data-cat="co"><span class="yr mono">2025</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2025arXiv250111524K/abstract">GOTO065054+593624: A Peculiar Dwarf Nova Identified in Real Time via Kilonova Seekers</a><p class="au">Killestein, T. L., Ramsay, G., Kennedy, M., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS, under minor revision</p></div></li>
+        <li data-cat="co"><span class="yr mono">2024</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2024ApJ...975..132S/abstract">Unravelling the Asphericities in the Explosion and Multi-faceted Circumstellar Matter of SN 2023ixf</a><p class="au">Singh, A., Teja, R. S., Moriya, T. J., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">ApJ 975, 132</p></div></li>
+        <li data-cat="co"><span class="yr mono">2024</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2024arXiv240602334K/abstract">Kilonova Seekers: the GOTO Project for Real-time Citizen Science in Time-domain Astrophysics</a><p class="au">Killestein, T. L., Kelsey, L., Wickens, E., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 533, 2113</p></div></li>
+        <li data-cat="co"><span class="yr mono">2024</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2024arXiv240300927D/abstract">SN 2019nyk: a Rapidly Declining Type II Supernova with Early Interaction Signatures</a><p class="au">Dastidar, R., Pignata, G., Dukiya, N., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">A&amp;A 685, A44</p></div></li>
+        <li data-cat="co"><span class="yr mono">2024</span><div><a class="t" href="https://iopscience.iop.org/article/10.1088/1538-3873/ad8c83">Leveraging Movement Representation from Contrastive Learning for Asteroid Detection</a><p class="au">Kongsathitporn, N., Supratak, A., Noysena, K., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">PASP 136, 124507</p></div></li>
+        <li data-cat="co"><span class="yr mono">2023</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2023arXiv230816121H/abstract">A LOFAR Prompt Search for Radio Emission Accompanying X-ray Flares in GRB 210112A</a><p class="au">Hennessy, A., Starling, R. L. C., Rowlinson, A., de Ruiter, I., <b>Kumar, A.</b>, et al.</p><p class="ven mono">MNRAS 526, 106</p></div></li>
+        <li data-cat="co"><span class="yr mono">2023</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2023ApJ...942...34R/abstract">Prompt Emission and Early Optical Afterglow of Very-high-energy Detected GRB 201015A and GRB 201216C: Onset of the External Forward Shock</a><p class="au">Ror, A. K., Gupta, R., Jelinek, M., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">ApJ 942, 34</p></div></li>
+        <li data-cat="co"><span class="yr mono">2023</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2022arXiv220507790C/abstract">Prompt Emission Analysis of Luminous GRB 210619B Observed with Fermi and ASIM: a Transition between Thermal to Non-thermal Outflow?</a><p class="au">Caballero-García, M. D., Gupta, R., Pandey, S. B., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 519, 3201</p></div></li>
+        <li data-cat="co"><span class="yr mono">2023</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2023MNRAS.519..248A/abstract">Photometric and Spectroscopic Analysis of the Type II Short Plateau SN 2020jfo</a><p class="au">Ailawadhi, B., Dastidar, R., Misra, K., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 519, 248</p></div></li>
+        <li data-cat="co"><span class="yr mono">2022</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2022Natur.612..228T/abstract">A Long Gamma-ray Burst from a Stellar Merger in the Nearby Universe</a><p class="au">Troja, E., Fryer, C. F., O'Connor, B., Ryan, G., Dichiara, S., <b>Kumar, A.</b>, et al.</p><p class="ven mono">Nature 612, 228</p></div></li>
+        <li data-cat="co"><span class="yr mono">2022</span><div><a class="t" href="https://link.springer.com/article/10.1007/s12036-021-09794-4">Revealing Nature of GRB 210205A, ZTF21aaeyldq (AT2021any), and Follow-up Observations with the 4K×4K CCD Imager + 3.6m DOT</a><p class="au">Gupta, R., <b>Kumar, A.</b>, Pandey, S. B., Castro-Tirado, A. J., et al.</p><p class="ven mono">J. Astrophys. Astron. 43, 11</p></div></li>
+        <li data-cat="co"><span class="yr mono">2022</span><div><a class="t" href="https://link.springer.com/article/10.1007/s12036-021-09785-5">Deep V and I CCD Photometry of Young Star Cluster NGC 1893 with the 3.6m DOT</a><p class="au">Panwar, P., <b>Kumar, A.</b>, Pandey, S. B.</p><p class="ven mono">J. Astrophys. Astron. 43, 7</p></div></li>
+        <li data-cat="co"><span class="yr mono">2022</span><div><a class="t" href="https://link.springer.com/article/10.1007/s12036-022-09865-0">Photometric Studies on the Host Galaxies of Gamma-ray Bursts using 3.6m Devasthal Optical Telescope</a><p class="au">Gupta, R., Pandey, S. B., <b>Kumar, A.</b>, Aryan, A., et al.</p><p class="ven mono">J. Astrophys. Astron. 43, 82</p></div></li>
+        <li data-cat="co"><span class="yr mono">2022</span><div><a class="t" href="https://link.springer.com/article/10.1007/s12036-022-09866-z">Analyses of Core-collapse Supernovae using MOSFiT and MESA Based Tools</a><p class="au">Aryan, A., Pandey, S. B., <b>Kumar, A.</b>, Gupta, R., et al.</p><p class="ven mono">J. Astrophys. Astron. 43, 87</p></div></li>
+        <li data-cat="co"><span class="yr mono">2022</span><div><a class="t" href="https://link.springer.com/article/10.1007/s12036-021-09784-6">Core-collapse Supernova from a Possible Progenitor Star of 100 M<sub>☉</sub></a><p class="au">Aryan, A., Pandey, S. B., Yadav, A. P., <b>Kumar, A.</b>, et al.</p><p class="ven mono">J. Astrophys. Astron. 43, 2</p></div></li>
+        <li data-cat="co"><span class="yr mono">2022</span><div><a class="t" href="https://link.springer.com/article/10.1007/s12036-022-09822-x">GRB 210217A: A Short or a Long GRB?</a><p class="au">Dimple, Misra, K., Ghosh, A., Arun, K. G., Gupta, R., <b>Kumar, A.</b>, et al.</p><p class="ven mono">J. Astrophys. Astron. 43, 39</p></div></li>
+        <li data-cat="co"><span class="yr mono">2022</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2022MNRAS.511.1694G/abstract">Probing into Emission Mechanisms of GRB 190530A using Time-resolved Spectra and Polarization Studies: Synchrotron Origin?</a><p class="au">Gupta, R., Gupta, S., Chattopadhyay, T., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 511, 1694</p></div></li>
+        <li data-cat="co"><span class="yr mono">2022</span><div><a class="t" href="https://academic.oup.com/mnras/article/513/2/2777/6569719">The Long-active Afterglow of GRB 210204A: Detection of the Most Delayed Flares in a Gamma-ray Burst</a><p class="au">Kumar, H., Gupta, R., Saraogi, D., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 513, 2777</p></div></li>
+        <li data-cat="co"><span class="yr mono">2022</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2022MNRAS.517.1750A/abstract">SN 2016iyc: a Type IIb Supernova Arising from a Low-mass Progenitor</a><p class="au">Aryan, A., Pandey, S. B., Zheng, W., Filippenko, A. V., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 517, 1750</p></div></li>
+        <li data-cat="co"><span class="yr mono">2021</span><div><a class="t" href="https://www.aanda.org/articles/aa/abs/2021/02/aa39349-20/aa39349-20.html">10.4 m GTC Observations of the Nearby VHE-detected GRB 190829A/SN 2019oyw</a><p class="au">Hu, Y.-D., Castro-Tirado, A. J., <b>Kumar, A.</b>, Gupta, R., et al.</p><p class="ven mono">A&amp;A 646, A50</p></div></li>
+        <li data-cat="co"><span class="yr mono">2021</span><div><a class="t" href="https://academic.oup.com/mnras/article/505/2/2530/6275721">Progenitor Mass Constraints for the Type Ib Intermediate-luminosity SN 2015ap and the Highly Extinguished SN 2016bau</a><p class="au">Aryan, A., Pandey, S. B., Zheng, W., Filippenko, A. V., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 505, 2530</p></div></li>
+        <li data-cat="co"><span class="yr mono">2021</span><div><a class="t" href="https://academic.oup.com/mnras/article/505/3/4086/6290519">GRB 140102A: Insight into Prompt Spectral Evolution and Early Optical Afterglow Emission</a><p class="au">Gupta, R., Oates, S. R., Pandey, S. B., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 505, 4086</p></div></li>
+        <li data-cat="co"><span class="yr mono">2021</span><div><a class="t" href="https://academic.oup.com/mnrasl/article/507/1/L46/6343049">A Search for Blazar Activity in Broad-absorption-line Quasars</a><p class="au">Mishra, S., Gopal-Krishna, Chand, H., Chand, K., <b>Kumar, A.</b>, Negi, V.</p><p class="ven mono">MNRAS 507, L46</p></div></li>
+        <li data-cat="co"><span class="yr mono">2020</span><div><a class="t" href="https://iopscience.iop.org/article/10.3847/1538-4357/ab9606/meta">Peculiar Prompt Emission and Afterglow in the H.E.S.S.-detected GRB 190829A</a><p class="au">Chand, V., Banerjee, A., Gupta, R., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">ApJ 898, 42</p></div></li>
+        <li data-cat="co"><span class="yr mono">2019</span><div><a class="t" href="https://academic.oup.com/mnras/article/485/4/5294/5364556">A Multiwavelength Analysis of a Collection of Short-duration GRBs Observed between 2012 and 2015</a><p class="au">Pandey, S. B., Hu, Y., Castro-Tirado, A. J., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">MNRAS 485, 5294</p></div></li>
+
+        <!-- Proceedings -->
+        <li data-cat="proc"><span class="yr mono">2026</span><div><a class="t" href="https://doi.org/10.1142/9789819839926_0137">Light Curve Properties of Gamma-Ray Burst Associated Supernovae</a><p class="au"><b>Kumar, A.</b>, Sharma, K.</p><p class="ven mono">Proc. 17th Marcel Grossmann Meeting, 1678</p></div></li>
+        <li data-cat="proc"><span class="yr mono">2026</span><div><a class="t" href="https://doi.org/10.1117/12.3102830">The GOTO Telescope Control System</a><p class="au">Dyer, M. J., Dhillon, V., Littlefair, S., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">Proc. SPIE 14151</p></div></li>
+        <li data-cat="proc"><span class="yr mono">2024</span><div><a class="t" href="https://iopscience.iop.org/article/10.3847/2515-5172/ad1876">GRB 230911A: The First Discovery of a Fermi GRB Optical Counterpart with GOTO</a><p class="au">Belkin, S., Gompertz, B. P., <b>Kumar, A.</b>, Ackley, K., Galloway, D. K., et al.</p><p class="ven mono">Research Notes of the AAS 8, 1</p></div></li>
+        <li data-cat="proc"><span class="yr mono">2024</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2024SPIE13094E..1XD/abstract">The Gravitational-wave Optical Transient Observer (GOTO)</a><p class="au">Dyer, M. J., Ackley, K., Jiménez-Ibarra, F., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">Proc. SPIE 13094</p></div></li>
+        <li data-cat="proc"><span class="yr mono">2024</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2024SPIE13098E..18O/abstract">GERry: A Code to Optimise the Hunt for the Electromagnetic Counterparts to Gravitational Wave Events</a><p class="au">O'Neill, D., Lyman, J., Ackley, K., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">Proc. SPIE 13098</p></div></li>
+        <li data-cat="proc"><span class="yr mono">2024</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2024ASPC..536...35K/abstract">Galactic Novae in the GOTO Database</a><p class="au">Khamrat, S., Noysena, K., Surina, F., et al., incl. <b>Kumar, A.</b></p><p class="ven mono">ASP Conf. Ser. 536, 35</p></div></li>
+        <li data-cat="proc"><span class="yr mono">2021</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2021RMxAC..53..127K/abstract">Role of the 3.6m DOT to Investigate Connections between Long-GRBs and Core-collapse SNe</a><p class="au"><b>Kumar, A.</b>, Pandey, S. B., Gupta, R., Aryan, A., Castro-Tirado, A. J., Brahme, N.</p><p class="ven mono">RMxAC 53, 127</p></div></li>
+        <li data-cat="proc"><span class="yr mono">2021</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2021RMxAC..53..215A/abstract">Study of Energetic Transients using Tools like MESA, SNEC, MOSFiT and SNCOSMO</a><p class="au">Aryan, A., Pandey, S. B., <b>Kumar, A.</b>, Gupta, R., et al.</p><p class="ven mono">RMxAC 53, 215</p></div></li>
+        <li data-cat="proc"><span class="yr mono">2021</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2021RMxAC..53..113G/abstract">Observational Properties of TeV-detected GRB 180720B, GRB 190114C and GRB 190829A</a><p class="au">Gupta, R., Pandey, S. B., Castro-Tirado, A. J., <b>Kumar, A.</b>, et al.</p><p class="ven mono">RMxAC 53, 113</p></div></li>
+      </ol>
+      <p class="empty" id="pub-empty" hidden>No publications match that search. Try an object name such as “SN 2023ixf” or a journal such as “MNRAS”.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= OBSERVING ================= -->
+<section class="block" id="observing">
+  <div class="wrap block-grid">
+    <div class="rail mono"><span class="idx">05</span>Observing</div>
+    <div>
+      <h2>Telescope time and follow-up</h2>
+      <p class="note">Real-time photometric, spectroscopic and polarimetric follow-up of supernovae, GRBs and other fast transients, plus instrument and site calibration, under approved proposals from Cycles 2018A–2022B. Co-proposer on ESO proposals including the VLT, and member of a joint JWST–HST team for AT2023lcr.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Cycle</th><th>Facility (as lead proposer)</th><th>Science</th><th class="n">Hours</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">26A</td><td>Liverpool Telescope (2 m)</td><td>Low-redshift GRBs and their supernovae</td><td class="n">28</td></tr>
+            <tr><td class="mono">2025B</td><td>SAAO Lesedi 1 m robotic + GOTO</td><td>Rapid photometric and spectroscopic transient follow-up</td><td class="n">120</td></tr>
+            <tr><td class="mono">2025A</td><td>SAAO Lesedi 1 m robotic + GOTO</td><td>Rapid photometric and spectroscopic transient follow-up</td><td class="n">122.9</td></tr>
+            <tr><td class="mono">2025A</td><td>Chilean 0.4–1 m optical/NIR telescopes via CNTAC + GOTO</td><td>Transient follow-up</td><td class="n">42</td></tr>
+            <tr><td class="mono">2022–23</td><td>3.6 m Devasthal Optical Telescope + GOTO</td><td>GW counterpart searches; classification of young GOTO transients</td><td class="n">52</td></tr>
+          </tbody>
+          <tfoot><tr><td></td><td colspan="2">Total awarded</td><td class="n">364.9</td></tr></tfoot>
+        </table>
+      </div>
+
+      <h3 class="sub-h">Nights at the telescope, 2018–2022</h3>
+      <ul class="nights">
+        <li class="bar-row"><span>3.6 m Devasthal Optical Telescope</span><span class="bar"><i style="width:100%"></i></span><span class="mono">100+</span></li>
+        <li class="bar-row"><span>1.3 m Devasthal Fast Optical Telescope</span><span class="bar"><i style="width:62%"></i></span><span class="mono">62</span></li>
+        <li class="bar-row"><span>1.04 m Sampurnanand Telescope</span><span class="bar"><i style="width:35%"></i></span><span class="mono">35</span></li>
+      </ul>
+
+      <h3 class="sub-h">Data I have worked with</h3>
+      <ul class="scopes">
+        <li><span class="ap mono">10.4 m</span><span>Gran Telescopio Canarias</span></li>
+        <li><span class="ap mono">10 m</span><span>Keck</span></li>
+        <li><span class="ap mono">10 m</span><span>Hobby–Eberly Telescope</span></li>
+        <li><span class="ap mono">8.2 m</span><span>Very Large Telescope</span></li>
+        <li><span class="ap mono">6 m</span><span>Big Altazimuth Telescope</span></li>
+        <li><span class="ap mono">4.2 m</span><span>William Herschel Telescope (WEAVE)</span></li>
+        <li><span class="ap mono">3.6 m</span><span>Devasthal Optical Telescope</span></li>
+        <li><span class="ap mono">3.58 m</span><span>New Technology Telescope</span></li>
+        <li><span class="ap mono">2.4 m</span><span>Hubble Space Telescope</span></li>
+        <li><span class="ap mono">2.2 m</span><span>Calar Alto (CAHA)</span></li>
+        <li><span class="ap mono">2.01 m</span><span>Himalayan Chandra Telescope</span></li>
+        <li><span class="ap mono">2 m</span><span>Liverpool Telescope</span></li>
+        <li><span class="ap mono">1.3 m</span><span>Devasthal Fast Optical Telescope</span></li>
+        <li><span class="ap mono">1.04 m</span><span>Sampurnanand Telescope</span></li>
+        <li><span class="ap mono">space</span><span>Swift and Fermi</span></li>
+      </ul>
+
+      <h3 class="sub-h">Collaborations</h3>
+      <div class="tags">
+        <a class="tag" href="https://goto-observatory.org/">GOTO</a>
+        <a class="tag" href="https://www.pessto.org/index.py">PESSTO / ePESSTO+</a>
+        <a class="tag" href="http://www.engrave-eso.org/">ENGRAVE</a>
+        <a class="tag" href="https://researchportal.bath.ac.uk/en/projects/stargate-hunting-for-the-most-exotic-gamma-ray-bursts-new-insight">StarGate</a>
+        <a class="tag" href="https://lsst-tvssc.github.io/">LSST TVS</a>
+        <span class="tag">ESA / NASA planetary imaging</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TALKS ================= -->
+<section class="block" id="talks">
+  <div class="wrap block-grid">
+    <div class="rail mono"><span class="idx">06</span>Talks</div>
+    <div>
+      <h2>Talks and meetings</h2>
+      <ol class="talks">
+        <li><span class="d mono">Jun 2026</span><div><p class="tt">British Planetary Science Conference</p><p class="ev">University of St Andrews, Scotland · participant</p></div></li>
+        <li><span class="d mono">Mar 2026</span><div><p class="tt">CMOS Image Sensor Workshop</p><p class="ev">The Open University · certificate in CMOS sensor handling and practical operation</p></div></li>
+        <li><span class="d mono">Feb 2026</span><div><p class="tt">Exploring Jupiter's Icy Moons with JANUS</p><p class="ev">OU Space network event, Milton Keynes</p></div></li>
+        <li><span class="d mono">Oct 2025</span><div><p class="tt">GOTO: Discovering Afterglows of Poorly Localised GRB/GW Events</p><p class="ev">VIII Workshop on Robotic Autonomous Observatories (AstroRob 2025), Almería</p></div></li>
+        <li><span class="d mono">Sep 2025</span><div><p class="tt">Localising the Unlocalised: GRB Afterglow Discovery with GOTO</p><p class="ev">GOTO Science Meeting, University of Warwick</p></div></li>
+        <li><span class="d mono">Jul 2025</span><div><p class="tt">Shock Interaction Powering Late-Time Supernova Evolution: Tracing the Mass-Loss History of Massive Stars</p><p class="ev">National Astronomy Meeting 2025, Durham</p></div></li>
+        <li><span class="d mono">Apr 2025</span><div><p class="tt">Late-Time Shock Interaction in Core-Collapse Supernovae: A Window into Progenitor Evolution</p><p class="ev">An Extraordinary Journey Into the Transient Sky, Padova</p></div></li>
+        <li><span class="d mono">Nov 2024</span><div><p class="tt">From Collapse to Cataclysm: The Shared Origins of Supernovae and Gamma-Ray Bursts <span class="tag hot">Invited</span></p><p class="ev">Department of Physics, Royal Holloway, University of London</p></div></li>
+        <li><span class="d mono">Jul 2024</span><div><p class="tt">Magnetars as Powering Sources of Gamma-Ray Burst Associated Supernovae <span class="tag hot">Invited</span></p><p class="ev">17th Marcel Grossmann Meeting, Pescara</p></div></li>
+      </ol>
+      <details class="more">
+        <summary>Earlier talks and posters, 2019–2023</summary>
+        <ol class="talks">
+          <li><span class="d mono">Nov 2023</span><div><p class="tt">Powering Source of GRB-Associated Supernovae: Spin-down Millisecond Magnetar?</p><p class="ev">2nd Astro-COLIBRI Multi-Messenger Astrophysics Workshop, Institut Pascal, Paris-Saclay</p></div></li>
+          <li><span class="d mono">Oct 2023</span><div><p class="tt">Exploring the Enigmatic Relationship Between Gamma-Ray Bursts and Supernovae</p><p class="ev">AstroRob 2023, Málaga</p></div></li>
+          <li><span class="d mono">Jul 2023</span><div><p class="tt">Energetic Cosmic Transients in the Context of GRB–Supernova Connections</p><p class="ev">National Astronomy Meeting 2023, Cardiff</p></div></li>
+          <li><span class="d mono">Mar 2023</span><div><p class="tt">A New Era in Extragalactic Astronomy: Early Results from JWST</p><p class="ev">Kavli Institute for Cosmology, Cambridge · participant</p></div></li>
+          <li><span class="d mono">Oct 2022</span><div><p class="tt">Powering Mechanisms of Stripped-envelope Superluminous Supernovae</p><p class="ev">GOTO Collaboration Science Meeting, University of Warwick</p></div></li>
+          <li><span class="d mono">May 2022</span><div><p class="tt">Tools of Optical Spectroscopy</p><p class="ev">ARIES Training School in Observational Astronomy, Nainital</p></div></li>
+          <li><span class="d mono">Mar 2022</span><div><p class="tt">Investigation of Long GRBs and Stripped-envelope Supernovae Connections <span class="tag">Poster</span></p><p class="ev">40th Meeting of the Astronomical Society of India, ARIES &amp; IIT Roorkee</p></div></li>
+          <li><span class="d mono">Nov 2021</span><div><p class="tt">Photometric and Spectroscopic Studies of H-deficient SLSNe: SN 2010kd and SN 2020ank <span class="tag">Poster</span></p><p class="ev">SuperVirtual 2021: From Common to Exotic Transients</p></div></li>
+          <li><span class="d mono">May 2021</span><div><p class="tt">Optical Spectroscopy, with Demonstration</p><p class="ev">ARIES Training School in Observational Astronomy, Nainital</p></div></li>
+          <li><span class="d mono">Apr 2021</span><div><p class="tt">SN 2020ank: a Bright and Fast-evolving H-deficient Superluminous Supernova <span class="tag">Poster</span></p><p class="ev">Ninth International Fermi Symposium (virtual)</p></div></li>
+          <li><span class="d mono">Apr 2021</span><div><p class="tt">GRB–Supernovae Connections; The 4K×4K CCD Imager, First-light Instrument for the 3.6m DOT <span class="tag">Talk + poster</span></p><p class="ev">Astrophysical Jets and Observational Facilities: National Perspective, ARIES</p></div></li>
+          <li><span class="d mono">Feb 2021</span><div><p class="tt">2020ank: a Bright and Fast-evolving H-deficient Superluminous Supernova <span class="tag">Poster</span></p><p class="ev">39th Meeting of the Astronomical Society of India (virtual)</p></div></li>
+          <li><span class="d mono">Mar 2020</span><div><p class="tt">Photometric and Spectroscopic Analysis of a Slow-Decaying Superluminous Supernova</p><p class="ev">Indo-Thai Workshop on Stellar Variability &amp; Star Formation, ARIES</p></div></li>
+          <li><span class="d mono">Sep 2019</span><div><p class="tt">Role of the 3.6m DOT to Investigate Connections between Long-GRBs and Core-collapse SNe <span class="tag">Poster</span></p><p class="ev">6th Workshop on Robotic Autonomous Observatories, Málaga</p></div></li>
+          <li><span class="d mono">Sep 2019</span><div><p class="tt">Investigating Superluminous Supernovae and their Connection with Long GRBs</p><p class="ev">Young Astronomers' Meet, Kodaikanal Solar Observatory</p></div></li>
+          <li><span class="d mono">2019</span><div><p class="tt">The 3.6m Devasthal Optical Telescope at ARIES <span class="tag hot">Invited</span></p><p class="ev">Workshop on Modern Digital Learning Methods for STEM in Hilly Areas, Champawat</p></div></li>
+          <li><span class="d mono">Mar 2019</span><div><p class="tt">An Overview of Astronomical Spectroscopy, with Demonstration</p><p class="ev">ARIES Training School in Observational Astronomy, Nainital</p></div></li>
+          <li><span class="d mono">Feb 2019</span><div><p class="tt">SN 2010kd: an Interesting PTF12dam-like Superluminous Supernova <span class="tag">Poster</span></p><p class="ev">Astronomical Society of India meeting, Bengaluru</p></div></li>
+        </ol>
+      </details>
+
+      <h3 class="sub-h">Organising and outreach</h3>
+      <div class="two-col">
+        <div class="card">
+          <ul>
+            <li>SOC/LOC, GOTO Collaboration Science Meeting 2024</li>
+            <li>Session chair, UK Transients Meeting 2024, University of Leicester</li>
+            <li>LOC, Astrophysical Jets and Observational Facilities: National Perspective, 2021</li>
+            <li>LOC, India-TMT Science and Instruments Workshop, 2019</li>
+          </ul>
+        </div>
+        <div class="card">
+          <ul>
+            <li>Taught astronomical techniques to undergraduates at the ARIES Training School in Observational Astronomy, every year 2018–2021</li>
+            <li>Stargazing sessions and talks for school and master's students and the public since 2018</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section class="block" id="skills">
+  <div class="wrap block-grid">
+    <div class="rail mono"><span class="idx">07</span>Skills</div>
+    <div>
+      <h2>Technical skills</h2>
+      <div class="skills">
+        <div class="card"><h3>Detector characterisation</h3><p>CCD/CMOS sensors; photon-transfer curves, conversion gain, read noise, dark current, linearity, full-well capacity, calibration.</p></div>
+        <div class="card"><h3>Laboratory</h3><p>Optical detector test setups, vacuum measurements, ISO Class 5 cleanroom protocols and contamination control.</p></div>
+        <div class="card"><h3>Optical and mechanical design</h3><p>SolidWorks CAD; working familiarity with Zemax OpticStudio.</p></div>
+        <div class="card"><h3>Programming</h3><p>Python (NumPy, SciPy, Pandas, Matplotlib, Astropy, scikit-learn); IDL, Fortran, shell scripting; reproducible analysis pipelines.</p></div>
+        <div class="card"><h3>Photometry and spectroscopy</h3><p>Aperture and PSF photometry, image subtraction, calibration; spectral reduction, line identification, velocities. IRAF, DAOPHOT, SExtractor, GALFIT, HEASoft.</p></div>
+        <div class="card"><h3>Modelling and statistics</h3><p>MINIM, TigerFit, MOSFiT, SYN++, SYNAPPS, TARDIS; supervised and unsupervised classification, regression, population studies.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="block" id="contact">
+  <div class="wrap block-grid">
+    <div class="rail mono"><span class="idx">08</span>Contact</div>
+    <div>
+      <h2>Get in touch</h2>
+      <div class="contact">
+        <div class="card">
+          <dl>
+            <dt>Work email</dt><dd><a href="mailto:amit.kumar2@open.ac.uk">amit.kumar2@open.ac.uk</a></dd>
+            <dt>Personal</dt><dd><a href="mailto:amitkundu515@gmail.com">amitkundu515@gmail.com</a></dd>
+            <dt>Office</dt><dd>147, Robert Hooke Building<br>Centre for Electronic Imaging, School of Physical Sciences<br>The Open University, Walton Hall<br>Milton Keynes MK7 6AA, UK</dd>
+          </dl>
+        </div>
+        <div class="card">
+          <dl>
+            <dt>Scholar</dt><dd><a href="https://scholar.google.com/citations?hl=en&amp;user=ojOoBBUAAAAJ">Google Scholar profile ↗</a></dd>
+            <dt>ORCID</dt><dd><a href="https://orcid.org/0000-0002-4870-9436">0000-0002-4870-9436 ↗</a></dd>
+            <dt>ResearchGate</dt><dd><a href="https://www.researchgate.net/profile/Amit-Kumar-361">Amit-Kumar-361 ↗</a></dd>
+            <dt>Languages</dt><dd>English, Hindi</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap mono">
+    <span>© 2026 Amit Kumar</span>
+    <span>Last updated November 2026</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  /* ---------- publications filter ---------- */
+  var list = document.getElementById('pubs');
+  var items = Array.prototype.slice.call(list.querySelectorAll('li'));
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+  var search = document.getElementById('pub-search');
+  var countEl = document.getElementById('pub-count');
+  var emptyEl = document.getElementById('pub-empty');
+  var labels = { lead: 'lead-author papers', prep: 'papers in preparation', co: 'co-authored papers', proc: 'proceedings', all: 'entries' };
+  var current = 'lead';
+
+  chips.forEach(function (c) {
+    var f = c.getAttribute('data-filter');
+    var n = f === 'all' ? items.length : items.filter(function (i) { return i.dataset.cat === f; }).length;
+    c.querySelector('.ct').textContent = n;
+    c.addEventListener('click', function () {
+      current = f;
+      chips.forEach(function (o) { o.setAttribute('aria-pressed', String(o === c)); });
+      apply();
+    });
+  });
+  search.addEventListener('input', apply);
+
+  function apply() {
+    var q = search.value.trim().toLowerCase();
+    var shown = 0;
+    items.forEach(function (li) {
+      var catOk = current === 'all' || li.dataset.cat === current;
+      var textOk = !q || li.textContent.toLowerCase().indexOf(q) !== -1;
+      var vis = q ? textOk : catOk;  /* a search looks across every category */
+      li.hidden = !vis;
+      if (vis) shown++;
+    });
+    countEl.textContent = q
+      ? shown + ' match' + (shown === 1 ? '' : 'es') + ' across all publications'
+      : shown + ' ' + labels[current];
+    emptyEl.hidden = shown !== 0;
+  }
+  apply();
+
+  /* ---------- hero light curve ---------- */
+  var canvas = document.getElementById('lc');
+  var ctx = canvas.getContext('2d');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var progress = reduce ? 1 : 0;
+
+  function flux(t) {
+    var ag = Math.pow(t, -1.3);
+    var sn = 0.06 * Math.exp(-Math.pow(Math.log(t / 14), 2) / (2 * 0.45 * 0.45));
+    return { ag: ag, sn: sn, tot: ag + sn };
+  }
+  function mag(f) { return 20 - 2.5 * Math.log10(f); }
+
+  /* deterministic pseudo-noise so the figure is stable */
+  var pts = [];
+  var seed = 7;
+  function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647 - 0.5; }
+  for (var i = 0; i < 30; i++) {
+    var lt = Math.log10(0.15) + i * (Math.log10(45) - Math.log10(0.15)) / 29;
+    var t = Math.pow(10, lt);
+    var m = mag(flux(t).tot);
+    var err = 0.06 + 0.035 * Math.max(0, m - 19);
+    pts.push({ t: t, m: m + rnd() * err * 1.4, e: err });
+  }
+
+  function tok(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+  function draw() {
+    var rect = canvas.getBoundingClientRect();
+    var dpr = window.devicePixelRatio || 1;
+    var W = Math.max(280, rect.width), H = W * 0.75;
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    var ink = tok('--ink'), muted = tok('--muted'), line = tok('--line'), accent = tok('--accent'), surface = tok('--surface');
+    var mono = '"IBM Plex Mono", ui-monospace, monospace';
+    var fs = W < 420 ? 10 : 11;
+    var pad = { l: 44, r: 14, t: 12, b: 38 };
+    var pw = W - pad.l - pad.r, ph = H - pad.t - pad.b;
+    var x0 = Math.log10(0.1), x1 = Math.log10(60), y0 = 17, y1 = 26;
+    function X(t) { return pad.l + (Math.log10(t) - x0) / (x1 - x0) * pw; }
+    function Y(m) { return pad.t + (m - y0) / (y1 - y0) * ph; }
+
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = surface; ctx.fillRect(0, 0, W, H);
+
+    /* grid */
+    ctx.strokeStyle = line; ctx.lineWidth = 1;
+    ctx.font = fs + 'px ' + mono; ctx.fillStyle = muted;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    [0.1, 1, 10].forEach(function (t) {
+      ctx.beginPath(); ctx.moveTo(X(t) + 0.5, pad.t); ctx.lineTo(X(t) + 0.5, pad.t + ph); ctx.stroke();
+      ctx.fillText(String(t), X(t), pad.t + ph + 6);
+    });
+    for (var d = 2; d <= 50; d++) {
+      var dec = Math.pow(10, Math.floor(Math.log10(d)));
+      if (d % dec !== 0 || d / dec === 1) continue;
+      ctx.save(); ctx.globalAlpha = 0.45;
+      ctx.beginPath(); ctx.moveTo(X(d) + 0.5, pad.t + ph - 4); ctx.lineTo(X(d) + 0.5, pad.t + ph); ctx.stroke();
+      ctx.restore();
+    }
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    for (var mm = 18; mm <= 26; mm += 2) {
+      ctx.beginPath(); ctx.moveTo(pad.l, Y(mm) + 0.5); ctx.lineTo(pad.l + pw, Y(mm) + 0.5); ctx.stroke();
+      ctx.fillText(String(mm), pad.l - 7, Y(mm));
+    }
+    ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+    ctx.fillText('days since burst', pad.l + pw / 2, H - 2);
+    ctx.save(); ctx.translate(11, pad.t + ph / 2); ctx.rotate(-Math.PI / 2);
+    ctx.textBaseline = 'middle'; ctx.fillText('magnitude', 0, 0); ctx.restore();
+
+    /* component curves */
+    function curve(fn, color, dash, width) {
+      ctx.save(); ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = width; ctx.setLineDash(dash);
+      var first = true;
+      for (var k = 0; k <= 200; k++) {
+        var lt = x0 + k / 200 * (x1 - x0), t = Math.pow(10, lt);
+        var m = mag(fn(t)); if (m > y1 + 0.5) { first = true; continue; }
+        var px = X(t), py = Y(Math.max(y0, m));
+        if (first) { ctx.moveTo(px, py); first = false; } else ctx.lineTo(px, py);
+      }
+      ctx.stroke(); ctx.restore();
+    }
+    ctx.save();
+    ctx.beginPath(); ctx.rect(pad.l, pad.t, pw, ph); ctx.clip();
+    curve(function (t) { return flux(t).ag; }, muted, [4, 4], 1.2);
+    curve(function (t) { return flux(t).sn; }, accent, [4, 4], 1.2);
+    curve(function (t) { return flux(t).tot; }, ink, [], 1.4);
+
+    /* data points */
+    var n = Math.round(progress * pts.length);
+    for (var j = 0; j < n; j++) {
+      var p = pts[j], px = X(p.t), py = Y(p.m);
+      var inBump = p.t > 6 && p.t < 35;
+      ctx.strokeStyle = inBump ? accent : ink; ctx.fillStyle = inBump ? accent : ink; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(px, Y(p.m - p.e)); ctx.lineTo(px, Y(p.m + p.e)); ctx.stroke();
+      ctx.beginPath(); ctx.arc(px, py, 3, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
+
+    /* labels */
+    ctx.font = fs + 'px ' + mono; ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = muted; ctx.textAlign = 'left';
+    ctx.fillText('afterglow ∝ t^−α', X(0.13), Y(21.4));
+    ctx.fillStyle = accent; ctx.textAlign = 'center';
+    ctx.fillText('SN bump', X(14), Y(21.7));
+  }
+
+  function start() {
+    draw();
+    if (reduce) return;
+    var t0 = null;
+    function step(ts) {
+      if (t0 === null) t0 = ts;
+      progress = Math.min(1, (ts - t0) / 1400);
+      draw();
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+
+  if ('ResizeObserver' in window) new ResizeObserver(function () { draw(); }).observe(canvas);
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>
+</body>
+</html>

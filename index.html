@@ -4,577 +4,676 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dr Amit Kumar</title>
-<meta name="description" content="Dr Amit Kumar: Spaceflight Imager Engineer at the Centre for Electronic Imaging, The Open University. CCD/CMOS detector characterisation for JANUS/JUICE, I-MIM and EnVision; time-domain astrophysics of gamma-ray bursts and supernovae.">
+<meta name="description" content="Dr Amit Kumar, astrophysicist and Spaceflight Imager Engineer at the Centre for Electronic Imaging, The Open University. Detectors for JUICE, I-MIM and EnVision; gamma-ray bursts, superluminous supernovae and magnetars.">
+<meta property="og:title" content="Dr Amit Kumar">
+<meta property="og:description" content="Building the eyes for missions to Jupiter, Mars and Venus, and chasing the brightest explosions in the Universe.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* Layout idea: a lab-notebook page. Mono "readout" labels in a narrow left rail, content in a reading column; one plotted light curve as the hero figure. */
-  --bg: #f3f4f7;
-  --surface: #ffffff;
-  --ink: #141a2a;
-  --muted: #5a6276;
-  --line: #dcdfe7;
-  --accent: #b1203a;      /* H-alpha red, 656.3 nm */
-  --accent-soft: #b1203a14;
-  --font-display: "Spectral", "Iowan Old Style", Georgia, serif;
+  /* One visual world: the night sky. Cyan belongs to detectors, H-alpha red to explosions; everything else is starlight on navy. */
+  --sky: #060a14;
+  --sky-2: #0a1120;
+  --panel: #0e1629;
+  --line: #1c2640;
+  --ink: #edf1fa;
+  --muted: #9aa4bd;
+  --faint: #64708c;
+  --red: #ff5d73;
+  --cyan: #67d4ff;
+  --gold: #ffd78f;
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
   --font-body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --step--1: 0.84rem;
-  --step-0: 1rem;
-  --step-1: 1.2rem;
-  --step-2: 1.6rem;
-  --step-3: 2.2rem;
-  --step-4: clamp(2.8rem, 6.4vw, 4.6rem);
-  --rail: 9.5rem;
-  color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0e121c;
-    --surface: #151b28;
-    --ink: #e6e9f0;
-    --muted: #9aa2b4;
-    --line: #262d3d;
-    --accent: #ff7088;
-    --accent-soft: #ff708818;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0e121c;
-  --surface: #151b28;
-  --ink: #e6e9f0;
-  --muted: #9aa2b4;
-  --line: #262d3d;
-  --accent: #ff7088;
-  --accent-soft: #ff708818;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --wrap: 1180px;
   color-scheme: dark;
 }
-
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-size: var(--step-0);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-a:hover { text-decoration-thickness: 2px; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
-h1, h2, h3 { font-family: var(--font-display); font-weight: 500; text-wrap: balance; margin: 0; line-height: 1.15; }
+html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; background: var(--sky); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+body { margin: 0; background: var(--sky); color: var(--ink); font-family: var(--font-body); font-size: 1.04rem; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; margin: 0; line-height: 1.08; text-wrap: balance; letter-spacing: -0.01em; }
 p { margin: 0; }
-ul, ol { margin: 0; padding: 0; }
-.mono { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.01em; font-variant-numeric: tabular-nums; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 3px; }
+.mono { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 max(20px, 4vw); }
+.kicker { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); display: flex; align-items: center; gap: 0.7rem; }
+.kicker::before { content: ""; width: 28px; height: 1px; background: currentColor; }
+.sec { padding: clamp(4.5rem, 10vw, 8rem) 0 0; }
+.sec-head { display: grid; gap: 1rem; max-width: 46rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
+.sec-head h2 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 300; }
+.sec-head h2 em { font-style: italic; color: var(--gold); }
+.sec-head p { color: var(--muted); font-size: 1.1rem; max-width: 38rem; }
 
-.wrap { max-width: 1120px; margin: 0 auto; padding: 0 max(20px, 4vw); }
+/* nav */
+.nav { position: fixed; inset: 0 0 auto 0; z-index: 20; transition: background 0.3s, border-color 0.3s; border-bottom: 1px solid transparent; }
+.nav.solid { background: color-mix(in srgb, var(--sky) 82%, transparent); backdrop-filter: blur(10px); border-bottom-color: var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; min-height: 4rem; gap: 1rem; }
+.mark { font-family: var(--font-display); font-size: 1.25rem; text-decoration: none; display: flex; align-items: center; gap: 0.55rem; white-space: nowrap; }
+.mark i { width: 9px; height: 9px; border-radius: 50%; background: var(--red); box-shadow: 0 0 12px var(--red); display: inline-block; }
+.nav-links { display: flex; gap: 1.6rem; }
+.nav-links a { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; }
+.nav-links a:hover { color: var(--ink); }
+.nav-cta { font-family: var(--font-mono); font-size: 0.78rem; text-decoration: none; padding: 0.45rem 0.85rem; border: 1px solid var(--line); border-radius: 999px; white-space: nowrap; }
+.nav-cta:hover { border-color: var(--red); color: var(--red); }
 
-/* ---------- top bar ---------- */
-.topbar {
-  position: sticky; top: 0; z-index: 10;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--line);
-}
-.topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.6rem; }
-.brand { font-family: var(--font-display); font-size: var(--step-1); color: var(--ink); text-decoration: none; white-space: nowrap; }
-.brand span { color: var(--accent); }
-.nav { display: flex; gap: 1.25rem; overflow-x: auto; scrollbar-width: none; }
-.nav::-webkit-scrollbar { display: none; }
-.nav a { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); text-decoration: none; white-space: nowrap; padding: 0.25rem 0; }
-.nav a:hover { color: var(--ink); }
+/* hero */
+.hero { position: relative; overflow: hidden; padding: clamp(7.5rem, 14vw, 11rem) 0 clamp(4rem, 8vw, 6rem); isolation: isolate; }
+#sky { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+.hero::after { content: ""; position: absolute; inset: auto 0 0 0; height: 40%; background: linear-gradient(to bottom, transparent, var(--sky)); z-index: -1; pointer-events: none; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.9fr); gap: clamp(2rem, 6vw, 5rem); align-items: center; }
+.now { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); padding: 0.4rem 0.85rem 0.4rem 0.7rem; border: 1px solid var(--line); border-radius: 999px; background: color-mix(in srgb, var(--panel) 70%, transparent); }
+.pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 0 0 var(--cyan); animation: pulse 2.4s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--cyan) 70%, transparent); } 80%, 100% { box-shadow: 0 0 0 10px transparent; } }
+.hero h1 { font-size: clamp(3.6rem, 10.5vw, 8.4rem); font-weight: 300; letter-spacing: -0.035em; line-height: 0.92; margin: 1.6rem 0 1.5rem; }
+.hero h1 .dr { display: block; font-size: 0.26em; font-style: italic; letter-spacing: 0; color: var(--gold); margin-bottom: 0.4rem; }
+.hero h1 .last { font-style: italic; }
+.hero-lede { font-size: clamp(1.15rem, 2vw, 1.4rem); line-height: 1.5; max-width: 33rem; color: #d6dcea; }
+.hero-lede b { font-weight: 500; color: var(--cyan); }
+.hero-lede strong { font-weight: 500; color: var(--red); }
+.cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2.2rem; }
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; padding: 0.8rem 1.25rem; border-radius: 999px; text-decoration: none; border: 1px solid var(--line); transition: transform 0.2s, border-color 0.2s, background 0.2s; }
+.btn:hover { transform: translateY(-2px); }
+.btn.primary { background: var(--ink); color: var(--sky); border-color: var(--ink); }
+.btn.ghost:hover { border-color: var(--ink); }
+.profiles { display: flex; gap: 1.2rem; margin-top: 1.6rem; flex-wrap: wrap; }
+.profiles a { font-family: var(--font-mono); font-size: 0.78rem; color: var(--faint); text-decoration: none; }
+.profiles a:hover { color: var(--ink); }
 
-/* ---------- hero ---------- */
-.hero { padding: clamp(2.5rem, 6vw, 4.5rem) 0 2.5rem; }
-.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
-.eyebrow { color: var(--accent); margin-bottom: 1rem; display: block; }
-.id-row { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 1.4rem; }
-.id-row .eyebrow { margin: 0; line-height: 1.5; }
-.portrait {
-  width: clamp(88px, 11vw, 116px); height: auto; aspect-ratio: 1; object-fit: cover; flex: none;
-  border-radius: 50%; border: 3px solid var(--surface);
-  box-shadow: 0 0 0 1px var(--accent), 0 6px 18px -8px color-mix(in srgb, var(--ink) 45%, transparent);
-}
-.hero h1 { font-size: var(--step-4); font-weight: 400; letter-spacing: -0.02em; }
-.hero h1 em { font-style: italic; color: var(--muted); font-weight: 400; }
-.lede { margin-top: 1.25rem; font-size: var(--step-1); line-height: 1.55; max-width: 34em; color: var(--ink); }
-.lede + .lede { font-size: var(--step-0); color: var(--muted); margin-top: 0.9rem; }
-.links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
-.btn {
-  display: inline-flex; align-items: center; gap: 0.45rem;
-  font-family: var(--font-mono); font-size: 0.82rem;
-  padding: 0.55rem 0.9rem; border-radius: 4px;
-  border: 1px solid var(--line); background: var(--surface); color: var(--ink); text-decoration: none;
-}
-.btn:hover { border-color: var(--accent); color: var(--accent); }
-.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
-.btn.primary:hover { filter: brightness(1.08); color: var(--surface); }
+.portrait-wrap { position: relative; width: min(100%, 360px); aspect-ratio: 1; margin-inline: auto; }
+.orbit { position: absolute; inset: 0; border-radius: 50%; border: 1px dashed color-mix(in srgb, var(--muted) 40%, transparent); animation: spin 60s linear infinite; }
+.orbit.o2 { inset: -9%; border-style: solid; border-color: color-mix(in srgb, var(--line) 90%, transparent); animation-duration: 90s; animation-direction: reverse; }
+.orbit::after { content: ""; position: absolute; top: 50%; left: -5px; width: 10px; height: 10px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 14px var(--cyan); }
+.orbit.o2::after { left: auto; right: 12%; top: 6%; background: var(--red); box-shadow: 0 0 14px var(--red); width: 7px; height: 7px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.portrait { position: absolute; inset: 11%; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 1px var(--line), 0 30px 80px -20px color-mix(in srgb, var(--cyan) 35%, transparent); }
+.portrait img { width: 100%; height: 100%; object-fit: cover; }
+.portrait-tag { position: absolute; right: -4%; bottom: 8%; font-family: var(--font-mono); font-size: 0.72rem; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 0.45rem 0.7rem; color: var(--muted); line-height: 1.4; }
+.portrait-tag b { color: var(--ink); font-weight: 500; display: block; }
 
-.figure { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1rem 1rem 0.85rem; }
-.figure-head { display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); margin-bottom: 0.4rem; }
-.figure canvas { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; }
-.figure figcaption { color: var(--muted); font-size: var(--step--1); line-height: 1.45; margin-top: 0.5rem; border-top: 1px solid var(--line); padding-top: 0.6rem; }
-.figure figcaption b { color: var(--ink); font-weight: 500; }
+.tlog { margin-top: clamp(2.5rem, 6vw, 4rem); display: flex; align-items: center; gap: 0.7rem; color: var(--faint); min-height: 1.5rem; }
+.tlog .ring { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--red); flex: none; }
+.tlog span { color: var(--muted); }
 
-/* ---------- readout strip ---------- */
-.readout { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
-.readout ul { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
-.readout li { padding: 1.2rem 1rem 1.1rem; border-left: 1px solid var(--line); }
-.readout li:first-child { border-left: 0; padding-left: 0; }
-.readout .num { font-family: var(--font-display); font-size: var(--step-3); line-height: 1; font-variant-numeric: tabular-nums lining-nums; }
-.readout .num small { font-size: 0.5em; color: var(--muted); margin-left: 0.15em; }
-.readout .lbl { display: block; color: var(--muted); margin-top: 0.45rem; font-size: 0.78rem; line-height: 1.35; }
+/* numbers */
+.numbers { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: linear-gradient(180deg, var(--sky-2), var(--sky)); }
+.numbers ul { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.numbers li { padding: 1.8rem 1.2rem 1.6rem; border-left: 1px solid var(--line); }
+.numbers li:first-child { border-left: 0; padding-left: 0; }
+.numbers .n { font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 300; line-height: 1; font-variant-numeric: lining-nums; }
+.numbers .n small { font-size: 0.45em; color: var(--muted); margin-left: 0.1em; }
+.numbers .l { display: block; margin-top: 0.6rem; color: var(--muted); font-size: 0.86rem; line-height: 1.4; }
 
-/* ---------- sections ---------- */
-section.block { padding: clamp(3rem, 7vw, 5rem) 0 0; }
-.block-grid { display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); gap: 2rem; }
-.rail { color: var(--muted); padding-top: 0.55rem; }
-.rail .idx { color: var(--accent); display: block; }
-.block h2 { font-size: var(--step-3); font-weight: 400; margin-bottom: 1.4rem; }
-.prose p { max-width: 65ch; }
-.prose p + p { margin-top: 1rem; }
-
-.two-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1.4rem 1.4rem 1.3rem; display: flex; flex-direction: column; gap: 0.8rem; }
-.card h3 { font-size: var(--step-2); }
-.card p { color: var(--muted); }
-.card ul { list-style: none; display: grid; gap: 0.45rem; }
-.card li { padding-left: 1.1rem; position: relative; }
-.card li::before { content: ""; position: absolute; left: 0; top: 0.68em; width: 0.45rem; height: 1px; background: var(--accent); }
-.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.tag { font-family: var(--font-mono); font-size: 0.74rem; padding: 0.18rem 0.5rem; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); background: var(--bg); white-space: nowrap; }
-.tag.hot { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); background: var(--accent-soft); }
-
-/* key papers */
-.theme + .theme { margin-top: 2.2rem; }
-.theme-h { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.9rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--line); }
-.theme-h h3 { font-family: var(--font-body); font-size: var(--step-1); font-weight: 600; }
-.theme-h .mono { color: var(--muted); margin-left: auto; white-space: nowrap; }
-.papers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; }
-.paper { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 6px; padding: 1.15rem 1.25rem 1.1rem; display: flex; flex-direction: column; gap: 0.6rem; }
-.paper-meta { display: flex; flex-wrap: wrap; gap: 0.4rem 0.75rem; align-items: center; color: var(--muted); }
-.paper-meta .tag { margin-left: auto; }
-.paper h4 { margin: 0; font-family: var(--font-display); font-size: 1.15rem; font-weight: 500; line-height: 1.3; text-wrap: balance; }
-.paper h4 a { color: var(--ink); text-decoration: none; }
-.paper h4 a:hover { color: var(--accent); text-decoration: underline; }
-.paper p { color: var(--muted); font-size: 0.95rem; }
-.facts { list-style: none; display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: auto; padding-top: 0.3rem; }
-.facts li { font-family: var(--font-mono); font-size: 0.74rem; padding: 0.2rem 0.5rem; border-radius: 3px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); font-variant-numeric: tabular-nums; }
-
-/* timeline */
-.timeline { list-style: none; display: grid; }
-.timeline li { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 1.25rem; padding: 1.2rem 0; border-top: 1px solid var(--line); }
-.timeline li:last-child { border-bottom: 1px solid var(--line); }
-.timeline .when { color: var(--muted); padding-top: 0.2rem; }
-.timeline h3 { font-size: var(--step-1); font-family: var(--font-body); font-weight: 600; }
-.timeline .where { color: var(--muted); margin-top: 0.15rem; }
-.timeline p.what { margin-top: 0.55rem; max-width: 65ch; }
-.timeline .now { color: var(--accent); }
-
-/* publications */
-.pub-tools { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+/* two worlds */
+.worlds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+.world { --c: var(--cyan); position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: clamp(1.4rem, 3vw, 2.2rem); display: flex; flex-direction: column; gap: 1.1rem; overflow: hidden; }
+.world.red { --c: var(--red); }
+.world::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 2px; background: linear-gradient(90deg, var(--c), transparent 70%); }
+.world .tag-line { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c); }
+.world h3 { font-size: clamp(1.8rem, 3.2vw, 2.5rem); font-weight: 300; }
+.world > p { color: var(--muted); }
+.screen { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: #050811; }
+.screen canvas { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; touch-action: none; }
+.screen-bar { display: flex; justify-content: space-between; gap: 1rem; padding: 0.55rem 0.8rem; border-top: 1px solid var(--line); color: var(--faint); background: #070c18; }
+.screen-bar b { color: var(--c); font-weight: 500; }
 .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.chip {
-  font-family: var(--font-mono); font-size: 0.78rem; cursor: pointer;
-  padding: 0.38rem 0.7rem; border-radius: 999px; border: 1px solid var(--line);
-  background: var(--surface); color: var(--muted);
-}
-.chip:hover { color: var(--ink); border-color: var(--muted); }
-.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
-.chip .ct { opacity: 0.7; margin-left: 0.3rem; }
-.search { position: relative; flex: 0 1 17rem; min-width: 12rem; }
-.search input {
-  width: 100%; font: inherit; font-size: 0.9rem; color: var(--ink);
-  padding: 0.45rem 0.75rem; border-radius: 4px; border: 1px solid var(--line); background: var(--surface);
-}
-.search input::placeholder { color: var(--muted); }
-.pub-count { color: var(--muted); margin-bottom: 0.5rem; display: block; }
-.pubs { list-style: none; counter-reset: pub; }
-.pubs li { display: grid; grid-template-columns: 3.2rem minmax(0, 1fr); gap: 0.5rem; padding: 0.95rem 0; border-top: 1px solid var(--line); }
-.pubs li[hidden] { display: none; }
-.pubs .yr { color: var(--muted); padding-top: 0.15rem; }
-.pubs .t { font-family: var(--font-display); font-size: 1.12rem; line-height: 1.35; color: var(--ink); text-decoration: none; }
-.pubs a.t:hover { color: var(--accent); }
-.pubs .au { color: var(--muted); font-size: 0.92rem; margin-top: 0.2rem; }
-.pubs .au b { color: var(--ink); font-weight: 600; }
-.pubs .ven { margin-top: 0.3rem; display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; color: var(--muted); }
-.empty { color: var(--muted); padding: 1rem 0; border-top: 1px solid var(--line); }
-.note { color: var(--muted); font-size: 0.92rem; max-width: 65ch; margin-bottom: 1.25rem; }
+.chip { font-family: var(--font-mono); font-size: 0.74rem; padding: 0.3rem 0.65rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
 
-/* observing */
-.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
-table { width: 100%; border-collapse: collapse; font-size: 0.94rem; }
-th, td { text-align: left; padding: 0.75rem 1rem; border-top: 1px solid var(--line); vertical-align: top; }
-thead th { border-top: 0; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; color: var(--muted); background: var(--bg); }
-td.n { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
-th.n { text-align: right; }
-tfoot td { font-weight: 600; }
-.sub-h { font-family: var(--font-body); font-size: var(--step-1); font-weight: 600; margin: 2rem 0 0.9rem; }
-.scopes { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0; border-top: 1px solid var(--line); }
-.scopes li { display: grid; grid-template-columns: 4.2rem minmax(0, 1fr); gap: 0.6rem; padding: 0.6rem 0; border-bottom: 1px solid var(--line); font-size: 0.93rem; }
-.scopes .ap { color: var(--accent); }
-.nights { list-style: none; display: grid; gap: 0.6rem; margin-top: 0.25rem; }
-.bar-row { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) 3.5rem; gap: 0.9rem; align-items: center; font-size: 0.93rem; }
-.bar { height: 0.55rem; background: var(--bg); border: 1px solid var(--line); border-radius: 2px; overflow: hidden; }
-.bar i { display: block; height: 100%; background: var(--accent); }
+/* missions */
+.missions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+.mission { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 1.6rem; display: flex; flex-direction: column; gap: 0.9rem; position: relative; overflow: hidden; }
+.planet { width: 110px; height: 110px; border-radius: 50%; position: relative; margin-bottom: 0.4rem; box-shadow: inset -18px -10px 30px rgba(0,0,0,0.55), 0 0 60px -10px var(--glow); }
+.planet.jupiter { --glow: #d9a06b; background: repeating-linear-gradient(170deg, #e7c9a1 0 9px, #c8915e 9px 15px, #f0dcc0 15px 22px, #b77a4c 22px 26px, #e9cfa9 26px 34px); }
+.planet.jupiter::after { content: ""; position: absolute; width: 20px; height: 12px; border-radius: 50%; background: #b0573a; left: 58%; top: 60%; transform: rotate(-10deg); opacity: 0.85; }
+.planet.mars { --glow: #c45a3a; background: radial-gradient(circle at 50% 4%, #f6efe9 0 13%, transparent 14%), radial-gradient(circle at 35% 55%, #8d3a24 0 14%, transparent 15%), radial-gradient(circle at 65% 70%, #a3462b 0 10%, transparent 11%), #c8643f; }
+.planet.venus { --glow: #e8cf8f; background: radial-gradient(circle at 35% 30%, #fff3cf, #e8c983 45%, #b99351); }
+.mission .dest { font-family: var(--font-mono); font-size: 0.75rem; color: var(--faint); letter-spacing: 0.08em; text-transform: uppercase; }
+.mission h3 { font-size: 1.7rem; font-weight: 400; }
+.mission p { color: var(--muted); font-size: 0.97rem; }
+.mission .facts { margin-top: auto; }
+.facts { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.facts li { font-family: var(--font-mono); font-size: 0.72rem; padding: 0.22rem 0.55rem; border-radius: 4px; background: var(--sky-2); border: 1px solid var(--line); color: #cfd6e6; font-variant-numeric: tabular-nums; }
+
+/* now / current role */
+.now-head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: end; margin-bottom: clamp(2rem, 4vw, 3rem); }
+.now-head .sec-head { margin-bottom: 0; }
+.now-head .sec-head h2 { font-size: clamp(2.4rem, 5.6vw, 4.2rem); }
+.now-head .sec-head a { color: var(--ink); text-decoration-color: var(--cyan); text-underline-offset: 4px; }
+.desk { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 1.4rem 1.5rem; display: grid; gap: 0.9rem; }
+.desk .mono { color: var(--faint); }
+.desk address { font-style: normal; color: var(--muted); line-height: 1.55; }
+.desk address a { color: var(--ink); }
+.desk .lab { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.desk .lab span { font-family: var(--font-mono); font-size: 0.72rem; padding: 0.28rem 0.6rem; border-radius: 999px; background: color-mix(in srgb, var(--cyan) 12%, transparent); color: var(--cyan); border: 1px solid color-mix(in srgb, var(--cyan) 35%, transparent); }
+.missions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+.mission { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; padding: 0; gap: 0; transition: transform 0.25s, border-color 0.25s; }
+.mission:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--cyan) 45%, var(--line)); }
+.mission .photo { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #000; margin: 0; }
+.mission .photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+.mission:hover .photo img { transform: scale(1.04); }
+.mission .photo figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.6rem 0.8rem 0.45rem; font-family: var(--font-mono); font-size: 0.62rem; color: rgba(255,255,255,0.7); background: linear-gradient(transparent, rgba(0,0,0,0.75)); }
+.mission .body { padding: 1.4rem 1.5rem 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; flex: 1; }
+.mission .dest { font-family: var(--font-mono); font-size: 0.74rem; color: var(--cyan); letter-spacing: 0.08em; text-transform: uppercase; }
+.mission h3 { font-size: 1.75rem; font-weight: 400; }
+.mission p { color: var(--muted); font-size: 0.96rem; }
+.mission .facts { margin-top: auto; }
+.mlink { font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--cyan); align-self: flex-start; padding-bottom: 2px; }
+.mlink:hover { color: var(--cyan); }
+
+/* gallery */
+.gallery { columns: 3 300px; column-gap: 1.1rem; }
+.shot { break-inside: avoid; margin: 0 0 1.1rem; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.shot button { all: unset; display: block; width: 100%; cursor: zoom-in; background: #fff; }
+.shot button:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
+.shot img { width: 100%; height: auto; transition: transform 0.5s; }
+.shot:hover img { transform: scale(1.025); }
+.shot.dark button { background: #000; }
+.shot figcaption { padding: 0.95rem 1.1rem 1.05rem; display: grid; gap: 0.35rem; }
+.shot .skill { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+.shot.c .skill { color: var(--cyan); }
+.shot.r .skill { color: var(--red); }
+.shot .cap { color: #d3d9e6; font-size: 0.92rem; line-height: 1.5; }
+.shot .src { font-family: var(--font-mono); font-size: 0.7rem; color: var(--faint); }
+.shot .src a { color: var(--muted); }
+.lightbox { position: fixed; inset: 0; z-index: 50; background: rgba(3,6,12,0.92); display: none; align-items: center; justify-content: center; padding: 4vw; flex-direction: column; gap: 1rem; }
+.lightbox.open { display: flex; }
+.lightbox img { max-width: min(1200px, 100%); max-height: 80vh; width: auto; border-radius: 10px; background: #fff; }
+.lightbox p { color: var(--muted); max-width: 70ch; text-align: center; font-size: 0.95rem; }
+.lightbox button { position: absolute; top: 1rem; right: 1rem; width: 2.6rem; height: 2.6rem; border-radius: 50%; border: 1px solid var(--line); background: var(--panel); color: var(--ink); font: 1.1rem var(--font-mono); cursor: pointer; }
+
+/* latest */
+.latest { padding: clamp(2.2rem, 5vw, 3.2rem) 0 0; }
+.latest-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.news { display: flex; gap: 0.9rem; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 0.6rem; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.news li { flex: 0 0 min(78vw, 270px); scroll-snap-align: start; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.45rem; }
+.news .d { font-family: var(--font-mono); font-size: 0.72rem; color: var(--faint); display: flex; justify-content: space-between; gap: 0.5rem; }
+.news .k { color: var(--cyan); }
+.news .k.r { color: var(--red); }
+.news .k.g { color: var(--gold); }
+.news p { font-size: 0.93rem; line-height: 1.45; color: #d6dcea; }
+.news a { color: var(--ink); text-decoration-color: var(--faint); text-underline-offset: 3px; }
+.ask { display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem; margin-top: 1.4rem; font-family: var(--font-mono); font-size: 0.76rem; color: var(--faint); }
+.ask span.t { padding: 0.25rem 0.6rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+
+/* janus */
+.janus { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.jshot { margin: 0; background: #000; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+.jshot button { all: unset; cursor: zoom-in; display: block; aspect-ratio: 4 / 5; overflow: hidden; }
+.jshot button:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
+.jshot img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+.jshot:hover img { transform: scale(1.05); }
+.jshot figcaption { padding: 0.85rem 1rem 1rem; background: var(--panel); display: grid; gap: 0.3rem; flex: 1; }
+.jshot .when { font-family: var(--font-mono); font-size: 0.7rem; color: var(--cyan); }
+.jshot .cap { font-size: 0.9rem; color: #d6dcea; line-height: 1.45; }
+.credit { font-family: var(--font-mono); font-size: 0.66rem; color: var(--faint); line-height: 1.5; }
+.credit a { color: var(--muted); }
+
+footer details { margin-top: 0.8rem; width: 100%; }
+footer summary { cursor: pointer; color: var(--muted); }
+footer .credits { margin-top: 0.8rem; display: grid; gap: 0.35rem; font-size: 0.74rem; color: var(--faint); max-width: 90ch; line-height: 1.5; }
+footer .credits a { color: var(--muted); }
+
+/* papers */
+.filters { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1.5rem; }
+.filter { font: 500 0.8rem var(--font-mono); padding: 0.5rem 0.95rem; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; }
+.filter:hover { color: var(--ink); border-color: var(--muted); }
+.filter[aria-pressed="true"] { background: var(--ink); color: var(--sky); border-color: var(--ink); }
+.papers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.1rem; grid-auto-flow: dense; }
+.paper { --c: var(--red); background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 1.35rem 1.35rem 1.2rem; display: flex; flex-direction: column; gap: 0.7rem; transition: border-color 0.2s, transform 0.2s; }
+.paper:hover { border-color: color-mix(in srgb, var(--c) 55%, var(--line)); transform: translateY(-3px); }
+.paper[data-topic="instr"] { --c: var(--cyan); }
+.paper[data-topic="grb"] { --c: var(--gold); }
+.paper[hidden] { display: none; }
+.paper[data-topic="second"] { --c: var(--muted); }
+.second { margin-top: 2.4rem; }
+.second-h { font-size: 1.5rem; font-weight: 400; margin-bottom: 1rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.7rem; }
+.second-h .mono { color: var(--faint); }
+.papers.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.paper.feature { grid-column: 1 / -1; background: radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--c) 14%, var(--panel)), var(--panel) 60%); }
+.paper.feature h4 { font-size: clamp(1.4rem, 2.6vw, 1.9rem); max-width: 34ch; }
+.paper.feature p { max-width: 70ch; font-size: 1rem; }
+.paper-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.4rem; color: var(--faint); }
+.paper-meta .role { color: var(--c); }
+.paper h4 { font-size: 1.2rem; font-weight: 400; line-height: 1.28; }
+.paper h4 a { text-decoration: none; }
+.paper h4 a:hover { color: var(--c); }
+.paper p { color: var(--muted); font-size: 0.93rem; }
+.paper .facts { margin-top: auto; padding-top: 0.3rem; }
+.paper .alt { font-family: var(--font-mono); font-size: 0.74rem; color: var(--faint); }
+
+details.all { margin-top: 2rem; border: 1px solid var(--line); border-radius: 16px; background: var(--sky-2); }
+details.all > summary { cursor: pointer; list-style: none; padding: 1.2rem 1.4rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-family: var(--font-display); font-size: 1.3rem; }
+details.all > summary::-webkit-details-marker { display: none; }
+details.all > summary .mono { color: var(--muted); }
+details.all > summary::after { content: "+"; font-family: var(--font-mono); font-size: 1.2rem; color: var(--muted); }
+details.all[open] > summary::after { content: "−"; }
+.all-body { padding: 0 1.4rem 1.4rem; }
+.pub-tools { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; justify-content: space-between; margin-bottom: 0.9rem; }
+.chipset { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.pchip { font: 0.76rem var(--font-mono); cursor: pointer; padding: 0.38rem 0.7rem; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--muted); }
+.pchip[aria-pressed="true"] { background: var(--ink); color: var(--sky); border-color: var(--ink); }
+.pchip .ct { opacity: 0.65; margin-left: 0.3rem; }
+.search input { width: min(19rem, 100%); font: inherit; font-size: 0.9rem; color: var(--ink); padding: 0.5rem 0.85rem; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); }
+.search input::placeholder { color: var(--faint); }
+.pub-count { color: var(--faint); display: block; margin-bottom: 0.4rem; }
+.pubs li { display: grid; grid-template-columns: 3.4rem minmax(0, 1fr); gap: 0.6rem; padding: 0.9rem 0; border-top: 1px solid var(--line); }
+.pubs li[hidden] { display: none; }
+.pubs .yr { color: var(--faint); padding-top: 0.15rem; }
+.pubs .t { font-family: var(--font-display); font-size: 1.05rem; line-height: 1.35; text-decoration: none; }
+.pubs a.t:hover { color: var(--red); }
+.pubs .au { color: var(--muted); font-size: 0.88rem; margin-top: 0.2rem; }
+.pubs .au b { color: var(--ink); font-weight: 600; }
+.pubs .ven { margin-top: 0.25rem; color: var(--faint); }
+.pubs .ven a { color: var(--muted); }
+.empty { color: var(--muted); padding: 1rem 0; border-top: 1px solid var(--line); }
+.reports { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin-top: 1.25rem; }
+.report { padding: 1.1rem 1.2rem; border: 1px solid var(--line); border-radius: 14px; text-decoration: none; display: grid; gap: 0.3rem; }
+.report:hover { border-color: var(--muted); }
+.report .n { font-family: var(--font-display); font-size: 2rem; font-weight: 300; line-height: 1; }
+.report .l { color: var(--muted); font-size: 0.86rem; line-height: 1.4; }
+
+/* journey */
+.journey-wrap { position: relative; }
+.journey { display: flex; gap: 1.1rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: 2.6rem 2px 1.2rem; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.journey::before { content: ""; position: absolute; left: 0; right: 0; top: 1.4rem; height: 1px; background: linear-gradient(90deg, var(--line), var(--muted), var(--line)); }
+.stop { flex: 0 0 min(80vw, 300px); min-width: 0; scroll-snap-align: start; position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 1.3rem 1.3rem 1.2rem; display: flex; flex-direction: column; gap: 0.55rem; }
+.stop::before { content: ""; position: absolute; top: -1.6rem; left: 1.3rem; width: 11px; height: 11px; border-radius: 50%; background: var(--sky); border: 2px solid var(--muted); }
+.stop.here::before { background: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 14px var(--cyan); }
+.stop .when { color: var(--faint); }
+.stop h3 { font-size: 1.55rem; font-weight: 400; }
+.stop .role { font-weight: 500; font-size: 0.95rem; }
+.stop p { color: var(--muted); font-size: 0.92rem; }
+.jnav { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 0.4rem; }
+.jnav button { width: 2.6rem; height: 2.6rem; border-radius: 50%; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; font: 1rem var(--font-mono); }
+.jnav button:hover { border-color: var(--ink); }
+
+/* telescopes */
+.scopes-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+.mirrors { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 1.6rem; }
+.mirrors-head { display: flex; justify-content: space-between; gap: 1rem; color: var(--faint); margin-bottom: 1.2rem; }
+.mirror-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1.2rem 1.8rem; }
+.m { display: flex; flex-direction: column; align-items: center; gap: 0.45rem; text-align: center; width: max-content; max-width: 9rem; }
+.m .disc { border-radius: 50%; background: radial-gradient(circle at 35% 30%, #c9d8ee, #5f7392 55%, #26324a); box-shadow: 0 0 0 1px var(--line); }
+.m.used .disc { background: radial-gradient(circle at 35% 30%, #fff1d6, var(--gold) 45%, #8a6a35); box-shadow: 0 0 22px -4px color-mix(in srgb, var(--gold) 60%, transparent); }
+.m .ap { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink); }
+.m .nm { font-size: 0.74rem; color: var(--muted); line-height: 1.25; }
+.legend { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-top: 1.4rem; color: var(--faint); }
+.legend span::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 0.4rem; background: #5f7392; vertical-align: 0; }
+.legend span.u::before { background: var(--gold); }
+.time { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 1.6rem; display: flex; flex-direction: column; gap: 1rem; }
+.time .big { font-family: var(--font-display); font-size: 3.6rem; font-weight: 300; line-height: 1; }
+.time .big small { font-size: 0.4em; color: var(--muted); }
+.time li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.6rem; padding: 0.6rem 0; border-top: 1px solid var(--line); font-size: 0.9rem; }
+.time li span:last-child { font-family: var(--font-mono); color: var(--gold); }
+.time .note { color: var(--muted); font-size: 0.88rem; }
 
 /* talks */
-.talks { list-style: none; }
-.talks li { display: grid; grid-template-columns: 6.2rem minmax(0, 1fr); gap: 1rem; padding: 0.85rem 0; border-top: 1px solid var(--line); }
-.talks .d { color: var(--muted); padding-top: 0.15rem; }
-.talks .tt { font-family: var(--font-display); font-size: 1.08rem; line-height: 1.35; }
-.talks .ev { color: var(--muted); font-size: 0.92rem; margin-top: 0.15rem; }
-details.more { margin-top: 0.5rem; }
-details.more > summary {
-  cursor: pointer; list-style: none; font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent);
-  padding: 0.8rem 0; border-top: 1px solid var(--line);
-}
-details.more > summary::-webkit-details-marker { display: none; }
-details.more > summary::before { content: "+ "; }
-details.more[open] > summary::before { content: "− "; }
+.talk-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.1rem; }
+.talk { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 1.3rem; display: flex; flex-direction: column; gap: 0.6rem; }
+.talk .when { display: flex; justify-content: space-between; gap: 0.6rem; color: var(--faint); }
+.talk .inv { color: var(--gold); }
+.talk h4 { font-size: 1.15rem; font-weight: 400; line-height: 1.3; }
+.talk p { color: var(--muted); font-size: 0.9rem; margin-top: auto; }
+.tlist li { display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 1rem; padding: 0.8rem 0; border-top: 1px solid var(--line); }
+.tlist .d { color: var(--faint); padding-top: 0.15rem; }
+.tlist .tt { font-family: var(--font-display); font-size: 1.02rem; line-height: 1.35; }
+.tlist .ev { color: var(--muted); font-size: 0.88rem; }
+.tlist .tag { font-family: var(--font-mono); font-size: 0.68rem; padding: 0.1rem 0.45rem; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); vertical-align: 2px; }
+.tlist .tag.hot { color: var(--gold); border-color: color-mix(in srgb, var(--gold) 45%, var(--line)); }
 
-/* skills */
-.skills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
-.skills h3 { font-family: var(--font-body); font-size: 0.95rem; font-weight: 600; margin-bottom: 0.6rem; }
-.skills .card { gap: 0; }
-.skills .card + .card { margin: 0; }
-.skills p { font-size: 0.93rem; }
+/* toolkit + community */
+.duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+.box { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 1.6rem; display: flex; flex-direction: column; gap: 1.1rem; }
+.box h3 { font-size: 1.6rem; font-weight: 400; }
+.tool-group { display: grid; gap: 0.5rem; }
+.tool-group .mono { color: var(--faint); }
+.box ul.bul li { padding-left: 1.1rem; position: relative; color: var(--muted); font-size: 0.95rem; margin-bottom: 0.45rem; }
+.box ul.bul li::before { content: ""; position: absolute; left: 0; top: 0.7em; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
 
 /* contact */
-.contact { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 1.25rem; }
-.contact dl { margin: 0; display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 0.75rem 1rem; }
-.contact dt { color: var(--muted); font-family: var(--font-mono); font-size: 0.8rem; padding-top: 0.15rem; }
-.contact dd { margin: 0; }
+.contact { margin-top: clamp(4.5rem, 10vw, 8rem); padding: clamp(3rem, 7vw, 5.5rem) 0; border-top: 1px solid var(--line); background: radial-gradient(80% 120% at 50% 100%, color-mix(in srgb, var(--red) 12%, var(--sky)), var(--sky) 70%); }
+.contact h2 { font-size: clamp(2.4rem, 6vw, 4.6rem); font-weight: 300; max-width: 21ch; }
+.contact h2 em { color: var(--gold); }
+.mail { display: inline-block; margin-top: 1.8rem; font-family: var(--font-display); font-size: clamp(1.4rem, 3.4vw, 2.4rem); font-style: italic; text-decoration: none; border-bottom: 1px solid var(--red); padding-bottom: 0.2rem; word-break: break-word; }
+.mail:hover { color: var(--red); }
+.contact-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin-top: 2.6rem; color: var(--muted); font-size: 0.92rem; }
+.contact-grid .mono { color: var(--faint); display: block; margin-bottom: 0.4rem; }
+.contact-grid a { color: var(--ink); }
+footer { border-top: 1px solid var(--line); padding: 1.4rem 0 2.2rem; color: var(--faint); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.7rem; }
+footer .wrap > details { flex-basis: 100%; }
 
-footer { margin-top: clamp(3.5rem, 8vw, 6rem); border-top: 1px solid var(--line); padding: 1.5rem 0 2.5rem; color: var(--muted); }
-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem; }
-
-/* ---------- responsive ---------- */
-@media (max-width: 920px) {
-  .hero .wrap { grid-template-columns: minmax(0, 1fr); }
-  .readout ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .readout li:nth-child(4) { border-left: 0; padding-left: 0; }
-  .readout li:nth-child(n+4) { border-top: 1px solid var(--line); }
-  .block-grid { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
-  .rail { display: flex; gap: 0.75rem; padding-top: 0; }
-  .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .papers { grid-template-columns: minmax(0, 1fr); }
+/* responsive */
+@media (max-width: 980px) {
+  .nav-links { display: none; }
+  .hero-grid { grid-template-columns: minmax(0, 1fr); }
+  .portrait-wrap { width: min(70vw, 300px); margin: 1rem 0 0; }
+  .numbers ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .numbers li:nth-child(4) { border-left: 0; padding-left: 0; }
+  .numbers li:nth-child(n+4) { border-top: 1px solid var(--line); }
+  .worlds, .duo, .scopes-grid, .now-head { grid-template-columns: minmax(0, 1fr); }
+  .missions, .talk-grid, .papers, .janus { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .reports { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
-  .two-col, .skills, .contact { grid-template-columns: minmax(0, 1fr); }
-  .readout ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .readout li { border-left: 0 !important; padding-left: 0 !important; border-top: 1px solid var(--line); }
-  .readout li:nth-child(-n+2) { border-top: 0; }
-  .readout li:nth-child(even) { padding-left: 1rem !important; border-left: 1px solid var(--line) !important; }
-  .timeline li { grid-template-columns: minmax(0, 1fr); gap: 0.3rem; }
-  .talks li { grid-template-columns: minmax(0, 1fr); gap: 0.2rem; }
-  .pubs li { grid-template-columns: minmax(0, 1fr); gap: 0.1rem; }
-  .bar-row { grid-template-columns: minmax(0, 1fr) 3rem; }
-  .bar-row .bar { grid-column: 1 / -1; grid-row: 2; }
-  .contact dl { grid-template-columns: minmax(0, 1fr); gap: 0.15rem; }
-  .contact dd { margin-bottom: 0.7rem; }
-  .nav { display: none; }
+  .numbers ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .numbers li { border-left: 0 !important; padding-left: 0 !important; border-top: 1px solid var(--line); }
+  .numbers li:nth-child(-n+2) { border-top: 0; }
+  .numbers li:nth-child(even) { padding-left: 1rem !important; border-left: 1px solid var(--line) !important; }
+  .missions, .talk-grid, .papers, .contact-grid { grid-template-columns: minmax(0, 1fr); }
+  .paper.feature { grid-column: auto; }
+  .pubs li, .tlist li { grid-template-columns: minmax(0, 1fr); gap: 0.1rem; }
+  .portrait-tag { right: 0; }
 }
 </style>
 </head>
 <body>
 
-<header class="topbar">
+<nav class="nav" id="nav" aria-label="Main">
   <div class="wrap">
-    <a class="brand" href="#top">Amit Kumar<span>.</span></a>
-    <nav class="nav" aria-label="Sections">
-      <a href="#about">About</a>
+    <a class="mark" href="#top"><i></i>Amit Kumar</a>
+    <div class="nav-links">
+      <a href="#now">Now</a>
+      <a href="#work">Work</a>
+      <a href="#pictures">Pictures</a>
       <a href="#research">Research</a>
-      <a href="#key-papers">Key papers</a>
-      <a href="#experience">Experience</a>
-      <a href="#publications">Publications</a>
-      <a href="#observing">Observing</a>
+      <a href="#janus">JANUS</a>
+      <a href="#journey">Journey</a>
       <a href="#talks">Talks</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    </div>
+    <a class="nav-cta" href="#contact">Get in touch</a>
+  </div>
+</nav>
+
+<main>
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="now"><span class="pulse"></span>Now · Spaceflight Imager Engineer, The Open University</span>
+        <h1><span class="dr">Dr</span>Amit <span class="last">Kumar</span></h1>
+        <p class="hero-lede">I test the <b>cameras</b> that will image Jupiter's icy moons. Before that I spent a decade chasing the Universe's brightest <strong>explosions</strong>.</p>
+        <div class="ask"><span>Ask me about</span><span class="t">space detectors</span><span class="t">CCD &amp; CMOS testing</span><span class="t">gamma-ray bursts</span><span class="t">supernovae</span><span class="t">telescope instruments</span></div>
+        <div class="cta">
+          <a class="btn primary" href="#contact">Get in touch</a>
+        </div>
+        <div class="profiles">
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=ojOoBBUAAAAJ">Google Scholar ↗</a>
+          <a href="https://orcid.org/0000-0002-4870-9436">ORCID ↗</a>
+          <a href="https://www.researchgate.net/profile/Amit-Kumar-361">ResearchGate ↗</a>
+        </div>
+      </div>
+      <div class="portrait-wrap">
+        <div class="orbit o2"></div>
+        <div class="orbit"></div>
+        <div class="portrait" title="Photo: Amit Kumar (personal photo)"><img src="amit-kumar.jpg" width="360" height="360" alt="Amit Kumar smiling outdoors, wearing a helmet and harness"></div>
+        <div class="portrait-tag"><b>Centre for Electronic Imaging</b>The Open University, UK</div>
+      </div>
+    </div>
+    <p class="tlog mono" id="tlog" aria-live="off"><span class="ring"></span><span id="tlog-text">AT 2026kmr · new transient in field · Δm −2.3 mag</span></p>
   </div>
 </header>
 
-<main id="top">
-
-<!-- ================= HERO ================= -->
-<section class="hero">
-  <div class="wrap">
-    <div>
-      <div class="id-row">
-        <img class="portrait" src="assets/amit-kumar.jpg" width="360" height="360" alt="Amit Kumar smiling outdoors, wearing a helmet and harness">
-        <span class="eyebrow mono">Spaceflight Imager Engineer<br>The Open University</span>
-      </div>
-      <h1>Dr Amit Kumar</h1>
-      <p class="lede">I characterise the CCD and CMOS detectors that will image Jupiter's icy moons and the surface of Venus, at the Centre for Electronic Imaging.</p>
-      <p class="lede">Before that I spent a decade studying the Universe's most energetic explosions: gamma-ray bursts, superluminous supernovae and the links between them, from discovery with GOTO to modelling what powers them.</p>
-      <div class="links">
-        <a class="btn primary" href="mailto:amit.kumar2@open.ac.uk">amit.kumar2@open.ac.uk</a>
-        <a class="btn" href="https://scholar.google.com/citations?hl=en&amp;user=ojOoBBUAAAAJ">Google Scholar ↗</a>
-        <a class="btn" href="https://orcid.org/0000-0002-4870-9436">ORCID ↗</a>
-        <a class="btn" href="https://www.researchgate.net/profile/Amit-Kumar-361">ResearchGate ↗</a>
-      </div>
-    </div>
-
-    <figure class="figure" aria-labelledby="fig-cap">
-      <div class="figure-head mono"><span>Fig. 1</span><span>GRB + SN light curve</span></div>
-      <canvas id="lc" width="640" height="480" role="img" aria-label="Schematic light curve: a gamma-ray burst afterglow fades as a power law, then a supernova bump rises to a peak about two weeks after the burst."></canvas>
-      <figcaption id="fig-cap"><b>Schematic.</b> A long-GRB afterglow fades as a power law in time; around two weeks later the light of the accompanying supernova emerges as a bump. Separating the two is the core of my thesis work on GRB–SN connections.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- ================= READOUT ================= -->
-<div class="readout">
+<!-- ============ NUMBERS ============ -->
+<section class="numbers" aria-label="Highlights">
   <div class="wrap">
     <ul>
-      <li><span class="num">60</span><span class="lbl mono">refereed papers, 10 as lead or corresponding author</span></li>
-      <li><span class="num">~1900</span><span class="lbl mono">TNS transient reports, ~430 as first author</span></li>
-      <li><span class="num">~180</span><span class="lbl mono">GCN circulars, ~60 as first author</span></li>
-      <li><span class="num">~200</span><span class="lbl mono">observing nights on 1–3.6 m telescopes</span></li>
-      <li><span class="num">365<small>h</small></span><span class="lbl mono">telescope time won as lead proposer</span></li>
+      <li><span class="n">60</span><span class="l">refereed papers, 8 as first author</span></li>
+      <li><span class="n">~1900</span><span class="l">new transients reported to the TNS</span></li>
+      <li><span class="n">~180</span><span class="l">GCN circulars on gamma-ray bursts</span></li>
+      <li><span class="n">~200</span><span class="l">nights at the telescope</span></li>
+      <li><span class="n">16</span><span class="l">telescopes on the ground and in space</span></li>
     </ul>
   </div>
-</div>
+</section>
 
-<!-- ================= ABOUT ================= -->
-<section class="block" id="about">
-  <div class="wrap block-grid">
-    <div class="rail mono"><span class="idx">01</span>About</div>
-    <div class="prose">
-      <h2>From transient skies to flight detectors</h2>
-      <p>I am a Spaceflight Imager Engineer at the Centre for Electronic Imaging (CEI), School of Physical Sciences, The Open University. I test and calibrate imaging sensors for ESA and NASA planetary missions, including the CIS115 CMOS sensor of the JANUS camera on JUICE, as well as I-MIM and EnVision. The work runs from optical and vacuum test setups in an ISO Class 5 cleanroom to photon-transfer analysis, noise and dark-current measurements, and Python pipelines that turn test data into detector performance.</p>
-      <p>My background is observational astrophysics. I did my PhD at the Aryabhatta Research Institute of Observational Sciences (ARIES) in Nainital, India, on the connection between gamma-ray bursts and supernovae, then held postdoctoral positions at the University of Warwick with the Gravitational-wave Optical Transient Observer (GOTO) and at Royal Holloway, University of London. Instrumentation has been part of my work throughout: my first-author papers include the photometric calibration of the 4K×4K CCD Imager on India's 3.6 m Devasthal Optical Telescope.</p>
+<!-- ============ LATEST ============ -->
+<section class="latest" aria-label="Latest news">
+  <div class="wrap">
+    <div class="latest-head"><span class="kicker">Latest</span><span class="mono" style="color:var(--faint)">scroll sideways →</span></div>
+    <ul class="news">
+      <li><span class="d"><span>Sep 2026</span><span class="k">JUICE</span></span><p>JUICE swung past Earth on 28 September, and JANUS took images of our planet on the way to Jupiter. <a href="https://www.esa.int/media/juice-images-earth-during-earth-flyby">ESA ↗</a></p></li>
+      <li><span class="d"><span>Jun 2026</span><span class="k">Meeting</span></span><p>At the British Planetary Science Conference in St Andrews.</p></li>
+      <li><span class="d"><span>Mar 2026</span><span class="k">Training</span></span><p>Certificate in CMOS sensor handling and operation from the CMOS Image Sensor Workshop at the Open University.</p></li>
+      <li><span class="d"><span>Feb 2026</span><span class="k g">Talk</span></span><p>"Exploring Jupiter's icy moons with JANUS" at OU Space, Milton Keynes.</p></li>
+      <li><span class="d"><span>Dec 2025</span><span class="k">New role</span></span><p>Joined the <a href="https://www5.open.ac.uk/science/research/cei/">Centre for Electronic Imaging</a> as Spaceflight Imager Engineer.</p></li>
+      <li><span class="d"><span>Oct 2025</span><span class="k r">Paper</span></span><p>GOTO finds the afterglows of seven poorly localised gamma-ray bursts. <a href="https://doi.org/10.1093/mnras/staf1689">MNRAS 544, 1541 ↗</a></p></li>
+      <li><span class="d"><span>In progress</span><span class="k">Writing</span></span><p>Two SPIE papers on signal-dependent effects in the CIS115 sensor for JANUS.</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ NOW ============ -->
+<section class="sec" id="now">
+  <div class="wrap">
+    <div class="now-head">
+      <div class="sec-head">
+        <span class="kicker">Now · since December 2025</span>
+        <h2>Spaceflight Imager <em>Engineer</em></h2>
+        <p>At the <a href="https://www5.open.ac.uk/science/research/cei/">Centre for Electronic Imaging</a>, <a href="https://www.open.ac.uk/">The Open University</a>, I test and characterise the imaging detectors that will fly on space missions to Jupiter, Venus and Mars, making sure each camera returns clean, well-calibrated images.</p>
+      </div>
+      <aside class="desk">
+        <span class="mono">Where you'll find me</span>
+        <address><a href="https://www5.open.ac.uk/science/research/cei/">Centre for Electronic Imaging</a><br>2nd Floor, Robert Hooke Building<br><a href="https://www.open.ac.uk/">The Open University</a>, Walton Hall<br>Milton Keynes MK7 6AA, UK</address>
+        <div class="lab"><span>CCD &amp; CMOS sensors</span><span>detector testing</span><span>space missions</span></div>
+      </aside>
+    </div>
+    <div class="missions">
+      <article class="mission">
+        <figure class="photo"><img src="juice.jpg" width="1200" height="675" alt="Artist's impression of the Juice spacecraft near Jupiter and its moons Ganymede, Callisto, Europa and Io" loading="lazy"><figcaption>Spacecraft: ESA/ATG medialab; Jupiter: NASA/ESA/J. Nichols (Univ. of Leicester); Ganymede: NASA/JPL; Io: NASA/JPL/Univ. of Arizona; Callisto, Europa: NASA/JPL/DLR · ESA Standard Licence</figcaption></figure>
+        <div class="body">
+          <span class="dest">Jupiter · ESA</span>
+          <h3>JANUS on JUICE</h3>
+          <p>ESA's Jupiter Icy Moons Explorer launched in April 2023 and reaches Jupiter in July 2031. Its JANUS camera uses UK-built detectors supplied through the Open University to map Ganymede, Callisto and Europa. I am writing up two signal-dependent effects in its CIS115 CMOS sensor: a baseline shift and negative trailing.</p>
+          <ul class="facts"><li>launched 2023</li><li>arrives 2031</li><li>CIS115 CMOS</li></ul>
+          <a class="mlink" href="https://esa.int/Juice">ESA mission page ↗</a>
+        </div>
+      </article>
+      <article class="mission">
+        <figure class="photo"><img src="envision.jpg" width="1200" height="790" alt="Artist's impression of the EnVision spacecraft orbiting Venus" loading="lazy"><figcaption>ESA/Paris Observatory/VR2Planets &amp; NASA/JPL-Caltech · ESA Standard Licence</figcaption></figure>
+        <div class="body">
+          <span class="dest">Venus · ESA</span>
+          <h3>EnVision</h3>
+          <p>ESA's next mission to Venus. The Open University is helping build VenSpec-U, an ultraviolet spectrometer that will study sulphur chemistry in Venus's atmosphere and hunt for its unknown UV absorber. Our team tests and characterises the detectors at the heart of the instrument.</p>
+          <ul class="facts"><li>VenSpec-U</li><li>UV detectors</li></ul>
+          <a class="mlink" href="https://research.open.ac.uk/news/ps23m-grant-awarded-professor-manish-patel-next-european-space-mission-venus">OU project news ↗</a>
+        </div>
+      </article>
+      <article class="mission">
+        <figure class="photo"><img src="imim.jpg" width="602" height="465" alt="Concept illustration of the International Mars Ice Mapper orbiter above Mars with relay satellites" loading="lazy"><figcaption>Concept image: NASA · via the UK Space Agency blog</figcaption></figure>
+        <div class="body">
+          <span class="dest">Mars · international</span>
+          <h3>I-MIM</h3>
+          <p>The International Mars Ice Mapper is a proposed multi-agency orbiter to find accessible water ice ahead of human exploration. The Open University is developing a core detector that combines visible and infrared sensing in one package, so its imager can tell water ice from carbon-dioxide ice.</p>
+          <ul class="facts"><li>visible + infrared</li><li>water vs CO₂ ice</li></ul>
+          <a class="mlink" href="https://ounews.co/science-mct/ou-space-researchers-awarded-major-grant-supporting-the-future-human-exploration-of-mars/">OU project news ↗</a>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ================= RESEARCH ================= -->
-<section class="block" id="research">
-  <div class="wrap block-grid">
-    <div class="rail mono"><span class="idx">02</span>Research</div>
-    <div>
-      <h2>Two threads, one instrument chain</h2>
-      <div class="two-col">
-        <article class="card">
-          <div class="tags"><span class="tag hot">JANUS / JUICE</span><span class="tag hot">I-MIM</span><span class="tag hot">EnVision</span></div>
-          <h3>Imaging detectors for planetary missions</h3>
-          <p>Characterising CCD and CMOS sensors so that flight cameras return calibrated, trustworthy images.</p>
-          <ul>
-            <li>Photon-transfer curves, conversion gain, read noise, linearity and full-well capacity</li>
-            <li>Dark current and noise measurements in vacuum test setups</li>
-            <li>Signal-dependent effects in the CIS115 sensor for JANUS: baseline shift and negative trailing (two SPIE papers in preparation)</li>
-            <li>Cleanroom handling and contamination control for sensitive detectors</li>
-          </ul>
-        </article>
-        <article class="card">
-          <div class="tags"><span class="tag">GRBs</span><span class="tag">Supernovae</span><span class="tag">GW counterparts</span><span class="tag">GOTO</span></div>
-          <h3>Time-domain astrophysics</h3>
-          <p>Finding fast-evolving transients early, following them up, and working out what powers them.</p>
-          <ul>
-            <li>GRB–supernova connections and magnetar-powered explosions</li>
-            <li>Superluminous and stripped-envelope supernovae; late-time shock interaction</li>
-            <li>Afterglow discovery for poorly localised GRBs with GOTO's wide-field survey</li>
-            <li>Light-curve and spectral modelling (MOSFiT, TARDIS, SYN++) and machine-learning classification</li>
-          </ul>
-        </article>
-      </div>
+<!-- ============ JANUS ============ -->
+<section class="sec" id="janus">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Seen through JANUS</span>
+      <h2>First pictures from the <em>road to Jupiter</em></h2>
+      <p>JANUS is the science camera on JUICE, built around the CIS115 sensors I work on. It is switched on during the spacecraft's flybys to check how it performs in space. These are some of its first pictures.</p>
+    </div>
+    <div class="janus">
+      <figure class="jshot"><button type="button" aria-label="Enlarge: The Moon's cratered surface seen by JANUS"><img src="moon.jpg" width="700" height="931" alt="The Moon's cratered surface seen by JANUS" loading="lazy"></button><figcaption><span class="when">19 Aug 2024</span><span class="cap">The Moon's cratered surface, captured as JUICE flew past during its lunar–Earth flyby.</span><span class="credit">Credit: <a href="https://www.esa.int/media/juice-janus-view-of-the-moon">ESA/Juice/JANUS</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0/igo/">CC BY-SA 3.0 IGO</a></span></figcaption></figure>
+      <figure class="jshot"><button type="button" aria-label="Enlarge: Clouds and coastline of Luzon seen by JANUS at dawn"><img src="earth.jpg" width="700" height="931" alt="Clouds and coastline of Luzon seen by JANUS at dawn" loading="lazy"></button><figcaption><span class="when">20 Aug 2024</span><span class="cap">Dawn over Luzon in the Philippines, seen during the Earth leg of the same flyby.</span><span class="credit">Credit: <a href="https://www.esa.int/media/juice-janus-view-of-earth">ESA/Juice/JANUS</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0/igo/">CC BY-SA 3.0 IGO</a></span></figcaption></figure>
+      <figure class="jshot"><button type="button" aria-label="Enlarge: Earth and the Moon as two small points of light seen by JANUS"><img style="object-fit:contain" src="earth-moon.jpg" width="540" height="405" alt="Earth and the Moon as two small points of light seen by JANUS" loading="lazy"></button><figcaption><span class="when">9 Sep 2024</span><span class="cap">Earth and the Moon together, as JUICE headed on towards Venus.</span><span class="credit">Credit: <a href="https://www.esa.int/media/juice-snaps-an-earth-moon-portrait">ESA/Juice/JANUS</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0/igo/">CC BY-SA 3.0 IGO</a></span></figcaption></figure>
+      <figure class="jshot"><button type="button" aria-label="Enlarge: Interstellar comet 3I/ATLAS with its tail, seen by JANUS"><img src="3i-atlas.jpg" width="700" height="937" alt="Interstellar comet 3I/ATLAS with its tail, seen by JANUS" loading="lazy"></button><figcaption><span class="when">Published Feb 2026</span><span class="cap">The first JANUS view of interstellar comet 3I/ATLAS, with its tail pointing away from the Sun.</span><span class="credit">Credit: <a href="https://www.esa.int/media/first-glimpse-of-comet-3i-atlas-from-juice-science-camera">ESA/Juice/JANUS</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0/igo/">CC BY-SA 3.0 IGO</a></span></figcaption></figure>
     </div>
   </div>
 </section>
 
-<!-- ================= KEY PAPERS ================= -->
-<section class="block" id="key-papers">
-  <div class="wrap block-grid">
-    <div class="rail mono"><span class="idx">03</span>Key papers</div>
-    <div>
-      <h2>Ten papers I led</h2>
-      <p class="note">Eight as first author and two as corresponding author, grouped by the question each one asks.</p>
+<!-- ============ TWO WORLDS ============ -->
+<section class="sec" id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">What I do</span>
+      <h2>Two ends of the same <em>photon</em></h2>
+      <p>Every discovery in astronomy starts with light from a distant source landing on a detector. I have worked at both ends of that journey.</p>
+    </div>
+    <div class="worlds">
+      <article class="world">
+        <span class="tag-line">The detector</span>
+        <h3>Building the eyes</h3>
+        <p>At the Centre for Electronic Imaging I characterise the CCD and CMOS sensors that fly on planetary missions: photon-transfer curves, read noise, dark current and the subtle signal-dependent effects that decide whether a flight camera returns a clean image.</p>
+        <figure class="screen" style="margin:0">
+          <canvas id="ccd" width="640" height="400" role="img" aria-label="Simulated sensor readout: a star's light spread over a grid of pixels with shot noise and read noise. Move the pointer to move the star."></canvas>
+          <figcaption class="screen-bar mono"><span>Simulated readout · move to steer the star</span><b id="ccd-read">peak — e⁻</b></figcaption>
+        </figure>
+        <div class="chips"><span class="chip">photon transfer</span><span class="chip">conversion gain</span><span class="chip">read noise</span><span class="chip">dark current</span><span class="chip">vacuum testing</span><span class="chip">Python pipelines</span></div>
+      </article>
+      <article class="world red">
+        <span class="tag-line">The sky</span>
+        <h3>Chasing explosions</h3>
+        <p>Before moving into instrumentation I studied gamma-ray bursts, superluminous supernovae and the magnetars that may power them. I found afterglows with the GOTO wide-field telescope, classified transients in real time and modelled what drives the most energetic explosions we see.</p>
+        <figure class="screen" style="margin:0">
+          <canvas id="lc" width="640" height="400" role="img" aria-label="Schematic light curve: a gamma-ray burst afterglow fades as a power law, then a supernova bump rises to a peak about two weeks after the burst."></canvas>
+          <figcaption class="screen-bar mono"><span>Schematic GRB afterglow + supernova bump</span><b>my PhD topic</b></figcaption>
+        </figure>
+        <div class="chips"><span class="chip">gamma-ray bursts</span><span class="chip">superluminous SNe</span><span class="chip">magnetars</span><span class="chip">photometry</span><span class="chip">spectroscopy</span><span class="chip">light-curve modelling</span><span class="chip">machine learning</span></div>
+      </article>
+    </div>
+  </div>
+</section>
 
-      <div class="theme">
-        <div class="theme-h"><h3>What powers the explosion? Magnetar central engines</h3><span class="mono">3 papers</span></div>
-        <div class="papers">
-          <article class="paper">
-            <div class="paper-meta mono"><span>MNRAS 531, 3297 · 2024</span><span class="tag hot">First author</span></div>
-            <h4><a href="https://doi.org/10.1093/mnras/stae901">Magnetars as powering sources of gamma-ray burst associated supernovae, and unsupervized clustering of cosmic explosions</a></h4>
-            <p>I modelled the light curves of 13 GRB supernovae and two relativistic broad-lined Ic supernovae with a spinning-down magnetar engine. Unsupervised machine learning then showed that GRB supernovae occupy their own region of magnetar parameter space, separate from superluminous supernovae, fast blue optical transients and long and short GRBs.</p>
-            <ul class="facts"><li>15 SNe modelled</li><li>median P<sub>i</sub> ≈ 20.5 ms</li><li>M<sub>ej</sub> ≈ 5.2 M<sub>☉</sub></li><li>~95% clustering accuracy</li></ul>
-          </article>
-          <article class="paper">
-            <div class="paper-meta mono"><span>New Astronomy 116, 102346 · 2025</span><span class="tag hot">Sole author</span></div>
-            <h4><a href="https://doi.org/10.1016/j.newast.2024.102346">Insights from modelling magnetar-driven light curves of stripped-envelope supernovae</a></h4>
-            <p>Magnetar fits to 11 stripped-envelope supernovae. The superluminous SNe 2010kd and 2020ank need the fastest-spinning, weakest-field magnetars. Explosion energies above about 2×10<sup>51</sup> erg point to a possible jittering-jet mechanism. Correlation analysis and PCA map how the events differ.</p>
-            <ul class="facts"><li>11 SESNe</li><li>E<sub>exp</sub> ≳ 2×10<sup>51</sup> erg</li><li>correlations + PCA</li></ul>
-          </article>
-          <article class="paper">
-            <div class="paper-meta mono"><span>New Astronomy 97, 101889 · 2022</span><span class="tag hot">First author</span></div>
-            <h4><a href="https://doi.org/10.1016/j.newast.2022.101889">Tale of GRB 171010A/SN 2017htp and GRB 171205A/SN 2017iuk: Magnetar origin?</a></h4>
-            <p>Late-time imaging with the 3.6 m Devasthal Optical Telescope of two GRB supernovae, one among the brightest and one among the faintest known, together with their prompt gamma-ray emission. A magnetar engine reproduces both, and also the only known GRB-associated superluminous supernova, SLSN 2011kl.</p>
-            <ul class="facts"><li>z = 0.33 and 0.037</li><li>3 GRB–SNe modelled</li><li>3.6 m DOT</li></ul>
-          </article>
-        </div>
-      </div>
+<!-- ============ PICTURES ============ -->
+<section class="sec" id="pictures">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Research in pictures</span>
+      <h2>Skills you can <em>see</em></h2>
+      <p>Figures from my papers, each showing a different part of the job: building instruments, calibrating detectors, observing, and analysing what comes back. Click any picture to enlarge it. All are figures from my own papers, credited below each one.</p>
+    </div>
+    <div class="gallery">
+      <figure class="shot dark"><button type="button" aria-label="Enlarge: Robotic survey operations"><img src="goto-telescopes.jpg" width="662" height="662" alt="The GOTO network: 32 robotic telescopes in four domes on La Palma and at Siding Spring, which I used to find gamma-ray burst afterglows." loading="lazy"></button><figcaption><span class="skill">Robotic survey operations</span><span class="cap">The GOTO network: 32 robotic telescopes in four domes on La Palma and at Siding Spring, which I used to find gamma-ray burst afterglows.</span><span class="src">From <a href="https://doi.org/10.1093/mnras/staf1689">Kumar et al. 2025, MNRAS 544, 1541</a> · CC BY 4.0</span></figcaption></figure>
+      <figure class="shot c"><button type="button" aria-label="Enlarge: Instrument hardware"><img src="ccd-imager.jpg" width="700" height="799" alt="The 4K×4K CCD Imager on the axial port of India's 3.6 m Devasthal Optical Telescope, with baffle, filter wheels, LN₂ port and shutter labelled." loading="lazy"></button><figcaption><span class="skill">Instrument hardware</span><span class="cap">The 4K×4K CCD Imager on the axial port of India's 3.6 m Devasthal Optical Telescope, with baffle, filter wheels, LN₂ port and shutter labelled.</span><span class="src">From <a href="https://doi.org/10.1007/s12036-022-09798-8">Kumar et al. 2022, J. Astrophys. Astron. 43, 27</a> · © Indian Academy of Sciences</span></figcaption></figure>
+      <figure class="shot r"><button type="button" aria-label="Enlarge: Integral-field spectroscopy"><img src="weave-2023ixf.jpg" width="1000" height="518" alt="The WEAVE fibre footprint on SN 2023ixf in M101 (left) and the resulting datacube (right): the first supernova spectrum taken with WEAVE." loading="lazy"></button><figcaption><span class="skill">Integral-field spectroscopy</span><span class="cap">The WEAVE fibre footprint on SN 2023ixf in M101 (left) and the resulting datacube (right): the first supernova spectrum taken with WEAVE.</span><span class="src">From <a href="https://doi.org/10.1093/mnras/staf312">Kumar et al. 2025, MNRAS 538, 659</a> · CC BY 4.0</span></figcaption></figure>
+      <figure class="shot dark"><button type="button" aria-label="Enlarge: Transient discovery"><img src="goto-discovery.jpg" width="612" height="300" alt="GOTO's discovery image of the GRB 240122A afterglow (left) beside archival Pan-STARRS imaging of the same 6.3′ field (right)." loading="lazy"></button><figcaption><span class="skill">Transient discovery</span><span class="cap">GOTO's discovery image of the GRB 240122A afterglow (left) beside archival Pan-STARRS imaging of the same 6.3′ field (right).</span><span class="src">From <a href="https://doi.org/10.1093/mnras/staf1689">Kumar et al. 2025, MNRAS 544, 1541</a> · CC BY 4.0</span></figcaption></figure>
+      <figure class="shot c"><button type="button" aria-label="Enlarge: Detector calibration"><img src="fringe-correction.jpg" width="1000" height="493" alt="An I-band frame from the Imager before (left) and after (right) fringe correction." loading="lazy"></button><figcaption><span class="skill">Detector calibration</span><span class="cap">An I-band frame from the Imager before (left) and after (right) fringe correction.</span><span class="src">From <a href="https://ui.adsabs.harvard.edu/abs/2023JAI....1240009P/abstract">Pandey, Kumar et al. 2023, J. Astron. Instrum.</a> · © World Scientific</span></figcaption></figure>
+      <figure class="shot"><button type="button" aria-label="Enlarge: Deep imaging"><img src="m101-wr.jpg" width="785" height="788" alt="M101 in the R band with the 4K×4K Imager. Nine of the 15 known Wolf–Rayet star regions are recovered in a single 300 s exposure." loading="lazy"></button><figcaption><span class="skill">Deep imaging</span><span class="cap">M101 in the R band with the 4K×4K Imager. Nine of the 15 known Wolf–Rayet star regions are recovered in a single 300 s exposure.</span><span class="src">From <a href="https://ui.adsabs.harvard.edu/abs/2023JAI....1240009P/abstract">Pandey, Kumar et al. 2023, J. Astron. Instrum.</a> · © World Scientific</span></figcaption></figure>
+      <figure class="shot r"><button type="button" aria-label="Enlarge: Machine learning"><img src="ml-clustering.jpg" width="1100" height="375" alt="k-means clustering on magnetar parameters separates superluminous supernovae, GRB supernovae and fast blue optical transients; confusion matrices on the right." loading="lazy"></button><figcaption><span class="skill">Machine learning</span><span class="cap">k-means clustering on magnetar parameters separates superluminous supernovae, GRB supernovae and fast blue optical transients; confusion matrices on the right.</span><span class="src">From <a href="https://doi.org/10.1093/mnras/stae901">Kumar et al. 2024, MNRAS 531, 3297</a> · CC BY 4.0</span></figcaption></figure>
+    </div>
+  </div>
+</section>
 
-      <div class="theme">
-        <div class="theme-h"><h3>Superluminous and unusual supernovae</h3><span class="mono">4 papers</span></div>
-        <div class="papers">
-          <article class="paper">
-            <div class="paper-meta mono"><span>MNRAS 538, 659 · 2025</span><span class="tag hot">First author</span></div>
-            <h4><a href="https://doi.org/10.1093/mnras/staf312">Signatures of the shock interaction as an additional power source in the nebular spectra of SN 2023ixf</a></h4>
-            <p>The first supernova spectrum taken with WEAVE on the William Herschel Telescope. One year after the explosion, broad side-wings on Hα show the ejecta still being energised by collision with material the star shed a few hundred years before it died.</p>
-            <ul class="facts"><li>+363 d</li><li>Hα wings at ±5650 km s<sup>−1</sup></li><li>shock power ≳ 5×10<sup>40</sup> erg s<sup>−1</sup></li><li>M<sub>ZAMS</sub> ≲ 12 M<sub>☉</sub></li></ul>
-          </article>
-          <article class="paper">
-            <div class="paper-meta mono"><span>MNRAS 502, 1678 · 2021</span><span class="tag hot">First author</span></div>
-            <h4><a href="https://doi.org/10.1093/mnras/staa4047">SN 2020ank: a bright and fast-evolving H-deficient superluminous supernova</a></h4>
-            <p>One of the brightest hydrogen-poor superluminous supernovae, with a fast, symmetric light curve. A magnetar spinning once every 2.2 ms fits it, and its spectra closely resemble the fast-evolving SN 2010gx.</p>
-            <ul class="facts"><li>z = 0.2485</li><li>M<sub>g</sub> ≈ −21.84 mag</li><li>L<sub>max</sub> ≈ 3.9×10<sup>44</sup> erg s<sup>−1</sup></li><li>P<sub>i</sub> ≈ 2.2 ms</li></ul>
-          </article>
-          <article class="paper">
-            <div class="paper-meta mono"><span>ApJ 892, 28 · 2020</span><span class="tag hot">First author</span></div>
-            <h4><a href="https://doi.org/10.3847/1538-4357/ab737b">SN 2010kd: Photometric and spectroscopic analysis of a slow-decaying superluminous supernova</a></h4>
-            <p>A nearby, slowly fading superluminous supernova like PTF12dam, followed from four weeks before peak to six months after. Its light curve favours interaction with circumstellar matter, and its spectra show O II and Si II at two different velocities. It lives in a dwarf galaxy that is forming stars rapidly.</p>
-            <ul class="facts"><li>z = 0.101</li><li>−28 to +194 d</li><li>O I mass ≲ 10 M<sub>☉</sub></li></ul>
-          </article>
-          <article class="paper">
-            <div class="paper-meta mono"><span>MNRAS 507, 1229 · 2021</span><span class="tag">Corresponding author</span></div>
-            <h4><a href="https://doi.org/10.1093/mnras/stab1889">Photometric, polarimetric, and spectroscopic studies of the luminous, slow-decaying Type Ib SN 2012au</a></h4>
-            <p>More than a year of photometry, polarimetry and optical and near-infrared spectroscopy of one of the most luminous slow-fading Type Ib supernovae. A magnetar powers it, the polarimetry shows asymmetric ejecta, and the late spectra point to a Wolf–Rayet progenitor.</p>
-            <ul class="facts"><li>−0.2 to +413 d</li><li>M<sub>ej</sub> ≈ 4.7–8.3 M<sub>☉</sub></li><li>M<sub>ZAMS</sub> ≈ 17–25 M<sub>☉</sub></li></ul>
-          </article>
-        </div>
-      </div>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged figure"><button type="button" id="lb-close" aria-label="Close">✕</button><img id="lb-img" alt=""><p id="lb-cap"></p></div>
 
-      <div class="theme">
-        <div class="theme-h"><h3>Finding afterglows of poorly localised gamma-ray bursts</h3><span class="mono">1 paper</span></div>
-        <div class="papers">
-          <article class="paper">
-            <div class="paper-meta mono"><span>MNRAS 544, 1541 · 2025</span><span class="tag hot">First author</span></div>
+<!-- ============ RESEARCH ============ -->
+<section class="sec" id="research">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Research</span>
+      <h2>Eight papers <em>I led</em></h2>
+      <p>My first-author papers, plus two where I am second author and one of the corresponding authors. Pick a theme, or open the full list of all my publications below.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter papers by theme">
+      <button class="filter" type="button" data-topic="all" aria-pressed="true">All 8</button>
+      <button class="filter" type="button" data-topic="mag" aria-pressed="false">Magnetar engines</button>
+      <button class="filter" type="button" data-topic="sn" aria-pressed="false">Supernovae</button>
+      <button class="filter" type="button" data-topic="grb" aria-pressed="false">GRB afterglows</button>
+      <button class="filter" type="button" data-topic="instr" aria-pressed="false">Instrumentation</button>
+    </div>
+    <div class="papers" id="papers">
+      <article class="paper feature" data-topic="grb" data-feature>
+            <div class="paper-meta mono"><span>MNRAS 544, 1541 · 2025</span><span class="role">First author</span></div>
             <h4><a href="https://doi.org/10.1093/mnras/staf1689">Discovery and analysis of afterglows from poorly localized GRBs with the Gravitational-wave Optical Transient Observer (GOTO) All-sky Survey</a></h4>
             <p>Most Fermi and MAXI bursts come with error regions too large for normal telescopes to search. GOTO's wide field found the optical afterglows of seven of them in 2024. With redshifts from the VLT and GTC, radio detections and broadband modelling, the paper shows that optical discovery of such bursts favours luminous events with hard spectra.</p>
             <ul class="facts"><li>7 long GRBs</li><li>z ≈ 0.40–3.16</li><li>E<sub>jet</sub> ~ 10<sup>51</sup>–10<sup>52</sup> erg</li></ul>
           </article>
-        </div>
-      </div>
+      <article class="paper" data-topic="sn">
+            <div class="paper-meta mono"><span>MNRAS 538, 659 · 2025</span><span class="role">First author</span></div>
+            <h4><a href="https://doi.org/10.1093/mnras/staf312">Signatures of the shock interaction as an additional power source in the nebular spectra of SN 2023ixf</a></h4>
+            <p>The first supernova spectrum taken with WEAVE on the William Herschel Telescope. One year after the explosion, broad side-wings on Hα show the ejecta still being energised by collision with material the star shed a few hundred years before it died.</p>
+            <ul class="facts"><li>+363 d</li><li>Hα wings at ±5650 km s<sup>−1</sup></li><li>shock power ≳ 5×10<sup>40</sup> erg s<sup>−1</sup></li><li>M<sub>ZAMS</sub> ≲ 12 M<sub>☉</sub></li></ul>
+          </article>
+      <article class="paper feature" data-topic="mag" data-feature>
+            <div class="paper-meta mono"><span>MNRAS 531, 3297 · 2024</span><span class="role">First author</span></div>
+            <h4><a href="https://doi.org/10.1093/mnras/stae901">Magnetars as powering sources of gamma-ray burst associated supernovae, and unsupervized clustering of cosmic explosions</a></h4>
+            <p>I modelled the light curves of 13 GRB supernovae and two relativistic broad-lined Ic supernovae with a spinning-down magnetar engine. Unsupervised machine learning then showed that GRB supernovae occupy their own region of magnetar parameter space, separate from superluminous supernovae, fast blue optical transients and long and short GRBs.</p>
+            <ul class="facts"><li>15 SNe modelled</li><li>median P<sub>i</sub> ≈ 20.5 ms</li><li>M<sub>ej</sub> ≈ 5.2 M<sub>☉</sub></li><li>~95% clustering accuracy</li></ul>
+          </article>
+      <article class="paper" data-topic="mag">
+            <div class="paper-meta mono"><span>New Astronomy 116, 102346 · 2025</span><span class="role">Sole author</span></div>
+            <h4><a href="https://doi.org/10.1016/j.newast.2024.102346">Insights from modelling magnetar-driven light curves of stripped-envelope supernovae</a></h4>
+            <p>Magnetar fits to 11 stripped-envelope supernovae. The superluminous SNe 2010kd and 2020ank need the fastest-spinning, weakest-field magnetars. Explosion energies above about 2×10<sup>51</sup> erg point to a possible jittering-jet mechanism. Correlation analysis and PCA map how the events differ.</p>
+            <ul class="facts"><li>11 SESNe</li><li>E<sub>exp</sub> ≳ 2×10<sup>51</sup> erg</li><li>correlations + PCA</li></ul>
+          </article>
+      <article class="paper" data-topic="mag">
+            <div class="paper-meta mono"><span>New Astronomy 97, 101889 · 2022</span><span class="role">First author</span></div>
+            <h4><a href="https://doi.org/10.1016/j.newast.2022.101889">Tale of GRB 171010A/SN 2017htp and GRB 171205A/SN 2017iuk: Magnetar origin?</a></h4>
+            <p>Late-time imaging with the 3.6 m Devasthal Optical Telescope of two GRB supernovae, one among the brightest and one among the faintest known, together with their prompt gamma-ray emission. A magnetar engine reproduces both, and also the only known GRB-associated superluminous supernova, SLSN 2011kl.</p>
+            <ul class="facts"><li>z = 0.33 and 0.037</li><li>3 GRB–SNe modelled</li><li>3.6 m DOT</li></ul>
+          </article>
+      <article class="paper" data-topic="sn">
+            <div class="paper-meta mono"><span>MNRAS 502, 1678 · 2021</span><span class="role">First author</span></div>
+            <h4><a href="https://doi.org/10.1093/mnras/staa4047">SN 2020ank: a bright and fast-evolving H-deficient superluminous supernova</a></h4>
+            <p>One of the brightest hydrogen-poor superluminous supernovae, with a fast, symmetric light curve. A magnetar spinning once every 2.2 ms fits it, and its spectra closely resemble the fast-evolving SN 2010gx.</p>
+            <ul class="facts"><li>z = 0.2485</li><li>M<sub>g</sub> ≈ −21.84 mag</li><li>L<sub>max</sub> ≈ 3.9×10<sup>44</sup> erg s<sup>−1</sup></li><li>P<sub>i</sub> ≈ 2.2 ms</li></ul>
+          </article>
+      <article class="paper" data-topic="sn">
+            <div class="paper-meta mono"><span>ApJ 892, 28 · 2020</span><span class="role">First author</span></div>
+            <h4><a href="https://doi.org/10.3847/1538-4357/ab737b">SN 2010kd: Photometric and spectroscopic analysis of a slow-decaying superluminous supernova</a></h4>
+            <p>A nearby, slowly fading superluminous supernova like PTF12dam, followed from four weeks before peak to six months after. Its light curve favours interaction with circumstellar matter, and its spectra show O II and Si II at two different velocities. It lives in a dwarf galaxy that is forming stars rapidly.</p>
+            <ul class="facts"><li>z = 0.101</li><li>−28 to +194 d</li><li>O I mass ≲ 10 M<sub>☉</sub></li></ul>
+          </article>
 
-      <div class="theme">
-        <div class="theme-h"><h3>Instrumentation: the 4K×4K CCD Imager on the 3.6 m DOT</h3><span class="mono">2 papers</span></div>
-        <div class="papers">
-          <article class="paper">
-            <div class="paper-meta mono"><span>J. Astrophys. Astron. 43, 27 · 2022</span><span class="tag hot">First author</span></div>
+      <article class="paper" data-topic="instr">
+            <div class="paper-meta mono"><span>J. Astrophys. Astron. 43, 27 · 2022</span><span class="role">First author</span></div>
             <h4><a href="https://doi.org/10.1007/s12036-022-09798-8">Photometric calibrations and characterization of the 4K×4K CCD Imager, the first-light axial port instrument for the 3.6m DOT</a></h4>
             <p>Gain and read noise checked for every gain and readout-speed setting, colour terms and zero points tracked over five years, and extinction and night-sky brightness measured in ten filters at Devasthal.</p>
             <ul class="facts"><li>5 gains × 3 readout speeds</li><li>10 filters</li><li>2016–2021 data</li></ul>
           </article>
-          <article class="paper">
-            <div class="paper-meta mono"><span>J. Astron. Instrum. 12 · 2023</span><span class="tag">Corresponding author</span></div>
+
+    </div>
+
+    <div class="second">
+      <h3 class="second-h">As second author and one of the corresponding authors</h3>
+      <div class="papers two">
+      <article class="paper" data-topic="second">
+            <div class="paper-meta mono"><span>MNRAS 507, 1229 · 2021</span><span class="role">Second author · co-corresponding</span></div>
+            <h4><a href="https://doi.org/10.1093/mnras/stab1889">Photometric, polarimetric, and spectroscopic studies of the luminous, slow-decaying Type Ib SN 2012au</a></h4>
+            <p>More than a year of photometry, polarimetry and optical and near-infrared spectroscopy of one of the most luminous slow-fading Type Ib supernovae. A magnetar powers it, the polarimetry shows asymmetric ejecta, and the late spectra point to a Wolf–Rayet progenitor.</p>
+            <ul class="facts"><li>−0.2 to +413 d</li><li>M<sub>ej</sub> ≈ 4.7–8.3 M<sub>☉</sub></li><li>M<sub>ZAMS</sub> ≈ 17–25 M<sub>☉</sub></li></ul>
+          </article>
+      <article class="paper" data-topic="second">
+            <div class="paper-meta mono"><span>J. Astron. Instrum. 12 · 2023</span><span class="role">Second author · co-corresponding</span></div>
             <h4><a href="https://ui.adsabs.harvard.edu/abs/2023JAI....1240009P/abstract">4K×4K CCD Imager for the 3.6m DOT: Recent up-gradations and results</a></h4>
             <p>Instrument details not covered in earlier papers. A Zemax analysis traced the vignetting and ghosts at the image edges, which a redesigned light baffle now fixes. The paper also covers finite-element design of the filter housing, filter-wheel upgrades, and fringe correction in the I, i and z filters. New science includes Wolf–Rayet stars in M101, an Abell galaxy cluster and GRB host galaxies.</p>
             <ul class="facts"><li>Zemax vignetting/ghosts</li><li>FEA filter housing</li><li>fringe correction I, i, z</li><li>9 WR stars in M101</li></ul>
-            <p class="mono" style="font-size:0.78rem"><a href="https://arxiv.org/abs/2306.13698">arXiv:2306.13698</a></p>
+            <p class="alt"><a href="https://arxiv.org/abs/2306.13698">arXiv:2306.13698</a></p>
           </article>
-        </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ================= EXPERIENCE ================= -->
-<section class="block" id="experience">
-  <div class="wrap block-grid">
-    <div class="rail mono"><span class="idx">04</span>Experience</div>
-    <div>
-      <h2>Positions and education</h2>
-      <ol class="timeline">
-        <li>
-          <span class="when mono">Dec 2025 – <span class="now">present</span></span>
-          <div>
-            <h3>Spaceflight Imager Engineer</h3>
-            <p class="where">Centre for Electronic Imaging, The Open University, UK</p>
-            <p class="what">Characterisation and testing of CCD/CMOS imaging detectors for JANUS/JUICE, I-MIM and EnVision: optical and vacuum test setups, photon-transfer analysis, calibration, noise and dark-current measurements, and Python-based performance evaluation.</p>
+    <details class="all" id="all-pubs">
+      <summary>All publications <span class="mono">search 71 entries</span></summary>
+      <div class="all-body">
+        <p class="pub-count mono" style="margin:0.2rem 0 1rem">I also referee for MNRAS, The Astrophysical Journal and Astronomy and Computing.</p>
+        <div class="pub-tools">
+          <div class="chipset" role="group" aria-label="Filter publications">
+            <button class="pchip" type="button" data-filter="all" aria-pressed="true">All<span class="ct"></span></button>
+            <button class="pchip" type="button" data-filter="lead" aria-pressed="false">First author<span class="ct"></span></button>
+            <button class="pchip" type="button" data-filter="prep" aria-pressed="false">In preparation<span class="ct"></span></button>
+            <button class="pchip" type="button" data-filter="co" aria-pressed="false">Co-author<span class="ct"></span></button>
+            <button class="pchip" type="button" data-filter="proc" aria-pressed="false">Proceedings<span class="ct"></span></button>
           </div>
-        </li>
-        <li>
-          <span class="when mono">Oct 2024 – Oct 2025</span>
-          <div>
-            <h3>Research Associate</h3>
-            <p class="where">Department of Physics, Royal Holloway, University of London</p>
-            <p class="what">Optical imaging and spectroscopy of supernovae, including fibre-fed WEAVE integral-field spectroscopy.</p>
-          </div>
-        </li>
-        <li>
-          <span class="when mono">Sep 2022 – Sep 2024</span>
-          <div>
-            <h3>Research Associate, GOTO</h3>
-            <p class="where">Department of Physics, University of Warwick</p>
-            <p class="what">Instrumentation, performance monitoring and science exploitation of GOTO's multi-camera wide-field telescope system: image analysis, transient-discovery pipelines and follow-up.</p>
-          </div>
-        </li>
-        <li>
-          <span class="when mono">Jun – Aug 2022</span>
-          <div>
-            <h3>Post-thesis-submission Fellow</h3>
-            <p class="where">Aryabhatta Research Institute of Observational Sciences (ARIES), India</p>
-          </div>
-        </li>
-        <li>
-          <span class="when mono">2018 – 2022</span>
-          <div>
-            <h3>PhD, Astronomy &amp; Astrophysics</h3>
-            <p class="where">Pt. Ravishankar Shukla University, Raipur; research carried out at ARIES, Nainital</p>
-            <p class="what">Thesis: <em>Energetic Cosmic Transients in the Context of Gamma Ray Bursts–Supernovae Connections</em>. Advisor Dr S. B. Pandey; co-advisor Prof. Nameeta Brahme. Defended January 2023. Senior and Junior Research Fellowships, 2017–2022.</p>
-          </div>
-        </li>
-        <li>
-          <span class="when mono">2015 – 2017</span>
-          <div>
-            <h3>MSc, Physics and Astrophysics</h3>
-            <p class="where">University of Delhi</p>
-            <p class="what">Qualified the National Eligibility Test twice, with All-India ranks 61 (2016) and 81 (2017).</p>
-          </div>
-        </li>
-        <li>
-          <span class="when mono">2012 – 2015</span>
-          <div>
-            <h3>BSc (Hons) Physics</h3>
-            <p class="where">Atma Ram Sanatan Dharma College, University of Delhi</p>
-            <p class="what">First rank in college.</p>
-          </div>
-        </li>
-      </ol>
-    </div>
-  </div>
-</section>
-
-<!-- ================= PUBLICATIONS ================= -->
-<section class="block" id="publications">
-  <div class="wrap block-grid">
-    <div class="rail mono"><span class="idx">05</span>Publications</div>
-    <div>
-      <h2>Publications</h2>
-      <p class="note">I referee for MNRAS, The Astrophysical Journal and Astronomy and Computing. Full and up-to-date list on <a href="https://scholar.google.com/citations?hl=en&amp;user=ojOoBBUAAAAJ">Google Scholar</a>.</p>
-
-      <div class="pub-tools">
-        <div class="chips" role="group" aria-label="Filter publications">
-          <button class="chip" type="button" data-filter="lead" aria-pressed="true">Lead author<span class="ct"></span></button>
-          <button class="chip" type="button" data-filter="prep" aria-pressed="false">In preparation<span class="ct"></span></button>
-          <button class="chip" type="button" data-filter="co" aria-pressed="false">Co-author<span class="ct"></span></button>
-          <button class="chip" type="button" data-filter="proc" aria-pressed="false">Proceedings<span class="ct"></span></button>
-          <button class="chip" type="button" data-filter="all" aria-pressed="false">All<span class="ct"></span></button>
+          <label class="search" for="pub-search"><input id="pub-search" type="search" placeholder="Search titles, authors, objects" autocomplete="off"></label>
         </div>
-        <label class="search" for="pub-search">
-          <input id="pub-search" type="search" placeholder="Search titles, authors, objects" autocomplete="off">
-        </label>
-      </div>
-      <span class="pub-count mono" id="pub-count" aria-live="polite"></span>
-
-      <ol class="pubs" id="pubs">
+        <span class="pub-count mono" id="pub-count" aria-live="polite"></span>
+        <ol class="pubs" id="pubs">
         <!-- In preparation -->
         <li data-cat="prep"><span class="yr mono">—</span><div><span class="t">Signal-Dependent Baseline Shift (SDBS) in CMOS Image Sensors: Characterisation and Correction for the CIS115 Detector for JANUS</span><p class="au"><b>Kumar, A.</b>, et al.</p><p class="ven mono">SPIE · circulated to co-authors</p></div></li>
         <li data-cat="prep"><span class="yr mono">—</span><div><span class="t">Characterisation of Signal-Dependent Negative Trailing in the CIS115 CMOS Image Sensor Onboard JANUS</span><p class="au"><b>Kumar, A.</b>, et al.</p><p class="ven mono">SPIE · circulated to co-authors</p></div></li>
@@ -584,11 +683,11 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <li data-cat="lead"><span class="yr mono">2025</span><div><a class="t" href="https://doi.org/10.1093/mnras/staf312">Signatures of the Shock Interaction as an Additional Power Source in the Nebular Spectra of SN 2023ixf</a><p class="au"><b>Kumar, A.</b>, Dastidar, R., Maund, J. R., Singleton, A. J., Sun, N.-C.</p><p class="ven mono">MNRAS 538, 659</p></div></li>
         <li data-cat="lead"><span class="yr mono">2025</span><div><a class="t" href="https://doi.org/10.1016/j.newast.2024.102346">Insights from Modelling Magnetar-driven Light Curves of Stripped-envelope Supernovae</a><p class="au"><b>Kumar, A.</b></p><p class="ven mono">New Astronomy 116, 102346</p></div></li>
         <li data-cat="lead"><span class="yr mono">2024</span><div><a class="t" href="https://doi.org/10.1093/mnras/stae901">Magnetars as Powering Sources of Gamma-Ray Burst Associated Supernovae, and Unsupervized Clustering of Cosmic Explosions</a><p class="au"><b>Kumar, A.</b>, Sharma, K., Vinko, J., Steeghs, D., Gompertz, B., et al.</p><p class="ven mono">MNRAS 531, 3297</p></div></li>
-        <li data-cat="lead"><span class="yr mono">2023</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2023JAI....1240009P/abstract">4K×4K CCD Imager for the 3.6m DOT: Recent up-gradations and results</a><p class="au">Pandey, S. B., <b>Kumar, A.</b>, Reddy, B. K., Yadav, S., Nanjappa, N., Aryan, A., Gupta, R., Panwar, N., Yadav, R. K. S.</p><p class="ven mono">J. Astron. Instrum. 12 · <a href="https://arxiv.org/abs/2306.13698">arXiv:2306.13698</a></p></div></li>
+        <li data-cat="co"><span class="yr mono">2023</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2023JAI....1240009P/abstract">4K×4K CCD Imager for the 3.6m DOT: Recent up-gradations and results</a><p class="au">Pandey, S. B., <b>Kumar, A.</b>, Reddy, B. K., Yadav, S., Nanjappa, N., Aryan, A., Gupta, R., Panwar, N., Yadav, R. K. S.</p><p class="ven mono">J. Astron. Instrum. 12 · <a href="https://arxiv.org/abs/2306.13698">arXiv:2306.13698</a></p></div></li>
         <li data-cat="lead"><span class="yr mono">2022</span><div><a class="t" href="https://doi.org/10.1016/j.newast.2022.101889">Tale of GRB 171010A/SN 2017htp and GRB 171205A/SN 2017iuk: Magnetar Origin?</a><p class="au"><b>Kumar, A.</b>, Pandey, S. B., Gupta, R., Aryan, A., et al.</p><p class="ven mono">New Astronomy 97, 101889</p></div></li>
         <li data-cat="lead"><span class="yr mono">2022</span><div><a class="t" href="https://doi.org/10.1007/s12036-022-09798-8">Photometric Calibrations and Characterization of the 4K×4K CCD Imager, the First-light Axial Port Instrument for the 3.6m DOT</a><p class="au"><b>Kumar, A.</b>, Pandey, S. B., Singh, A., Yadav, R. K. S., et al.</p><p class="ven mono">J. Astrophys. Astron. 43, 27</p></div></li>
         <li data-cat="lead"><span class="yr mono">2021</span><div><a class="t" href="https://doi.org/10.1093/mnras/staa4047">SN 2020ank: A Bright and Fast-evolving H-deficient Superluminous Supernova</a><p class="au"><b>Kumar, A.</b>, Kumar, B., Pandey, S. B., Sahu, D. K., et al.</p><p class="ven mono">MNRAS 502, 1678</p></div></li>
-        <li data-cat="lead"><span class="yr mono">2021</span><div><a class="t" href="https://doi.org/10.1093/mnras/stab1889">Photometric, Polarimetric, and Spectroscopic Studies of the Luminous, Slow-decaying Type Ib SN 2012au</a><p class="au">Pandey, S. B., <b>Kumar, A.</b>, Kumar, B., Anupama, G. C., et al.</p><p class="ven mono">MNRAS 507, 1229</p></div></li>
+        <li data-cat="co"><span class="yr mono">2021</span><div><a class="t" href="https://doi.org/10.1093/mnras/stab1889">Photometric, Polarimetric, and Spectroscopic Studies of the Luminous, Slow-decaying Type Ib SN 2012au</a><p class="au">Pandey, S. B., <b>Kumar, A.</b>, Kumar, B., Anupama, G. C., et al.</p><p class="ven mono">MNRAS 507, 1229</p></div></li>
         <li data-cat="lead"><span class="yr mono">2020</span><div><a class="t" href="https://doi.org/10.3847/1538-4357/ab737b">SN 2010kd: Photometric and Spectroscopic Analysis of a Slow-decaying Superluminous Supernova</a><p class="au"><b>Kumar, A.</b>, Pandey, S. B., Konyves-Toth, R., Staten, R., Vinko, J., Wheeler, J. C., et al.</p><p class="ven mono">ApJ 892, 28</p></div></li>
 
         <!-- Co-author: 2nd / 3rd and others -->
@@ -655,91 +754,117 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <li data-cat="proc"><span class="yr mono">2021</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2021RMxAC..53..113G/abstract">Observational Properties of TeV-detected GRB 180720B, GRB 190114C and GRB 190829A</a><p class="au">Gupta, R., Pandey, S. B., Castro-Tirado, A. J., <b>Kumar, A.</b>, et al.</p><p class="ven mono">RMxAC 53, 113</p></div></li>
       </ol>
       <p class="empty" id="pub-empty" hidden>No publications match that search. Try an object name such as “SN 2023ixf” or a journal such as “MNRAS”.</p>
+      </div>
+    </details>
+
+    <div class="reports">
+      <a class="report" href="https://ui.adsabs.harvard.edu/search/fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&amp;fq_database=database%3A%20astronomy&amp;q=author%3A(%22%5EKumar%2C%20A.%2C%22)%20((%3Dabs%3A(%22GOTO%20Transient%20Discovery%20Report%22)%20OR%20simbid%3A(%220%22)%20OR%20nedid%3A(%220%22))%20database%3Aastronomy)&amp;sort=date%20desc%2C%20bibcode%20desc&amp;p_=0"><span class="n">~1900</span><span class="l">Transient Name Server reports, ~430 as first author</span></a>
+      <a class="report" href="https://ui.adsabs.harvard.edu/search/fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&amp;fq_database=database%3A%20astronomy&amp;q=author%3A(%22Kumar%2C%20A.%2C%22)%20((%3Dabs%3A(GCN)%20OR%20simbid%3A(0)%20OR%20nedid%3A(0))%20database%3Aastronomy)&amp;sort=date%20desc%2C%20bibcode%20desc&amp;p_=0"><span class="n">~180</span><span class="l">GCN circulars, ~60 as first author</span></a>
+      <a class="report" href="https://ui.adsabs.harvard.edu/search/fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&amp;fq_database=database%3A%20astronomy&amp;q=author%3A(%22Kumar%2C%20A.%2C%22)%20((%3Dabs%3A(%22ePESSTO%2B%22)%20OR%20simbid%3A(%220%22)%20OR%20nedid%3A(%220%22))%20database%3Aastronomy)&amp;sort=date%20desc%2C%20bibcode%20desc&amp;p_=0"><span class="n">~55</span><span class="l">ePESSTO+ transient classification reports</span></a>
+      <a class="report" href="https://ui.adsabs.harvard.edu/search/fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&amp;fq_database=database%3A%20astronomy&amp;q=author%3A(%22Kumar%2C%20A.%2C%22)%20((%3Dabs%3A(%22GOTO-FAST%22)%20OR%20simbid%3A(%220%22)%20OR%20nedid%3A(%220%22))%20database%3Aastronomy)&amp;sort=date%20desc%2C%20bibcode%20desc&amp;p_=0"><span class="n">~20</span><span class="l">GOTO-FAST spectroscopic classifications</span></a>
     </div>
   </div>
 </section>
 
-<!-- ================= OBSERVING ================= -->
-<section class="block" id="observing">
-  <div class="wrap block-grid">
-    <div class="rail mono"><span class="idx">06</span>Observing</div>
-    <div>
-      <h2>Telescope time and follow-up</h2>
-      <p class="note">Real-time photometric, spectroscopic and polarimetric follow-up of supernovae, GRBs and other fast transients, plus instrument and site calibration, under approved proposals from Cycles 2018A–2022B. Co-proposer on ESO proposals including the VLT, and member of a joint JWST–HST team for AT2023lcr.</p>
-
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Cycle</th><th>Facility (as lead proposer)</th><th>Science</th><th class="n">Hours</th></tr></thead>
-          <tbody>
-            <tr><td class="mono">26A</td><td>Liverpool Telescope (2 m)</td><td>Low-redshift GRBs and their supernovae</td><td class="n">28</td></tr>
-            <tr><td class="mono">2025B</td><td>SAAO Lesedi 1 m robotic + GOTO</td><td>Rapid photometric and spectroscopic transient follow-up</td><td class="n">120</td></tr>
-            <tr><td class="mono">2025A</td><td>SAAO Lesedi 1 m robotic + GOTO</td><td>Rapid photometric and spectroscopic transient follow-up</td><td class="n">122.9</td></tr>
-            <tr><td class="mono">2025A</td><td>Chilean 0.4–1 m optical/NIR telescopes via CNTAC + GOTO</td><td>Transient follow-up</td><td class="n">42</td></tr>
-            <tr><td class="mono">2022–23</td><td>3.6 m Devasthal Optical Telescope + GOTO</td><td>GW counterpart searches; classification of young GOTO transients</td><td class="n">52</td></tr>
-          </tbody>
-          <tfoot><tr><td></td><td colspan="2">Total awarded</td><td class="n">364.9</td></tr></tfoot>
-        </table>
-      </div>
-
-      <h3 class="sub-h">Nights at the telescope, 2018–2022</h3>
-      <ul class="nights">
-        <li class="bar-row"><span>3.6 m Devasthal Optical Telescope</span><span class="bar"><i style="width:100%"></i></span><span class="mono">100+</span></li>
-        <li class="bar-row"><span>1.3 m Devasthal Fast Optical Telescope</span><span class="bar"><i style="width:62%"></i></span><span class="mono">62</span></li>
-        <li class="bar-row"><span>1.04 m Sampurnanand Telescope</span><span class="bar"><i style="width:35%"></i></span><span class="mono">35</span></li>
-      </ul>
-
-      <h3 class="sub-h">Data I have worked with</h3>
-      <ul class="scopes">
-        <li><span class="ap mono">10.4 m</span><span>Gran Telescopio Canarias</span></li>
-        <li><span class="ap mono">10 m</span><span>Keck</span></li>
-        <li><span class="ap mono">10 m</span><span>Hobby–Eberly Telescope</span></li>
-        <li><span class="ap mono">8.2 m</span><span>Very Large Telescope</span></li>
-        <li><span class="ap mono">6 m</span><span>Big Altazimuth Telescope</span></li>
-        <li><span class="ap mono">4.2 m</span><span>William Herschel Telescope (WEAVE)</span></li>
-        <li><span class="ap mono">3.6 m</span><span>Devasthal Optical Telescope</span></li>
-        <li><span class="ap mono">3.58 m</span><span>New Technology Telescope</span></li>
-        <li><span class="ap mono">2.4 m</span><span>Hubble Space Telescope</span></li>
-        <li><span class="ap mono">2.2 m</span><span>Calar Alto (CAHA)</span></li>
-        <li><span class="ap mono">2.01 m</span><span>Himalayan Chandra Telescope</span></li>
-        <li><span class="ap mono">2 m</span><span>Liverpool Telescope</span></li>
-        <li><span class="ap mono">1.3 m</span><span>Devasthal Fast Optical Telescope</span></li>
-        <li><span class="ap mono">1.04 m</span><span>Sampurnanand Telescope</span></li>
-        <li><span class="ap mono">space</span><span>Swift and Fermi</span></li>
-      </ul>
-
-      <h3 class="sub-h">Collaborations</h3>
-      <div class="tags">
-        <a class="tag" href="https://goto-observatory.org/">GOTO</a>
-        <a class="tag" href="https://www.pessto.org/index.py">PESSTO / ePESSTO+</a>
-        <a class="tag" href="http://www.engrave-eso.org/">ENGRAVE</a>
-        <a class="tag" href="https://researchportal.bath.ac.uk/en/projects/stargate-hunting-for-the-most-exotic-gamma-ray-bursts-new-insight">StarGate</a>
-        <a class="tag" href="https://lsst-tvssc.github.io/">LSST TVS</a>
-        <span class="tag">ESA / NASA planetary imaging</span>
-      </div>
+<!-- ============ JOURNEY ============ -->
+<section class="sec" id="journey">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Journey</span>
+      <h2>From Haryana to <em>Jupiter</em></h2>
+      <p>Six places, from a school in Haryana to building flight hardware.</p>
     </div>
-  </div>
-</section>
-
-<!-- ================= TALKS ================= -->
-<section class="block" id="talks">
-  <div class="wrap block-grid">
-    <div class="rail mono"><span class="idx">07</span>Talks</div>
-    <div>
-      <h2>Talks and meetings</h2>
-      <ol class="talks">
-        <li><span class="d mono">Jun 2026</span><div><p class="tt">British Planetary Science Conference</p><p class="ev">University of St Andrews, Scotland · participant</p></div></li>
-        <li><span class="d mono">Mar 2026</span><div><p class="tt">CMOS Image Sensor Workshop</p><p class="ev">The Open University · certificate in CMOS sensor handling and practical operation</p></div></li>
-        <li><span class="d mono">Feb 2026</span><div><p class="tt">Exploring Jupiter's Icy Moons with JANUS</p><p class="ev">OU Space network event, Milton Keynes</p></div></li>
-        <li><span class="d mono">Oct 2025</span><div><p class="tt">GOTO: Discovering Afterglows of Poorly Localised GRB/GW Events</p><p class="ev">VIII Workshop on Robotic Autonomous Observatories (AstroRob 2025), Almería</p></div></li>
-        <li><span class="d mono">Sep 2025</span><div><p class="tt">Localising the Unlocalised: GRB Afterglow Discovery with GOTO</p><p class="ev">GOTO Science Meeting, University of Warwick</p></div></li>
-        <li><span class="d mono">Jul 2025</span><div><p class="tt">Shock Interaction Powering Late-Time Supernova Evolution: Tracing the Mass-Loss History of Massive Stars</p><p class="ev">National Astronomy Meeting 2025, Durham</p></div></li>
-        <li><span class="d mono">Apr 2025</span><div><p class="tt">Late-Time Shock Interaction in Core-Collapse Supernovae: A Window into Progenitor Evolution</p><p class="ev">An Extraordinary Journey Into the Transient Sky, Padova</p></div></li>
-        <li><span class="d mono">Nov 2024</span><div><p class="tt">From Collapse to Cataclysm: The Shared Origins of Supernovae and Gamma-Ray Bursts <span class="tag hot">Invited</span></p><p class="ev">Department of Physics, Royal Holloway, University of London</p></div></li>
-        <li><span class="d mono">Jul 2024</span><div><p class="tt">Magnetars as Powering Sources of Gamma-Ray Burst Associated Supernovae <span class="tag hot">Invited</span></p><p class="ev">17th Marcel Grossmann Meeting, Pescara</p></div></li>
+    <div class="journey-wrap">
+      <ol class="journey" id="journey-track" tabindex="0" aria-label="Career journey, scroll sideways">
+        <li class="stop">
+          <span class="when mono">Up to 2012</span>
+          <h3>Haryana</h3>
+          <span class="role">Born and schooled in Pabra, Hisar</span>
+          <p>Govt. High School, Pabra: first in school, 91.2% (2010). Jawahar Navodaya Vidyalaya, Pabra: senior secondary, 84.8% (2012).</p>
+        </li>
+        <li class="stop">
+          <span class="when mono">2012 – 2017</span>
+          <h3>Delhi</h3>
+          <span class="role">BSc (Hons) Physics, MSc Physics &amp; Astrophysics</span>
+          <p>BSc at Atma Ram Sanatan Dharma College: first in college, 87.03% (2015). MSc at the University of Delhi: 70.6% (2017). Twice qualified India's National Eligibility Test.</p>
+        </li>
+        <li class="stop">
+          <span class="when mono">2017 – 2022</span>
+          <h3>Nainital</h3>
+          <span class="role">PhD, Astronomy &amp; Astrophysics</span>
+          <p>At ARIES in the Himalayan foothills, working on the GRB–supernova connection. Spent around 200 nights observing and calibrated the 4K×4K CCD Imager on India's 3.6 m Devasthal Optical Telescope.</p>
+        </li>
+        <li class="stop">
+          <span class="when mono">2022 – 2024</span>
+          <h3>Coventry</h3>
+          <span class="role">Research Associate, University of Warwick</span>
+          <p>Ran science and performance monitoring for GOTO, a robotic wide-field telescope array, and hunted for optical counterparts to gamma-ray bursts and gravitational-wave events.</p>
+        </li>
+        <li class="stop">
+          <span class="when mono">2024 – 2025</span>
+          <h3>London</h3>
+          <span class="role">Research Associate, Royal Holloway</span>
+          <p>Supernova imaging and spectroscopy, including the first supernova spectrum ever taken with the WEAVE spectrograph on the William Herschel Telescope.</p>
+        </li>
+        <li class="stop here">
+          <span class="when mono">Dec 2025 – now</span>
+          <h3>Milton Keynes</h3>
+          <span class="role">Spaceflight Imager Engineer, The Open University</span>
+          <p>Testing and characterising flight detectors for JANUS/JUICE, EnVision and I-MIM at the Centre for Electronic Imaging.</p>
+        </li>
       </ol>
-      <details class="more">
-        <summary>Earlier talks and posters, 2019–2023</summary>
-        <ol class="talks">
+      <div class="jnav"><button type="button" id="j-prev" aria-label="Previous stop">←</button><button type="button" id="j-next" aria-label="Next stop">→</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TELESCOPES ============ -->
+<section class="sec" id="telescopes">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Telescopes</span>
+      <h2>From one-metre robots to <em>ten-metre giants</em></h2>
+      <p>The telescopes whose data I have worked with, drawn to scale by mirror size. Gold ones are where I spent nights observing.</p>
+    </div>
+    <div class="scopes-grid">
+      <div class="mirrors">
+        <div class="mirrors-head mono"><span>Primary mirror diameter, to scale</span><span>+ Swift and Fermi in space</span></div>
+        <div class="mirror-row" id="mirrors"></div>
+        <div class="legend mono"><span class="u">observed in person</span><span>worked with the data</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TALKS ============ -->
+<section class="sec" id="talks">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Talks</span>
+      <h2>On <em>stage</em></h2>
+      <p>Recent talks and meetings, from planetary science to time-domain astronomy.</p>
+    </div>
+    <div class="talk-grid">
+      <article class="talk"><div class="when mono"><span>Feb 2026</span><span>Talk</span></div><h4>Exploring Jupiter's Icy Moons with JANUS</h4><p>OU Space network event, Milton Keynes</p></article>
+      <article class="talk"><div class="when mono"><span>Oct 2025</span><span>Talk</span></div><h4>GOTO: discovering afterglows of poorly localised GRB/GW events</h4><p>AstroRob 2025, Almería, Spain</p></article>
+      <article class="talk"><div class="when mono"><span>Jul 2025</span><span>Talk</span></div><h4>Shock interaction powering late-time supernova evolution</h4><p>National Astronomy Meeting 2025, Durham</p></article>
+      <article class="talk"><div class="when mono"><span>Apr 2025</span><span>Talk</span></div><h4>Late-time shock interaction in core-collapse supernovae</h4><p>An Extraordinary Journey Into the Transient Sky, Padova</p></article>
+      <article class="talk"><div class="when mono"><span>Nov 2024</span><span class="inv">Invited</span></div><h4>From collapse to cataclysm: the shared origins of supernovae and gamma-ray bursts</h4><p>Department of Physics, Royal Holloway, University of London</p></article>
+      <article class="talk"><div class="when mono"><span>Jul 2024</span><span class="inv">Invited</span></div><h4>Magnetars as powering sources of GRB-associated supernovae</h4><p>17th Marcel Grossmann Meeting, Pescara, Italy</p></article>
+    </div>
+    <details class="all">
+      <summary>All talks, posters and meetings <span class="mono">2019 – 2026</span></summary>
+      <div class="all-body">
+        <ol class="tlist">
+          <li><span class="d mono">Jun 2026</span><div><p class="tt">British Planetary Science Conference</p><p class="ev">University of St Andrews, Scotland · participant</p></div></li>
+          <li><span class="d mono">Mar 2026</span><div><p class="tt">CMOS Image Sensor Workshop</p><p class="ev">The Open University · certificate in CMOS sensor handling and practical operation</p></div></li>
+          <li><span class="d mono">Feb 2026</span><div><p class="tt">Exploring Jupiter's Icy Moons with JANUS</p><p class="ev">OU Space network event, Milton Keynes</p></div></li>
+          <li><span class="d mono">Oct 2025</span><div><p class="tt">GOTO: Discovering Afterglows of Poorly Localised GRB/GW Events</p><p class="ev">VIII Workshop on Robotic Autonomous Observatories (AstroRob 2025), Almería</p></div></li>
+          <li><span class="d mono">Sep 2025</span><div><p class="tt">Localising the Unlocalised: GRB Afterglow Discovery with GOTO</p><p class="ev">GOTO Science Meeting, University of Warwick</p></div></li>
+          <li><span class="d mono">Jul 2025</span><div><p class="tt">Shock Interaction Powering Late-Time Supernova Evolution: Tracing the Mass-Loss History of Massive Stars</p><p class="ev">National Astronomy Meeting 2025, Durham</p></div></li>
+          <li><span class="d mono">Apr 2025</span><div><p class="tt">Late-Time Shock Interaction in Core-Collapse Supernovae: A Window into Progenitor Evolution</p><p class="ev">An Extraordinary Journey Into the Transient Sky, Padova</p></div></li>
+          <li><span class="d mono">Nov 2024</span><div><p class="tt">From Collapse to Cataclysm: The Shared Origins of Supernovae and Gamma-Ray Bursts <span class="tag hot">Invited</span></p><p class="ev">Department of Physics, Royal Holloway, University of London</p></div></li>
+          <li><span class="d mono">Jul 2024</span><div><p class="tt">Magnetars as Powering Sources of Gamma-Ray Burst Associated Supernovae <span class="tag hot">Invited</span></p><p class="ev">17th Marcel Grossmann Meeting, Pescara</p></div></li>
           <li><span class="d mono">Nov 2023</span><div><p class="tt">Powering Source of GRB-Associated Supernovae: Spin-down Millisecond Magnetar?</p><p class="ev">2nd Astro-COLIBRI Multi-Messenger Astrophysics Workshop, Institut Pascal, Paris-Saclay</p></div></li>
           <li><span class="d mono">Oct 2023</span><div><p class="tt">Exploring the Enigmatic Relationship Between Gamma-Ray Bursts and Supernovae</p><p class="ev">AstroRob 2023, Málaga</p></div></li>
           <li><span class="d mono">Jul 2023</span><div><p class="tt">Energetic Cosmic Transients in the Context of GRB–Supernova Connections</p><p class="ev">National Astronomy Meeting 2023, Cardiff</p></div></li>
@@ -759,250 +884,297 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           <li><span class="d mono">Mar 2019</span><div><p class="tt">An Overview of Astronomical Spectroscopy, with Demonstration</p><p class="ev">ARIES Training School in Observational Astronomy, Nainital</p></div></li>
           <li><span class="d mono">Feb 2019</span><div><p class="tt">SN 2010kd: an Interesting PTF12dam-like Superluminous Supernova <span class="tag">Poster</span></p><p class="ev">Astronomical Society of India meeting, Bengaluru</p></div></li>
         </ol>
-      </details>
+      </div>
+    </details>
+  </div>
+</section>
 
-      <h3 class="sub-h">Organising and outreach</h3>
-      <div class="two-col">
-        <div class="card">
-          <ul>
-            <li>SOC/LOC, GOTO Collaboration Science Meeting 2024</li>
-            <li>Session chair, UK Transients Meeting 2024, University of Leicester</li>
-            <li>LOC, Astrophysical Jets and Observational Facilities: National Perspective, 2021</li>
-            <li>LOC, India-TMT Science and Instruments Workshop, 2019</li>
-          </ul>
-        </div>
-        <div class="card">
-          <ul>
-            <li>Taught astronomical techniques to undergraduates at the ARIES Training School in Observational Astronomy, every year 2018–2021</li>
-            <li>Stargazing sessions and talks for school and master's students and the public since 2018</li>
-          </ul>
-        </div>
+<!-- ============ TOOLKIT + COMMUNITY ============ -->
+<section class="sec" id="more">
+  <div class="wrap">
+    <div class="duo">
+      <div class="box">
+        <span class="kicker">Toolkit</span>
+        <h3>What I work with</h3>
+        <div class="tool-group"><span class="mono">Detectors &amp; lab</span><div class="chips"><span class="chip">CCD / CMOS</span><span class="chip">PTC</span><span class="chip">linearity</span><span class="chip">full well</span><span class="chip">vacuum</span><span class="chip">cleanroom</span><span class="chip">SolidWorks</span><span class="chip">Zemax</span></div></div>
+        <div class="tool-group"><span class="mono">Code</span><div class="chips"><span class="chip">Python</span><span class="chip">NumPy · SciPy · Pandas</span><span class="chip">Astropy</span><span class="chip">scikit-learn</span><span class="chip">IDL</span><span class="chip">Fortran</span><span class="chip">shell</span></div></div>
+        <div class="tool-group"><span class="mono">Astronomy</span><div class="chips"><span class="chip">PSF photometry</span><span class="chip">image subtraction</span><span class="chip">IRAF</span><span class="chip">SExtractor</span><span class="chip">GALFIT</span><span class="chip">MOSFiT</span><span class="chip">TARDIS</span><span class="chip">MINIM</span><span class="chip">SYN++</span></div></div>
+      </div>
+      <div class="box">
+        <span class="kicker">Community</span>
+        <h3>Beyond research</h3>
+        <ul class="bul">
+          <li>Collaborations: GOTO, PESSTO/ePESSTO+, ENGRAVE, StarGate and LSST TVS</li>
+          <li>SOC/LOC for the GOTO Collaboration Science Meeting 2024; session chair at UK Transients 2024</li>
+          <li>Taught observing and data-reduction techniques to undergraduates at the ARIES Training School, 2018–2021</li>
+          <li>Stargazing nights for school students and the public since 2018</li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
-
-<!-- ================= SKILLS ================= -->
-<section class="block" id="skills">
-  <div class="wrap block-grid">
-    <div class="rail mono"><span class="idx">08</span>Skills</div>
-    <div>
-      <h2>Technical skills</h2>
-      <div class="skills">
-        <div class="card"><h3>Detector characterisation</h3><p>CCD/CMOS sensors; photon-transfer curves, conversion gain, read noise, dark current, linearity, full-well capacity, calibration.</p></div>
-        <div class="card"><h3>Laboratory</h3><p>Optical detector test setups, vacuum measurements, ISO Class 5 cleanroom protocols and contamination control.</p></div>
-        <div class="card"><h3>Optical and mechanical design</h3><p>SolidWorks CAD; working familiarity with Zemax OpticStudio.</p></div>
-        <div class="card"><h3>Programming</h3><p>Python (NumPy, SciPy, Pandas, Matplotlib, Astropy, scikit-learn); IDL, Fortran, shell scripting; reproducible analysis pipelines.</p></div>
-        <div class="card"><h3>Photometry and spectroscopy</h3><p>Aperture and PSF photometry, image subtraction, calibration; spectral reduction, line identification, velocities. IRAF, DAOPHOT, SExtractor, GALFIT, HEASoft.</p></div>
-        <div class="card"><h3>Modelling and statistics</h3><p>MINIM, TigerFit, MOSFiT, SYN++, SYNAPPS, TARDIS; supervised and unsupervised classification, regression, population studies.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= CONTACT ================= -->
-<section class="block" id="contact">
-  <div class="wrap block-grid">
-    <div class="rail mono"><span class="idx">09</span>Contact</div>
-    <div>
-      <h2>Get in touch</h2>
-      <div class="contact">
-        <div class="card">
-          <dl>
-            <dt>Work email</dt><dd><a href="mailto:amit.kumar2@open.ac.uk">amit.kumar2@open.ac.uk</a></dd>
-            <dt>Personal</dt><dd><a href="mailto:amitkundu515@gmail.com">amitkundu515@gmail.com</a></dd>
-            <dt>Office</dt><dd>147, Robert Hooke Building<br>Centre for Electronic Imaging, School of Physical Sciences<br>The Open University, Walton Hall<br>Milton Keynes MK7 6AA, UK</dd>
-          </dl>
-        </div>
-        <div class="card">
-          <dl>
-            <dt>Scholar</dt><dd><a href="https://scholar.google.com/citations?hl=en&amp;user=ojOoBBUAAAAJ">Google Scholar profile ↗</a></dd>
-            <dt>ORCID</dt><dd><a href="https://orcid.org/0000-0002-4870-9436">0000-0002-4870-9436 ↗</a></dd>
-            <dt>ResearchGate</dt><dd><a href="https://www.researchgate.net/profile/Amit-Kumar-361">Amit-Kumar-361 ↗</a></dd>
-            <dt>Languages</dt><dd>English, Hindi</dd>
-          </dl>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 </main>
 
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <span class="kicker">Contact</span>
+    <h2 style="margin-top:1.2rem">Let's talk about detectors, explosions or <em>anything in between</em>.</h2>
+    <p style="color:var(--muted);margin-top:1.2rem;max-width:60ch">Open to collaborations on detector characterisation, space instrumentation and time-domain astronomy, and always happy to give talks or help with outreach.</p>
+    <a class="mail" href="mailto:amit.kumar2@open.ac.uk">amit.kumar2@open.ac.uk</a>
+    <div class="contact-grid">
+      <div><span class="mono">Office</span><a href="https://www5.open.ac.uk/science/research/cei/">Centre for Electronic Imaging</a><br>2nd Floor, Robert Hooke Building<br><a href="https://www.open.ac.uk/">The Open University</a>, Milton Keynes<br>MK7 6AA, UK</div>
+      <div><span class="mono">Personal email</span><a href="mailto:amitkundu515@gmail.com">amitkundu515@gmail.com</a></div>
+      <div><span class="mono">Profiles</span><a href="https://scholar.google.com/citations?hl=en&amp;user=ojOoBBUAAAAJ">Google Scholar</a> · <a href="https://orcid.org/0000-0002-4870-9436">ORCID</a> · <a href="https://www.researchgate.net/profile/Amit-Kumar-361">ResearchGate</a></div>
+    </div>
+  </div>
+</section>
+
 <footer>
-  <div class="wrap mono">
-    <span>© 2026 Amit Kumar</span>
-    <span>Last updated November 2026</span>
+  <div class="wrap mono"><span>© 2026 Amit Kumar</span><span>Updated November 2026</span>
+    <details><summary>Image credits</summary>
+      <div class="credits">
+        <span>Portrait: Amit Kumar (personal photo).</span>
+        <span>JUICE artist's impression: spacecraft ESA/ATG medialab; Jupiter NASA/ESA/J. Nichols (University of Leicester); Ganymede NASA/JPL; Io NASA/JPL/University of Arizona; Callisto and Europa NASA/JPL/DLR. <a href="https://www.esa.int/media/exploring-jupiter">ESA</a>, ESA Standard Licence.</span>
+        <span>EnVision at Venus: ESA/Paris Observatory/VR2Planets &amp; NASA/JPL-Caltech. <a href="https://www.esa.int/media/envision-at-venus">ESA</a>, ESA Standard Licence.</span>
+        <span>I-MIM concept: NASA, as published on the <a href="https://space.blog.gov.uk/2024/10/31/nitemares-uncovering-the-invisible-secrets-of-mars/">UK Space Agency blog</a>.</span>
+        <span>JANUS images of the Moon, Earth, Earth–Moon and comet 3I/ATLAS: ESA/Juice/JANUS, <a href="https://creativecommons.org/licenses/by-sa/3.0/igo/">CC BY-SA 3.0 IGO</a>, resized for this site.</span>
+        <span>Research figures: Kumar et al. 2025, MNRAS 544, 1541; Kumar et al. 2025, MNRAS 538, 659; Kumar et al. 2024, MNRAS 531, 3297 (all © the authors, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>); Kumar et al. 2022, J. Astrophys. Astron. 43, 27 (© Indian Academy of Sciences); Pandey, Kumar et al. 2023, J. Astron. Instrum. (© World Scientific). Reproduced by the author.</span>
+        <span>Starfield, detector simulation, light curve and telescope chart are drawn by code on this page.</span>
+      </div>
+    </details>
   </div>
 </footer>
 
 <script>
 (function () {
-  /* ---------- publications filter ---------- */
-  var list = document.getElementById('pubs');
-  var items = Array.prototype.slice.call(list.querySelectorAll('li'));
-  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
-  var search = document.getElementById('pub-search');
-  var countEl = document.getElementById('pub-count');
-  var emptyEl = document.getElementById('pub-empty');
-  var labels = { lead: 'lead-author papers', prep: 'papers in preparation', co: 'co-authored papers', proc: 'proceedings', all: 'entries' };
-  var current = 'lead';
-
-  chips.forEach(function (c) {
-    var f = c.getAttribute('data-filter');
-    var n = f === 'all' ? items.length : items.filter(function (i) { return i.dataset.cat === f; }).length;
-    c.querySelector('.ct').textContent = n;
-    c.addEventListener('click', function () {
-      current = f;
-      chips.forEach(function (o) { o.setAttribute('aria-pressed', String(o === c)); });
-      apply();
-    });
-  });
-  search.addEventListener('input', apply);
-
-  function apply() {
-    var q = search.value.trim().toLowerCase();
-    var shown = 0;
-    items.forEach(function (li) {
-      var catOk = current === 'all' || li.dataset.cat === current;
-      var textOk = !q || li.textContent.toLowerCase().indexOf(q) !== -1;
-      var vis = q ? textOk : catOk;  /* a search looks across every category */
-      li.hidden = !vis;
-      if (vis) shown++;
-    });
-    countEl.textContent = q
-      ? shown + ' match' + (shown === 1 ? '' : 'es') + ' across all publications'
-      : shown + ' ' + labels[current];
-    emptyEl.hidden = shown !== 0;
-  }
-  apply();
-
-  /* ---------- hero light curve ---------- */
-  var canvas = document.getElementById('lc');
-  var ctx = canvas.getContext('2d');
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var progress = reduce ? 1 : 0;
+  function css(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
 
-  function flux(t) {
-    var ag = Math.pow(t, -1.3);
-    var sn = 0.06 * Math.exp(-Math.pow(Math.log(t / 14), 2) / (2 * 0.45 * 0.45));
-    return { ag: ag, sn: sn, tot: ag + sn };
-  }
-  function mag(f) { return 20 - 2.5 * Math.log10(f); }
+  /* ---------- nav ---------- */
+  var nav = document.getElementById('nav');
+  function onScroll() { nav.classList.toggle('solid', window.scrollY > 40); }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-  /* deterministic pseudo-noise so the figure is stable */
-  var pts = [];
-  var seed = 7;
-  function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647 - 0.5; }
-  for (var i = 0; i < 30; i++) {
-    var lt = Math.log10(0.15) + i * (Math.log10(45) - Math.log10(0.15)) / 29;
-    var t = Math.pow(10, lt);
-    var m = mag(flux(t).tot);
-    var err = 0.06 + 0.035 * Math.max(0, m - 19);
-    pts.push({ t: t, m: m + rnd() * err * 1.4, e: err });
-  }
-
-  function tok(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
-
-  function draw() {
-    var rect = canvas.getBoundingClientRect();
-    var dpr = window.devicePixelRatio || 1;
-    var W = Math.max(280, rect.width), H = W * 0.75;
-    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    var ink = tok('--ink'), muted = tok('--muted'), line = tok('--line'), accent = tok('--accent'), surface = tok('--surface');
-    var mono = '"IBM Plex Mono", ui-monospace, monospace';
-    var fs = W < 420 ? 10 : 11;
-    var pad = { l: 44, r: 14, t: 12, b: 38 };
-    var pw = W - pad.l - pad.r, ph = H - pad.t - pad.b;
-    var x0 = Math.log10(0.1), x1 = Math.log10(60), y0 = 17, y1 = 26;
-    function X(t) { return pad.l + (Math.log10(t) - x0) / (x1 - x0) * pw; }
-    function Y(m) { return pad.t + (m - y0) / (y1 - y0) * ph; }
-
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = surface; ctx.fillRect(0, 0, W, H);
-
-    /* grid */
-    ctx.strokeStyle = line; ctx.lineWidth = 1;
-    ctx.font = fs + 'px ' + mono; ctx.fillStyle = muted;
-    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-    [0.1, 1, 10].forEach(function (t) {
-      ctx.beginPath(); ctx.moveTo(X(t) + 0.5, pad.t); ctx.lineTo(X(t) + 0.5, pad.t + ph); ctx.stroke();
-      ctx.fillText(String(t), X(t), pad.t + ph + 6);
-    });
-    for (var d = 2; d <= 50; d++) {
-      var dec = Math.pow(10, Math.floor(Math.log10(d)));
-      if (d % dec !== 0 || d / dec === 1) continue;
-      ctx.save(); ctx.globalAlpha = 0.45;
-      ctx.beginPath(); ctx.moveTo(X(d) + 0.5, pad.t + ph - 4); ctx.lineTo(X(d) + 0.5, pad.t + ph); ctx.stroke();
-      ctx.restore();
-    }
-    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
-    for (var mm = 18; mm <= 26; mm += 2) {
-      ctx.beginPath(); ctx.moveTo(pad.l, Y(mm) + 0.5); ctx.lineTo(pad.l + pw, Y(mm) + 0.5); ctx.stroke();
-      ctx.fillText(String(mm), pad.l - 7, Y(mm));
-    }
-    ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
-    ctx.fillText('days since burst', pad.l + pw / 2, H - 2);
-    ctx.save(); ctx.translate(11, pad.t + ph / 2); ctx.rotate(-Math.PI / 2);
-    ctx.textBaseline = 'middle'; ctx.fillText('magnitude', 0, 0); ctx.restore();
-
-    /* component curves */
-    function curve(fn, color, dash, width) {
-      ctx.save(); ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = width; ctx.setLineDash(dash);
-      var first = true;
-      for (var k = 0; k <= 200; k++) {
-        var lt = x0 + k / 200 * (x1 - x0), t = Math.pow(10, lt);
-        var m = mag(fn(t)); if (m > y1 + 0.5) { first = true; continue; }
-        var px = X(t), py = Y(Math.max(y0, m));
-        if (first) { ctx.moveTo(px, py); first = false; } else ctx.lineTo(px, py);
+  /* ---------- starfield with transients ---------- */
+  (function () {
+    var c = document.getElementById('sky'), x = c.getContext('2d');
+    var stars = [], W = 0, H = 0, dpr = 1, flare = null, last = 0;
+    var tlog = document.getElementById('tlog-text');
+    var seed = 11; function r() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    function name() { var a = 'abcdefghijklmnopqrstuvwxyz', s = ''; for (var i = 0; i < 3; i++) s += a[Math.floor(Math.random() * 26)]; return 'AT 2026' + s; }
+    function setup() {
+      var b = c.getBoundingClientRect(); dpr = Math.min(2, window.devicePixelRatio || 1);
+      W = b.width; H = b.height; c.width = W * dpr; c.height = H * dpr; x.setTransform(dpr, 0, 0, dpr, 0, 0);
+      stars = []; seed = 11;
+      var n = Math.round(W * H / 2600);
+      for (var i = 0; i < n; i++) {
+        var m = Math.pow(r(), 3);
+        stars.push({ x: r() * W, y: r() * H, s: 0.4 + m * 1.6, b: 0.25 + m * 0.75, t: r() * 6.28, w: 0.4 + r() * 1.6, hue: r() });
       }
-      ctx.stroke(); ctx.restore();
     }
-    ctx.save();
-    ctx.beginPath(); ctx.rect(pad.l, pad.t, pw, ph); ctx.clip();
-    curve(function (t) { return flux(t).ag; }, muted, [4, 4], 1.2);
-    curve(function (t) { return flux(t).sn; }, accent, [4, 4], 1.2);
-    curve(function (t) { return flux(t).tot; }, ink, [], 1.4);
-
-    /* data points */
-    var n = Math.round(progress * pts.length);
-    for (var j = 0; j < n; j++) {
-      var p = pts[j], px = X(p.t), py = Y(p.m);
-      var inBump = p.t > 6 && p.t < 35;
-      ctx.strokeStyle = inBump ? accent : ink; ctx.fillStyle = inBump ? accent : ink; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(px, Y(p.m - p.e)); ctx.lineTo(px, Y(p.m + p.e)); ctx.stroke();
-      ctx.beginPath(); ctx.arc(px, py, 3, 0, Math.PI * 2); ctx.fill();
+    function newFlare(t) {
+      var cand = stars.filter(function (s) { return s.x > W * 0.08 && s.x < W * 0.92 && s.y > H * 0.15 && s.y < H * 0.85; });
+      var s = cand[Math.floor(Math.random() * cand.length)] || stars[0];
+      var dm = (1.6 + Math.random() * 2.2).toFixed(1);
+      flare = { s: s, t0: t, name: name(), dm: dm };
+      if (tlog) tlog.textContent = flare.name + ' · new transient in field · Δm −' + dm + ' mag';
     }
-    ctx.restore();
-
-    /* labels */
-    ctx.font = fs + 'px ' + mono; ctx.textBaseline = 'alphabetic';
-    ctx.fillStyle = muted; ctx.textAlign = 'left';
-    ctx.fillText('afterglow ∝ t^−α', X(0.13), Y(21.4));
-    ctx.fillStyle = accent; ctx.textAlign = 'center';
-    ctx.fillText('SN bump', X(14), Y(21.7));
-  }
-
-  function start() {
-    draw();
-    if (reduce) return;
-    var t0 = null;
-    function step(ts) {
-      if (t0 === null) t0 = ts;
-      progress = Math.min(1, (ts - t0) / 1400);
-      draw();
-      if (progress < 1) requestAnimationFrame(step);
+    function draw(t) {
+      x.clearRect(0, 0, W, H);
+      for (var i = 0; i < stars.length; i++) {
+        var s = stars[i], tw = reduce ? 1 : 0.75 + 0.25 * Math.sin(t / 1000 * s.w + s.t);
+        x.globalAlpha = s.b * tw;
+        x.fillStyle = s.hue > 0.85 ? '#ffd9a8' : s.hue < 0.12 ? '#bfe3ff' : '#ffffff';
+        x.beginPath(); x.arc(s.x, s.y, s.s, 0, 6.283); x.fill();
+      }
+      x.globalAlpha = 1;
+      if (flare) {
+        var age = reduce ? 1200 : t - flare.t0, life = 4200;
+        var k = age < 900 ? age / 900 : Math.max(0, 1 - (age - 900) / (life - 900));
+        var s = flare.s, red = css('--red');
+        var g = x.createRadialGradient(s.x, s.y, 0, s.x, s.y, 26 * k + 2);
+        g.addColorStop(0, 'rgba(255,255,255,' + (0.95 * k) + ')'); g.addColorStop(0.25, 'rgba(255,214,170,' + (0.6 * k) + ')'); g.addColorStop(1, 'rgba(255,93,115,0)');
+        x.fillStyle = g; x.beginPath(); x.arc(s.x, s.y, 26 * k + 2, 0, 6.283); x.fill();
+        x.strokeStyle = red; x.globalAlpha = Math.min(1, k * 1.4); x.lineWidth = 1.2;
+        x.beginPath(); x.arc(s.x, s.y, 16, 0, 6.283); x.stroke();
+        x.beginPath(); x.moveTo(s.x + 12, s.y - 12); x.lineTo(s.x + 30, s.y - 30); x.lineTo(s.x + 44, s.y - 30); x.stroke();
+        x.fillStyle = red; x.font = '11px "IBM Plex Mono", monospace'; x.fillText(flare.name, s.x + 48, s.y - 26);
+        x.globalAlpha = 1;
+        if (!reduce && age > life + 600) newFlare(t);
+      }
     }
-    requestAnimationFrame(step);
-  }
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+    function loop(t) { if (t - last > 33) { draw(t); last = t; } requestAnimationFrame(loop); }
+    setup(); newFlare(performance.now() - 900); draw(performance.now());
+    if (!reduce) requestAnimationFrame(loop);
+    var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { setup(); draw(performance.now()); }, 150); });
+  })();
 
-  if ('ResizeObserver' in window) new ResizeObserver(function () { draw(); }).observe(canvas);
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
-  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  /* ---------- simulated detector readout ---------- */
+  (function () {
+    var c = document.getElementById('ccd'), x = c.getContext('2d'), out = document.getElementById('ccd-read');
+    var COLS = 40, ROWS = 25, star = { x: 20, y: 12 }, user = false, last = 0, hover = null, frame = null;
+    function gauss() { var u = 1 - Math.random(), v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(6.283 * v); }
+    function readout() {
+      var f = new Float32Array(COLS * ROWS), peak = 0, FLUX = 60000, SIG = 1.6, SKY = 40, RN = 6;
+      for (var j = 0; j < ROWS; j++) for (var i = 0; i < COLS; i++) {
+        var dx = i + 0.5 - star.x, dy = j + 0.5 - star.y;
+        var mean = SKY + FLUX / (6.283 * SIG * SIG) * Math.exp(-(dx * dx + dy * dy) / (2 * SIG * SIG));
+        var e = Math.max(0, mean + Math.sqrt(mean) * gauss() + RN * gauss());
+        f[j * COLS + i] = e; if (e > peak) peak = e;
+      }
+      return { f: f, peak: peak };
+    }
+    function color(v) {
+      var t = Math.min(1, Math.sqrt(Math.max(0, v - 20) / 4200));
+      var r = Math.round(8 + t * t * 247), g = Math.round(14 + t * 200 + t * t * 40), b = Math.round(32 + t * 223);
+      return 'rgb(' + r + ',' + Math.min(255, g) + ',' + Math.min(255, b) + ')';
+    }
+    function draw() {
+      var b = c.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+      var W = b.width, H = b.height; if (c.width !== Math.round(W * dpr)) { c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); }
+      x.setTransform(dpr, 0, 0, dpr, 0, 0);
+      frame = readout();
+      var pw = W / COLS, ph = H / ROWS;
+      for (var j = 0; j < ROWS; j++) for (var i = 0; i < COLS; i++) {
+        x.fillStyle = color(frame.f[j * COLS + i]); x.fillRect(i * pw, j * ph, pw - 1, ph - 1);
+      }
+      if (hover) { x.strokeStyle = css('--cyan'); x.lineWidth = 1.5; x.strokeRect(hover.i * pw + 0.5, hover.j * ph + 0.5, pw - 2, ph - 2); }
+      var v = hover ? frame.f[hover.j * COLS + hover.i] : frame.peak;
+      out.textContent = (hover ? 'pixel (' + hover.i + ',' + hover.j + ') ' : 'peak ') + Math.round(v).toLocaleString('en-GB') + ' e⁻ · σ ≈ ' + Math.round(Math.sqrt(v + 36)) + ' e⁻';
+    }
+    function pos(e) { var b = c.getBoundingClientRect(); return { i: (e.clientX - b.left) / b.width * COLS, j: (e.clientY - b.top) / b.height * ROWS }; }
+    c.addEventListener('pointermove', function (e) { var p = pos(e); user = true; star.x = p.i; star.y = p.j; hover = { i: Math.max(0, Math.min(COLS - 1, Math.floor(p.i))), j: Math.max(0, Math.min(ROWS - 1, Math.floor(p.j))) }; if (reduce) draw(); });
+    c.addEventListener('pointerleave', function () { user = false; hover = null; if (reduce) draw(); });
+    function loop(t) {
+      if (t - last > 110) {
+        if (!user) { star.x = COLS / 2 + Math.sin(t / 2300) * COLS * 0.3; star.y = ROWS / 2 + Math.sin(t / 1700) * ROWS * 0.28; }
+        draw(); last = t;
+      }
+      requestAnimationFrame(loop);
+    }
+    draw(); if (!reduce) requestAnimationFrame(loop);
+    window.addEventListener('resize', draw);
+  })();
+
+  /* ---------- light curve ---------- */
+  (function () {
+    var c = document.getElementById('lc'), x = c.getContext('2d');
+    function flux(t) { var ag = Math.pow(t, -1.3), sn = 0.06 * Math.exp(-Math.pow(Math.log(t / 14), 2) / (2 * 0.45 * 0.45)); return { ag: ag, sn: sn, tot: ag + sn }; }
+    function mag(f) { return 20 - 2.5 * Math.log10(f); }
+    var pts = [], seed = 7; function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647 - 0.5; }
+    for (var i = 0; i < 30; i++) { var t = Math.pow(10, Math.log10(0.15) + i * (Math.log10(45) - Math.log10(0.15)) / 29), m = mag(flux(t).tot), e = 0.06 + 0.035 * Math.max(0, m - 19); pts.push({ t: t, m: m + rnd() * e * 1.4, e: e }); }
+    var progress = reduce ? 1 : 0;
+    function draw() {
+      var b = c.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1), W = b.width, H = b.height;
+      c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); x.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var ink = css('--ink'), muted = css('--faint'), line = css('--line'), red = css('--red');
+      var mono = '"IBM Plex Mono", monospace', fs = W < 420 ? 10 : 11, pad = { l: 42, r: 14, t: 14, b: 34 };
+      var pw = W - pad.l - pad.r, ph = H - pad.t - pad.b, x0 = Math.log10(0.1), x1 = Math.log10(60), y0 = 17, y1 = 26;
+      function X(t) { return pad.l + (Math.log10(t) - x0) / (x1 - x0) * pw; }
+      function Y(m) { return pad.t + (m - y0) / (y1 - y0) * ph; }
+      x.fillStyle = '#050811'; x.fillRect(0, 0, W, H);
+      x.strokeStyle = line; x.lineWidth = 1; x.font = fs + 'px ' + mono; x.fillStyle = muted;
+      x.textAlign = 'center'; x.textBaseline = 'top';
+      [0.1, 1, 10].forEach(function (t) { x.beginPath(); x.moveTo(X(t) + 0.5, pad.t); x.lineTo(X(t) + 0.5, pad.t + ph); x.stroke(); x.fillText(String(t), X(t), pad.t + ph + 6); });
+      x.textAlign = 'right'; x.textBaseline = 'middle';
+      for (var mm = 18; mm <= 26; mm += 2) { x.beginPath(); x.moveTo(pad.l, Y(mm) + 0.5); x.lineTo(pad.l + pw, Y(mm) + 0.5); x.stroke(); x.fillText(String(mm), pad.l - 7, Y(mm)); }
+      x.textAlign = 'center'; x.textBaseline = 'bottom'; x.fillText('days since burst', pad.l + pw / 2, H - 2);
+      x.save(); x.translate(11, pad.t + ph / 2); x.rotate(-Math.PI / 2); x.textBaseline = 'middle'; x.fillText('magnitude', 0, 0); x.restore();
+      function curve(fn, col, dash, w) { x.save(); x.beginPath(); x.strokeStyle = col; x.lineWidth = w; x.setLineDash(dash); var first = true; for (var k = 0; k <= 200; k++) { var t = Math.pow(10, x0 + k / 200 * (x1 - x0)), m = mag(fn(t)); if (m > y1 + 0.5) { first = true; continue; } var px = X(t), py = Y(Math.max(y0, m)); if (first) { x.moveTo(px, py); first = false; } else x.lineTo(px, py); } x.stroke(); x.restore(); }
+      x.save(); x.beginPath(); x.rect(pad.l, pad.t, pw, ph); x.clip();
+      curve(function (t) { return flux(t).ag; }, muted, [4, 4], 1.2);
+      curve(function (t) { return flux(t).sn; }, red, [4, 4], 1.2);
+      curve(function (t) { return flux(t).tot; }, ink, [], 1.4);
+      var n = Math.round(progress * pts.length);
+      for (var j = 0; j < n; j++) { var p = pts[j], px = X(p.t), py = Y(p.m), bump = p.t > 6 && p.t < 35; x.strokeStyle = x.fillStyle = bump ? red : ink; x.beginPath(); x.moveTo(px, Y(p.m - p.e)); x.lineTo(px, Y(p.m + p.e)); x.stroke(); x.beginPath(); x.arc(px, py, 3, 0, 6.283); x.fill(); }
+      x.restore();
+      x.font = fs + 'px ' + mono; x.textBaseline = 'alphabetic'; x.fillStyle = muted; x.textAlign = 'left'; x.fillText('afterglow ∝ t^−α', X(0.13), Y(21.4));
+      x.fillStyle = red; x.textAlign = 'center'; x.fillText('supernova bump', X(14), Y(21.7));
+    }
+    function start() { draw(); if (reduce) return; var t0 = null; function step(ts) { if (t0 === null) t0 = ts; progress = Math.min(1, (ts - t0) / 1600); draw(); if (progress < 1) requestAnimationFrame(step); } requestAnimationFrame(step); }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+    window.addEventListener('resize', draw);
+  })();
+
+  /* ---------- lightbox ---------- */
+  (function () {
+    var lb = document.getElementById('lightbox'), img = document.getElementById('lb-img'), cap = document.getElementById('lb-cap'), closeBtn = document.getElementById('lb-close'), last = null;
+    function close() { lb.classList.remove('open'); img.removeAttribute('src'); if (last) last.focus(); }
+    [].slice.call(document.querySelectorAll('.shot button, .jshot button')).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var i = b.querySelector('img'), fc = b.parentNode.querySelector('.cap');
+        last = b; img.src = i.src; img.alt = i.alt; cap.textContent = fc ? fc.textContent : '';
+        lb.classList.add('open'); closeBtn.focus();
+      });
+    });
+    closeBtn.addEventListener('click', close);
+    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.classList.contains('open')) close(); });
+  })();
+
+  /* ---------- key paper filters ---------- */
+  (function () {
+    var btns = [].slice.call(document.querySelectorAll('.filter')), cards = [].slice.call(document.querySelectorAll('#papers > .paper'));
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var t = b.getAttribute('data-topic');
+        btns.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+        cards.forEach(function (c) { c.hidden = !(t === 'all' || c.getAttribute('data-topic') === t); c.classList.toggle('feature', t === 'all' && c.hasAttribute('data-feature')); });
+      });
+    });
+  })();
+
+  /* ---------- full publication list ---------- */
+  (function () {
+    var items = [].slice.call(document.querySelectorAll('#pubs li')), chips = [].slice.call(document.querySelectorAll('.pchip'));
+    var search = document.getElementById('pub-search'), countEl = document.getElementById('pub-count'), emptyEl = document.getElementById('pub-empty');
+    var labels = { all: 'publications', lead: 'first-author papers', prep: 'papers in preparation', co: 'co-authored papers', proc: 'proceedings' }, current = 'all';
+    chips.forEach(function (c) {
+      var f = c.getAttribute('data-filter');
+      c.querySelector('.ct').textContent = f === 'all' ? items.length : items.filter(function (i) { return i.dataset.cat === f; }).length;
+      c.addEventListener('click', function () { current = f; chips.forEach(function (o) { o.setAttribute('aria-pressed', String(o === c)); }); apply(); });
+    });
+    search.addEventListener('input', apply);
+    function apply() {
+      var q = search.value.trim().toLowerCase(), shown = 0;
+      items.forEach(function (li) { var vis = q ? li.textContent.toLowerCase().indexOf(q) !== -1 : (current === 'all' || li.dataset.cat === current); li.hidden = !vis; if (vis) shown++; });
+      countEl.textContent = q ? shown + ' match' + (shown === 1 ? '' : 'es') : shown + ' ' + labels[current];
+      emptyEl.hidden = shown !== 0;
+    }
+    apply();
+  })();
+
+  /* ---------- journey scroller ---------- */
+  (function () {
+    var track = document.getElementById('journey-track'), stops = [].slice.call(track.children);
+    function go(d) {
+      var tl = track.getBoundingClientRect().left, idx = 0;
+      stops.forEach(function (s, i) { if (s.getBoundingClientRect().left - tl < 10) idx = i; });
+      var n = Math.max(0, Math.min(stops.length - 1, idx + d));
+      track.scrollTo({ left: stops[n].offsetLeft - stops[0].offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
+    }
+    document.getElementById('j-prev').addEventListener('click', function () { go(-1); });
+    document.getElementById('j-next').addEventListener('click', function () { go(1); });
+    track.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { e.preventDefault(); go(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); } });
+  })();
+
+  /* ---------- mirrors to scale ---------- */
+  (function () {
+    var data = [
+      [10.4, 'Gran Telescopio Canarias'], [10, 'Keck'], [10, 'Hobby–Eberly'], [8.2, 'Very Large Telescope'], [6, 'BTA'],
+      [4.2, 'William Herschel (WEAVE)'], [3.6, 'Devasthal Optical Telescope', 1], [3.58, 'New Technology Telescope'], [2.4, 'Hubble'],
+      [2.2, 'Calar Alto'], [2.01, 'Himalayan Chandra'], [2, 'Liverpool Telescope'], [1.3, 'Devasthal Fast Optical', 1], [1.04, 'Sampurnanand', 1]
+    ];
+    var row = document.getElementById('mirrors'), max = window.innerWidth < 640 ? 84 : 118, html = '';
+    data.forEach(function (d) {
+      var px = Math.max(8, Math.round(d[0] / 10.4 * max));
+      html += '<div class="m' + (d[2] ? ' used' : '') + '"><span class="disc" style="width:' + px + 'px;height:' + px + 'px"></span><span class="ap">' + d[0] + ' m</span><span class="nm">' + d[1] + '</span></div>';
+    });
+    row.innerHTML = html;
+  })();
 })();
 </script>
+<script data-goatcounter="https://amitkumar.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

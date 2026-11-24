@@ -151,6 +151,22 @@ section.block { padding: clamp(3rem, 7vw, 5rem) 0 0; }
 .tag { font-family: var(--font-mono); font-size: 0.74rem; padding: 0.18rem 0.5rem; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); background: var(--bg); white-space: nowrap; }
 .tag.hot { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); background: var(--accent-soft); }
 
+/* key papers */
+.theme + .theme { margin-top: 2.2rem; }
+.theme-h { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.9rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--line); }
+.theme-h h3 { font-family: var(--font-body); font-size: var(--step-1); font-weight: 600; }
+.theme-h .mono { color: var(--muted); margin-left: auto; white-space: nowrap; }
+.papers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; }
+.paper { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 6px; padding: 1.15rem 1.25rem 1.1rem; display: flex; flex-direction: column; gap: 0.6rem; }
+.paper-meta { display: flex; flex-wrap: wrap; gap: 0.4rem 0.75rem; align-items: center; color: var(--muted); }
+.paper-meta .tag { margin-left: auto; }
+.paper h4 { margin: 0; font-family: var(--font-display); font-size: 1.15rem; font-weight: 500; line-height: 1.3; text-wrap: balance; }
+.paper h4 a { color: var(--ink); text-decoration: none; }
+.paper h4 a:hover { color: var(--accent); text-decoration: underline; }
+.paper p { color: var(--muted); font-size: 0.95rem; }
+.facts { list-style: none; display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: auto; padding-top: 0.3rem; }
+.facts li { font-family: var(--font-mono); font-size: 0.74rem; padding: 0.2rem 0.5rem; border-radius: 3px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); font-variant-numeric: tabular-nums; }
+
 /* timeline */
 .timeline { list-style: none; display: grid; }
 .timeline li { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 1.25rem; padding: 1.2rem 0; border-top: 1px solid var(--line); }
@@ -248,6 +264,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .block-grid { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
   .rail { display: flex; gap: 0.75rem; padding-top: 0; }
   .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .papers { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 640px) {
   .two-col, .skills, .contact { grid-template-columns: minmax(0, 1fr); }
@@ -274,6 +291,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <nav class="nav" aria-label="Sections">
       <a href="#about">About</a>
       <a href="#research">Research</a>
+      <a href="#key-papers">Key papers</a>
       <a href="#experience">Experience</a>
       <a href="#publications">Publications</a>
       <a href="#observing">Observing</a>
@@ -371,10 +389,106 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   </div>
 </section>
 
+<!-- ================= KEY PAPERS ================= -->
+<section class="block" id="key-papers">
+  <div class="wrap block-grid">
+    <div class="rail mono"><span class="idx">03</span>Key papers</div>
+    <div>
+      <h2>Ten papers I led</h2>
+      <p class="note">Eight as first author and two as corresponding author, grouped by the question each one asks.</p>
+
+      <div class="theme">
+        <div class="theme-h"><h3>What powers the explosion? Magnetar central engines</h3><span class="mono">3 papers</span></div>
+        <div class="papers">
+          <article class="paper">
+            <div class="paper-meta mono"><span>MNRAS 531, 3297 · 2024</span><span class="tag hot">First author</span></div>
+            <h4><a href="https://doi.org/10.1093/mnras/stae901">Magnetars as powering sources of gamma-ray burst associated supernovae, and unsupervized clustering of cosmic explosions</a></h4>
+            <p>I modelled the light curves of 13 GRB supernovae and two relativistic broad-lined Ic supernovae with a spinning-down magnetar engine. Unsupervised machine learning then showed that GRB supernovae occupy their own region of magnetar parameter space, separate from superluminous supernovae, fast blue optical transients and long and short GRBs.</p>
+            <ul class="facts"><li>15 SNe modelled</li><li>median P<sub>i</sub> ≈ 20.5 ms</li><li>M<sub>ej</sub> ≈ 5.2 M<sub>☉</sub></li><li>~95% clustering accuracy</li></ul>
+          </article>
+          <article class="paper">
+            <div class="paper-meta mono"><span>New Astronomy 116, 102346 · 2025</span><span class="tag hot">Sole author</span></div>
+            <h4><a href="https://doi.org/10.1016/j.newast.2024.102346">Insights from modelling magnetar-driven light curves of stripped-envelope supernovae</a></h4>
+            <p>Magnetar fits to 11 stripped-envelope supernovae. The superluminous SNe 2010kd and 2020ank need the fastest-spinning, weakest-field magnetars. Explosion energies above about 2×10<sup>51</sup> erg point to a possible jittering-jet mechanism. Correlation analysis and PCA map how the events differ.</p>
+            <ul class="facts"><li>11 SESNe</li><li>E<sub>exp</sub> ≳ 2×10<sup>51</sup> erg</li><li>correlations + PCA</li></ul>
+          </article>
+          <article class="paper">
+            <div class="paper-meta mono"><span>New Astronomy 97, 101889 · 2022</span><span class="tag hot">First author</span></div>
+            <h4><a href="https://doi.org/10.1016/j.newast.2022.101889">Tale of GRB 171010A/SN 2017htp and GRB 171205A/SN 2017iuk: Magnetar origin?</a></h4>
+            <p>Late-time imaging with the 3.6 m Devasthal Optical Telescope of two GRB supernovae, one among the brightest and one among the faintest known, together with their prompt gamma-ray emission. A magnetar engine reproduces both, and also the only known GRB-associated superluminous supernova, SLSN 2011kl.</p>
+            <ul class="facts"><li>z = 0.33 and 0.037</li><li>3 GRB–SNe modelled</li><li>3.6 m DOT</li></ul>
+          </article>
+        </div>
+      </div>
+
+      <div class="theme">
+        <div class="theme-h"><h3>Superluminous and unusual supernovae</h3><span class="mono">4 papers</span></div>
+        <div class="papers">
+          <article class="paper">
+            <div class="paper-meta mono"><span>MNRAS 538, 659 · 2025</span><span class="tag hot">First author</span></div>
+            <h4><a href="https://doi.org/10.1093/mnras/staf312">Signatures of the shock interaction as an additional power source in the nebular spectra of SN 2023ixf</a></h4>
+            <p>The first supernova spectrum taken with WEAVE on the William Herschel Telescope. One year after the explosion, broad side-wings on Hα show the ejecta still being energised by collision with material the star shed a few hundred years before it died.</p>
+            <ul class="facts"><li>+363 d</li><li>Hα wings at ±5650 km s<sup>−1</sup></li><li>shock power ≳ 5×10<sup>40</sup> erg s<sup>−1</sup></li><li>M<sub>ZAMS</sub> ≲ 12 M<sub>☉</sub></li></ul>
+          </article>
+          <article class="paper">
+            <div class="paper-meta mono"><span>MNRAS 502, 1678 · 2021</span><span class="tag hot">First author</span></div>
+            <h4><a href="https://doi.org/10.1093/mnras/staa4047">SN 2020ank: a bright and fast-evolving H-deficient superluminous supernova</a></h4>
+            <p>One of the brightest hydrogen-poor superluminous supernovae, with a fast, symmetric light curve. A magnetar spinning once every 2.2 ms fits it, and its spectra closely resemble the fast-evolving SN 2010gx.</p>
+            <ul class="facts"><li>z = 0.2485</li><li>M<sub>g</sub> ≈ −21.84 mag</li><li>L<sub>max</sub> ≈ 3.9×10<sup>44</sup> erg s<sup>−1</sup></li><li>P<sub>i</sub> ≈ 2.2 ms</li></ul>
+          </article>
+          <article class="paper">
+            <div class="paper-meta mono"><span>ApJ 892, 28 · 2020</span><span class="tag hot">First author</span></div>
+            <h4><a href="https://doi.org/10.3847/1538-4357/ab737b">SN 2010kd: Photometric and spectroscopic analysis of a slow-decaying superluminous supernova</a></h4>
+            <p>A nearby, slowly fading superluminous supernova like PTF12dam, followed from four weeks before peak to six months after. Its light curve favours interaction with circumstellar matter, and its spectra show O II and Si II at two different velocities. It lives in a dwarf galaxy that is forming stars rapidly.</p>
+            <ul class="facts"><li>z = 0.101</li><li>−28 to +194 d</li><li>O I mass ≲ 10 M<sub>☉</sub></li></ul>
+          </article>
+          <article class="paper">
+            <div class="paper-meta mono"><span>MNRAS 507, 1229 · 2021</span><span class="tag">Corresponding author</span></div>
+            <h4><a href="https://doi.org/10.1093/mnras/stab1889">Photometric, polarimetric, and spectroscopic studies of the luminous, slow-decaying Type Ib SN 2012au</a></h4>
+            <p>More than a year of photometry, polarimetry and optical and near-infrared spectroscopy of one of the most luminous slow-fading Type Ib supernovae. A magnetar powers it, the polarimetry shows asymmetric ejecta, and the late spectra point to a Wolf–Rayet progenitor.</p>
+            <ul class="facts"><li>−0.2 to +413 d</li><li>M<sub>ej</sub> ≈ 4.7–8.3 M<sub>☉</sub></li><li>M<sub>ZAMS</sub> ≈ 17–25 M<sub>☉</sub></li></ul>
+          </article>
+        </div>
+      </div>
+
+      <div class="theme">
+        <div class="theme-h"><h3>Finding afterglows of poorly localised gamma-ray bursts</h3><span class="mono">1 paper</span></div>
+        <div class="papers">
+          <article class="paper">
+            <div class="paper-meta mono"><span>MNRAS 544, 1541 · 2025</span><span class="tag hot">First author</span></div>
+            <h4><a href="https://doi.org/10.1093/mnras/staf1689">Discovery and analysis of afterglows from poorly localized GRBs with the Gravitational-wave Optical Transient Observer (GOTO) All-sky Survey</a></h4>
+            <p>Most Fermi and MAXI bursts come with error regions too large for normal telescopes to search. GOTO's wide field found the optical afterglows of seven of them in 2024. With redshifts from the VLT and GTC, radio detections and broadband modelling, the paper shows that optical discovery of such bursts favours luminous events with hard spectra.</p>
+            <ul class="facts"><li>7 long GRBs</li><li>z ≈ 0.40–3.16</li><li>E<sub>jet</sub> ~ 10<sup>51</sup>–10<sup>52</sup> erg</li></ul>
+          </article>
+        </div>
+      </div>
+
+      <div class="theme">
+        <div class="theme-h"><h3>Instrumentation: the 4K×4K CCD Imager on the 3.6 m DOT</h3><span class="mono">2 papers</span></div>
+        <div class="papers">
+          <article class="paper">
+            <div class="paper-meta mono"><span>J. Astrophys. Astron. 43, 27 · 2022</span><span class="tag hot">First author</span></div>
+            <h4><a href="https://doi.org/10.1007/s12036-022-09798-8">Photometric calibrations and characterization of the 4K×4K CCD Imager, the first-light axial port instrument for the 3.6m DOT</a></h4>
+            <p>Gain and read noise checked for every gain and readout-speed setting, colour terms and zero points tracked over five years, and extinction and night-sky brightness measured in ten filters at Devasthal.</p>
+            <ul class="facts"><li>5 gains × 3 readout speeds</li><li>10 filters</li><li>2016–2021 data</li></ul>
+          </article>
+          <article class="paper">
+            <div class="paper-meta mono"><span>J. Astron. Instrum. 12 · 2023</span><span class="tag">Corresponding author</span></div>
+            <h4><a href="https://ui.adsabs.harvard.edu/abs/2023JAI....1240009P/abstract">4K×4K CCD Imager for the 3.6m DOT: Recent up-gradations and results</a></h4>
+            <p>Instrument details not covered in earlier papers. A Zemax analysis traced the vignetting and ghosts at the image edges, which a redesigned light baffle now fixes. The paper also covers finite-element design of the filter housing, filter-wheel upgrades, and fringe correction in the I, i and z filters. New science includes Wolf–Rayet stars in M101, an Abell galaxy cluster and GRB host galaxies.</p>
+            <ul class="facts"><li>Zemax vignetting/ghosts</li><li>FEA filter housing</li><li>fringe correction I, i, z</li><li>9 WR stars in M101</li></ul>
+            <p class="mono" style="font-size:0.78rem"><a href="https://arxiv.org/abs/2306.13698">arXiv:2306.13698</a></p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= EXPERIENCE ================= -->
 <section class="block" id="experience">
   <div class="wrap block-grid">
-    <div class="rail mono"><span class="idx">03</span>Experience</div>
+    <div class="rail mono"><span class="idx">04</span>Experience</div>
     <div>
       <h2>Positions and education</h2>
       <ol class="timeline">
@@ -441,7 +555,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 <!-- ================= PUBLICATIONS ================= -->
 <section class="block" id="publications">
   <div class="wrap block-grid">
-    <div class="rail mono"><span class="idx">04</span>Publications</div>
+    <div class="rail mono"><span class="idx">05</span>Publications</div>
     <div>
       <h2>Publications</h2>
       <p class="note">I referee for MNRAS, The Astrophysical Journal and Astronomy and Computing. Full and up-to-date list on <a href="https://scholar.google.com/citations?hl=en&amp;user=ojOoBBUAAAAJ">Google Scholar</a>.</p>
@@ -466,16 +580,16 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <li data-cat="prep"><span class="yr mono">—</span><div><span class="t">Characterisation of Signal-Dependent Negative Trailing in the CIS115 CMOS Image Sensor Onboard JANUS</span><p class="au"><b>Kumar, A.</b>, et al.</p><p class="ven mono">SPIE · circulated to co-authors</p></div></li>
 
         <!-- Lead / corresponding -->
-        <li data-cat="lead"><span class="yr mono">2025</span><div><a class="t" href="https://doi.org/10.1093/mnras/staf1689">Discovery and Analysis of Afterglows from Poorly Localised GRBs with the Gravitational-wave Optical Transient Observer (GOTO) All-sky Survey</a><p class="au"><b>Kumar, A.</b>, Gompertz, B. P., Schneider, B., Belkin, S., et al.</p><p class="ven mono">MNRAS 544, 1541</p></div></li>
-        <li data-cat="lead"><span class="yr mono">2025</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2024arXiv241203509K/abstract">Signatures of the Shock Interaction as an Additional Power Source in the Nebular Spectra of SN 2023ixf</a><p class="au"><b>Kumar, A.</b>, Dastidar, R., Maund, J. R., Singleton, A. J., Sun, N.-C.</p><p class="ven mono">MNRAS 538, 659</p></div></li>
-        <li data-cat="lead"><span class="yr mono">2025</span><div><a class="t" href="https://doi.org/10.1016/j.newast.2024.102346">Insights from Modeling Magnetar-driven Light Curves of Stripped-envelope Supernovae</a><p class="au"><b>Kumar, A.</b></p><p class="ven mono">New Astronomy 116, 102346</p></div></li>
-        <li data-cat="lead"><span class="yr mono">2024</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2024MNRAS.531.3297K/abstract">Magnetars as Powering Sources of Gamma-Ray Burst Associated Supernovae and Unsupervised Clustering of Cosmic Explosions</a><p class="au"><b>Kumar, A.</b>, Sharma, K., Vinko, J., Steeghs, D., Gompertz, B., et al.</p><p class="ven mono">MNRAS 531, 3297</p></div></li>
-        <li data-cat="lead"><span class="yr mono">2023</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2023JAI....1240009P/abstract">4K×4K CCD Imager for the 3.6m DOT: Recent Up-gradations and Results</a><p class="au">Pandey, S. B., <b>Kumar, A.</b>, Reddy, B. K., Yadav, S., Nanjappa, N., et al.</p><p class="ven mono">Journal of Astronomical Instrumentation</p></div></li>
-        <li data-cat="lead"><span class="yr mono">2022</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2022NewA...9701889K/abstract">Tale of GRB 171010A/SN 2017htp and GRB 171205A/SN 2017iuk: Magnetar Origin?</a><p class="au"><b>Kumar, A.</b>, Pandey, S. B., Gupta, R., Aryan, A., et al.</p><p class="ven mono">New Astronomy 97, 101889</p></div></li>
-        <li data-cat="lead"><span class="yr mono">2022</span><div><a class="t" href="https://link.springer.com/article/10.1007/s12036-022-09798-8">Photometric Calibration and Characterization of the 4K×4K CCD Imager, the First-light Axial Port Instrument for the 3.6m DOT</a><p class="au"><b>Kumar, A.</b>, Pandey, S. B., Singh, A., Yadav, R. K. S., et al.</p><p class="ven mono">J. Astrophys. Astron. 43, 27</p></div></li>
-        <li data-cat="lead"><span class="yr mono">2021</span><div><a class="t" href="https://academic.oup.com/mnras/article-abstract/502/2/1678/6103929">SN 2020ank: A Bright and Fast-evolving H-deficient Superluminous Supernova</a><p class="au"><b>Kumar, A.</b>, Kumar, B., Pandey, S. B., Sahu, D. K., et al.</p><p class="ven mono">MNRAS 502, 1678</p></div></li>
-        <li data-cat="lead"><span class="yr mono">2021</span><div><a class="t" href="https://academic.oup.com/mnras/article-abstract/507/1/1229/6358325">Photometric, Polarimetric, and Spectroscopic Studies of the Luminous, Slow-decaying Type Ib SN 2012au</a><p class="au">Pandey, S. B., <b>Kumar, A.</b>, Kumar, B., Anupama, G. C., et al.</p><p class="ven mono">MNRAS 507, 1229</p></div></li>
-        <li data-cat="lead"><span class="yr mono">2020</span><div><a class="t" href="https://iopscience.iop.org/article/10.3847/1538-4357/ab737b/meta">SN 2010kd: Photometric and Spectroscopic Analysis of a Slow-decaying Superluminous Supernova</a><p class="au"><b>Kumar, A.</b>, Pandey, S. B., Konyves-Toth, R., Staten, R., Vinko, J., Wheeler, J. C., et al.</p><p class="ven mono">ApJ 892, 28</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2025</span><div><a class="t" href="https://doi.org/10.1093/mnras/staf1689">Discovery and Analysis of Afterglows from Poorly Localized GRBs with the Gravitational-wave Optical Transient Observer (GOTO) All-sky Survey</a><p class="au"><b>Kumar, A.</b>, Gompertz, B. P., Schneider, B., Belkin, S., et al.</p><p class="ven mono">MNRAS 544, 1541</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2025</span><div><a class="t" href="https://doi.org/10.1093/mnras/staf312">Signatures of the Shock Interaction as an Additional Power Source in the Nebular Spectra of SN 2023ixf</a><p class="au"><b>Kumar, A.</b>, Dastidar, R., Maund, J. R., Singleton, A. J., Sun, N.-C.</p><p class="ven mono">MNRAS 538, 659</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2025</span><div><a class="t" href="https://doi.org/10.1016/j.newast.2024.102346">Insights from Modelling Magnetar-driven Light Curves of Stripped-envelope Supernovae</a><p class="au"><b>Kumar, A.</b></p><p class="ven mono">New Astronomy 116, 102346</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2024</span><div><a class="t" href="https://doi.org/10.1093/mnras/stae901">Magnetars as Powering Sources of Gamma-Ray Burst Associated Supernovae, and Unsupervized Clustering of Cosmic Explosions</a><p class="au"><b>Kumar, A.</b>, Sharma, K., Vinko, J., Steeghs, D., Gompertz, B., et al.</p><p class="ven mono">MNRAS 531, 3297</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2023</span><div><a class="t" href="https://ui.adsabs.harvard.edu/abs/2023JAI....1240009P/abstract">4K×4K CCD Imager for the 3.6m DOT: Recent up-gradations and results</a><p class="au">Pandey, S. B., <b>Kumar, A.</b>, Reddy, B. K., Yadav, S., Nanjappa, N., Aryan, A., Gupta, R., Panwar, N., Yadav, R. K. S.</p><p class="ven mono">J. Astron. Instrum. 12 · <a href="https://arxiv.org/abs/2306.13698">arXiv:2306.13698</a></p></div></li>
+        <li data-cat="lead"><span class="yr mono">2022</span><div><a class="t" href="https://doi.org/10.1016/j.newast.2022.101889">Tale of GRB 171010A/SN 2017htp and GRB 171205A/SN 2017iuk: Magnetar Origin?</a><p class="au"><b>Kumar, A.</b>, Pandey, S. B., Gupta, R., Aryan, A., et al.</p><p class="ven mono">New Astronomy 97, 101889</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2022</span><div><a class="t" href="https://doi.org/10.1007/s12036-022-09798-8">Photometric Calibrations and Characterization of the 4K×4K CCD Imager, the First-light Axial Port Instrument for the 3.6m DOT</a><p class="au"><b>Kumar, A.</b>, Pandey, S. B., Singh, A., Yadav, R. K. S., et al.</p><p class="ven mono">J. Astrophys. Astron. 43, 27</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2021</span><div><a class="t" href="https://doi.org/10.1093/mnras/staa4047">SN 2020ank: A Bright and Fast-evolving H-deficient Superluminous Supernova</a><p class="au"><b>Kumar, A.</b>, Kumar, B., Pandey, S. B., Sahu, D. K., et al.</p><p class="ven mono">MNRAS 502, 1678</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2021</span><div><a class="t" href="https://doi.org/10.1093/mnras/stab1889">Photometric, Polarimetric, and Spectroscopic Studies of the Luminous, Slow-decaying Type Ib SN 2012au</a><p class="au">Pandey, S. B., <b>Kumar, A.</b>, Kumar, B., Anupama, G. C., et al.</p><p class="ven mono">MNRAS 507, 1229</p></div></li>
+        <li data-cat="lead"><span class="yr mono">2020</span><div><a class="t" href="https://doi.org/10.3847/1538-4357/ab737b">SN 2010kd: Photometric and Spectroscopic Analysis of a Slow-decaying Superluminous Supernova</a><p class="au"><b>Kumar, A.</b>, Pandey, S. B., Konyves-Toth, R., Staten, R., Vinko, J., Wheeler, J. C., et al.</p><p class="ven mono">ApJ 892, 28</p></div></li>
 
         <!-- Co-author: 2nd / 3rd and others -->
         <li data-cat="co"><span class="yr mono">2026</span><div><a class="t" href="https://doi.org/10.1093/rasti/rzag042">The Gravitational-wave Optical Transient Observer (GOTO) Data Pipeline and Workflow for Transient Discovery</a><p class="au">Lyman, J. D., O'Neill, D., Killestein, T., Jarvis, D., <b>Kumar, A.</b>, et al.</p><p class="ven mono">RAS Techniques and Instruments 5, 1</p></div></li>
@@ -548,7 +662,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 <!-- ================= OBSERVING ================= -->
 <section class="block" id="observing">
   <div class="wrap block-grid">
-    <div class="rail mono"><span class="idx">05</span>Observing</div>
+    <div class="rail mono"><span class="idx">06</span>Observing</div>
     <div>
       <h2>Telescope time and follow-up</h2>
       <p class="note">Real-time photometric, spectroscopic and polarimetric follow-up of supernovae, GRBs and other fast transients, plus instrument and site calibration, under approved proposals from Cycles 2018A–2022B. Co-proposer on ESO proposals including the VLT, and member of a joint JWST–HST team for AT2023lcr.</p>
@@ -609,7 +723,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 <!-- ================= TALKS ================= -->
 <section class="block" id="talks">
   <div class="wrap block-grid">
-    <div class="rail mono"><span class="idx">06</span>Talks</div>
+    <div class="rail mono"><span class="idx">07</span>Talks</div>
     <div>
       <h2>Talks and meetings</h2>
       <ol class="talks">
@@ -671,7 +785,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 <!-- ================= SKILLS ================= -->
 <section class="block" id="skills">
   <div class="wrap block-grid">
-    <div class="rail mono"><span class="idx">07</span>Skills</div>
+    <div class="rail mono"><span class="idx">08</span>Skills</div>
     <div>
       <h2>Technical skills</h2>
       <div class="skills">
@@ -689,7 +803,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 <!-- ================= CONTACT ================= -->
 <section class="block" id="contact">
   <div class="wrap block-grid">
-    <div class="rail mono"><span class="idx">08</span>Contact</div>
+    <div class="rail mono"><span class="idx">09</span>Contact</div>
     <div>
       <h2>Get in touch</h2>
       <div class="contact">
